@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+			targetNamespace="urn:nl.nta.8800.export" xmlns:n="urn:nl.nta.8800.export">
+	<xs:element name="EMG">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NopwKoudenet" minOccurs="0">
+					<xs:annotation><xs:documentation>Equivalent opwekkingsrendement collectief koudenet.</xs:documentation></xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:decimal">
+								<xs:attribute name="kwaliteitsverklaring" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation><xs:documentation>Verwijzing naar een kwaliteitsverklaring in de lijst /Energieprestatie/Kwaliteitsverklaringen.</xs:documentation></xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="NopwTapwater" minOccurs="0">
+					<xs:annotation><xs:documentation>Equivalent opwekkingsrendement collectief circulatiesysteem tapwater.</xs:documentation></xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:decimal">
+								<xs:attribute name="kwaliteitsverklaring" type="xs:nonNegativeInteger" use="optional"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="NopwWarmtenet" minOccurs="0">
+					<xs:annotation><xs:documentation>Equivalent opwekkingsrendement collectief warmtenet.</xs:documentation></xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:decimal">
+								<xs:attribute name="kwaliteitsverklaring" type="xs:nonNegativeInteger" use="optional"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Elektriciteitsproductie" minOccurs="0">
+					<xs:annotation><xs:documentation>Equivalent elektriciteitsproductie in het gebied in MJ/m².</xs:documentation></xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:decimal">
+								<xs:attribute name="kwaliteitsverklaring" type="xs:nonNegativeInteger" use="optional"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

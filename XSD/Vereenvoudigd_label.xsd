@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:nl.nta.8800.export"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           xmlns:n="urn:nl.nta.8800.export">
+
+	<xs:element name="Vereenvoudigd_Label">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Invoer">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Woningtype" type="n:WoningtypeEnum"/>
+							<xs:element name="Woningsubtype" type="n:WoningsubtypeEnum" minOccurs="0"/>
+							<xs:choice>
+								<xs:element name="Bouwjaar" type="xs:nonNegativeInteger"/>
+								<xs:element name="Bouwjaarklasse" type="n:BouwjaarklasseEnum"/>
+							</xs:choice>
+							<xs:element name="Extreem_Goed_Geisoleerd" type="xs:boolean"/>
+							<xs:element name="Beglazing_Leefruimte" type="n:BeglazingEnum"/>
+							<xs:element name="Beglazing_Slaapruimte" type="n:BeglazingEnum"/>
+							<xs:element name="Isolatie_Gevel" type="n:NaisolatieEnum"/>
+							<xs:element name="Isolatie_Dak" type="n:NaisolatieEnum"/>
+							<xs:element name="Isolatie_Vloer" type="n:NaisolatieEnum"/>
+							<xs:element name="Verwarmingstoestel" type="n:VerwarmingstoestelEnum"/>
+							<xs:element name="WarmTapwatertoestel" type="n:WarmTapwatertoestelEnum"/>
+							<xs:element name="Ventilatiesysteem" type="n:VentilatiesysteemEnum"/>
+							<xs:element ref="n:Duurzaamheid"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Duurzaamheid">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Zonneboiler" type="xs:boolean"/>
+				<xs:element name="Oppervlakte_PV" type="xs:double">
+					<xs:annotation><xs:documentation>bij geen PV, 0 m² invullen</xs:documentation></xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="WoningtypeEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>vrijstaand</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>twee onder een kap</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>hoekwoning</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="4"><xs:annotation><xs:documentation>rijwoning</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="5"><xs:annotation><xs:documentation>appartement met 1 woonlaag per woning</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="6"><xs:annotation><xs:documentation>appartement met meerdere woonlagen per woning</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WoningsubtypeEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="0"><xs:annotation><xs:documentation>geen; hoort bij woningtype 1</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>eind; hoort bij woningtype 2 en 3</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>tussen; hoort bij woningtype 4</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>tussen midden; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="4"><xs:annotation><xs:documentation>tussen vloer; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="5"><xs:annotation><xs:documentation>tussen dak; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="6"><xs:annotation><xs:documentation>tussen dak vloer; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="7"><xs:annotation><xs:documentation>hoek midden; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="8"><xs:annotation><xs:documentation>hoek vloer; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="9"><xs:annotation><xs:documentation>hoek dak; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="10"><xs:annotation><xs:documentation>hoek dak vloer; hoort bij woningtype 5 en 6</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BouwjaarklasseEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>t/m 1945</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>1946 t/m 1964</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>1965 t/m 1974</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="4"><xs:annotation><xs:documentation>1975 t/m 1982</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="5"><xs:annotation><xs:documentation>1983 t/m 1987</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="6"><xs:annotation><xs:documentation>1988 t/m 1991</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="7"><xs:annotation><xs:documentation>1992 t/m 1999</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="8"><xs:annotation><xs:documentation>2000 t/m 2005</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="9"><xs:annotation><xs:documentation>2006 t/m 2013</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="10"><xs:annotation><xs:documentation>2014 t/m heden</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BeglazingEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>enkel glas</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>dubbel glas</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>HR glas</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="4"><xs:annotation><xs:documentation>drievoudig glas; alleen als er sprake is van een extreem goed geïsoleerde woning</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaisolatieEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>geen naisolatie</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>naisolatie</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>extreem goede naisolatie; alleen als er sprake is van een extreem goed geïsoleerde woning</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VerwarmingstoestelEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>individuele CV-ketel, installatiejaar voor 1998</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>individuele CV-ketel, installatiejaar in of na 1998</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>gemeenschappelijke CV-ketel, installatiejaar voor 1998 (bij appartementen)</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="4"><xs:annotation><xs:documentation>gemeenschappelijke CV-ketel, installatiejaar in of na 1998 (bij appartementen</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="5"><xs:annotation><xs:documentation>stadsverwarming</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="6"><xs:annotation><xs:documentation>gaskachels</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="7"><xs:annotation><xs:documentation>warmtepomp</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WarmTapwatertoestelEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="0"><xs:annotation><xs:documentation>verwarmingstoestel wordt ook gebruikt voor het verwarmen van tapwater</xs:documentation></xs:annotation></xs:enumeration>
+			<!--
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>individuele CV-ketel, installatiejaar voor 1998</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>individuele CV-ketel, installatiejaar in of na 1998</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>gemeenschappelijke CV-ketel, installatiejaar voor 1998 (bij appartementen)</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="4"><xs:annotation><xs:documentation>gemeenschappelijke CV-ketel, installatiejaar in of na 1998 (bij appartementen</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="5"><xs:annotation><xs:documentation>stadsverwarming</xs:documentation></xs:annotation></xs:enumeration>
+			-->
+			<xs:enumeration value="6"><xs:annotation><xs:documentation>geiser</xs:documentation></xs:annotation></xs:enumeration>
+			<!--
+			<xs:enumeration value="7"><xs:annotation><xs:documentation>warmtepomp bron geen ventilatieretourlucht</xs:documentation></xs:annotation></xs:enumeration>
+			-->
+			<xs:enumeration value="8"><xs:annotation><xs:documentation>elektrische boiler</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VentilatiesysteemEnum">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"><xs:annotation><xs:documentation>natuurlijke ventilatie; bouwjaarklasse 1 t/m 7</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="2"><xs:annotation><xs:documentation>mechanische afzuiging met wisselstroomventilator; bouwjaarklasse 1 t/m 8</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="3"><xs:annotation><xs:documentation>gebalanceerde ventilatie met wisselstroomventilator; bouwjaarklasse 8</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="4"><xs:annotation><xs:documentation>mechanische afzuiging met gelijkstroomventilator; bouwjaarklasse 9 en 10</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="5"><xs:annotation><xs:documentation>gebalanceerde ventilatie met gelijkstroomventilator; bouwjaarklasse 9 en 10 en extreem goed geïsoleerde woningen</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>
