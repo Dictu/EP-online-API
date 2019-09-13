@@ -1,2 +1,2 @@
 # EP-online-validaties
-Opsomming van de controles die in EP-online gedaan worden wanneer een energielabel geregistreerd wordt.
+Deze repo bevat documentatie voor de EP-online API zoals die vanaf 1 juli 2020 operationeel wordt.
