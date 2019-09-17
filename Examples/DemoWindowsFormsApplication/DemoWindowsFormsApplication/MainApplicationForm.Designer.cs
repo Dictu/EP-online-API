@@ -93,7 +93,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "EP-Online API Host";
+            this.label1.Text = "EP-online API Host";
             // 
             // hostTextBox
             // 
@@ -126,7 +126,7 @@
             this.Controls.Add(this.bearerTextBox);
             this.Controls.Add(this.getTokenButton);
             this.Name = "MainApplicationForm";
-            this.Text = "EP-Online Client";
+            this.Text = "EP-online Client";
             this.ResumeLayout(false);
             this.PerformLayout();
 

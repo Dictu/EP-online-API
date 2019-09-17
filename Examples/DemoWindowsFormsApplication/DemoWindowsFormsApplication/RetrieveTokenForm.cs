@@ -5,7 +5,7 @@ using CefSharp.WinForms;
 namespace DemoWindowsFormsApplication
 {
     /// <summary>
-    /// Sample form with an embedded browser, to retrieve a bearer token from the EP-Online token endpoint.
+    /// Sample form with an embedded browser, to retrieve a bearer token from the EP-online token endpoint.
     /// </summary>
     public partial class RetrieveTokenForm : Form
     {
@@ -16,7 +16,7 @@ namespace DemoWindowsFormsApplication
         /// <summary>
         /// ctor of the form
         /// </summary>
-        /// <param name="tokenDomainUrl">tokenEndpoint of the EP-Online token endpoint.</param>
+        /// <param name="tokenDomainUrl">tokenEndpoint of the EP-online token endpoint.</param>
         /// <param name="tokenEndpointPath"></param>
         /// <param name="visitor">Visitor that can be awaited for the bearer token.</param>
         public RetrieveTokenForm(string tokenDomainUrl, string tokenEndpointPath, IStringVisitor visitor)
