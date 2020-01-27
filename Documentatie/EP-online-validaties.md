@@ -8,6 +8,7 @@
 |	|	0.2	|	Peter Zaal	|	Foutjes eruit gehaald.
 |	9 sep 2019	|	0.3	|	Peter Zaal	|	Bijgewerkt met uitgesplitste SurveyDate rules.
 |	12 sep 2019	|	0.4	|	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
+|	24 jan 2020 |	0.5 |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
 
 ## Validaties
 Het valideren en verwerken van het registratiebestand gebeurd in een aantal stappen. Als er validaties in een stap niet voldoen, wordt de betreffende bijbehorende melding(en) gegeven en niet verder gegaan naar de volgende stap.
@@ -51,6 +52,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckMainBuildingCertificateByBag  	|  Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een VBO-Id (BAGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is voor het (eerste) VBO-Id van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
 |  CheckMainBuildingCertificateByTpg  	|  Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een adres (TPGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is  voor het adres van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
 |  CheckMainBuildingUse  	|  Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
+|  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds	| Bij meerdere Pand-Id’s mogen er niet meerdere VBO-Id’s opgegeven zijn.
 |  CheckNumberOfDwellingsNta  |  Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
 |  CheckObjectLocationIsSpecified  |  Elk gebouw moet minimaal met één BAG-id (BAGIdentification) of adres (TPGIdentification) worden geïdentificeerd.
 |  CheckSoftwareTool  |  De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
@@ -66,10 +68,15 @@ Voor elk adres (VBO-id of PHT) wordt gecontroleerd of deze valide is. De validat
 
 |  Situatie  	|  Rule(s)
 |--------------------------------------------------------------------------------------- |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  TPGIdentification  |  Het object (op basis van adres) moet gevonden worden in de BAG. Indien er meerdere adressen in de BAG gevonden worden, worden degene met het meest recente bouwjaar genomen. Er moet uiteindelijk precies één resultaat zijn.
-|  BAGIdentification	|  De objecten (op basis van VBO-id en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
-|  | Het VBO-Id uit het registratiebestand moet voorkomen in het resultaat van de BAG.
-|  | De Pand-Id’s uit het registratiebestand moeten voorkomen in het resultaat van de BAG.
+|  BagResultCheckAddressMustExistbyBag  |  De objecten (op basis van VBO-ID en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
+|  BagResultCheckAddressMustExistByTpg	|  De objecten (op basis van adres) moeten gevonden worden in de BAG.
+|  BagResultCheckBagHasMatchingAddress  |  Het object moet overeenkomen (op basis van adres) met het resultaat uit BAG.
+|  BagResultCheckMoreThanOneBuildingLocations  |  Het registratiebestand mag maar één adres worden bevatten.
+|  BagResultCheckNoBuildingIdWithOneOrMoreResidenceIds	|  Indien er geen Pand-ID(‘s) zijn opgegeven, moet het VBO-Id voorkomen in het resultaat van de BAG.
+|  BagResultCheckOneOrMoreBuildingIdsWithMoreThanOneResidenceIds  |  Indien er meerdere VBO-Id’s zijn opgegeven mogen er geen Pand-Id aanwezig zijn.
+|  BagResultCheckOneResidenceIdWithOneOrMoreBuildingIds  |  Indien er een Pand-Id is opgegeven mag er in de BAG geen VBO-Id’s bij aanwezig zijn.
+|  BagResultCheckValidateBuildingIdsForNta	|  De opgegeven Pand-Id’s dienen overeen te komen met de Pand-Id’s vanuit BAG.
+|  BagResultCheckValidateResidenceIdsForNta  |  De opgegeven VBO-Id’s dienen overeen te komen met de VBO-Id’s vanuit BAG.
 
 ## 5. Controle op recenter certificaat
 
@@ -91,7 +98,7 @@ Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij
 
 |  Actie  |  Rule(s)
 |------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|  Toevoegen  |  Op de opnamedatum (SurveyDate) mag er niet al een certificaat zijn met dezelfde adressen van het opnamegebouw.
+|  Toevoegen  |  Op de opnamedatum (SurveyDate) mag er niet al een certificaat zijn met dezelfde adressen van het opnamegebouw (inclusief zelfde scope en gebouwklasse).
 |  Vervangen  |  Op de opnamedatum (SurveyDate) moet er al een certificaat zijn met dezelfde adressen van het opnamegebouw.
 |  | De huidige datum moet in de geldigheidsperiode liggen van het bestaande certificaat (tussen Opnamedatum en Geldig tot). 
 |  | Het huidige certificaat moet geregistreerd zijn voor de huidige ingelogde gebruiker van EP-online of de webservice. 
