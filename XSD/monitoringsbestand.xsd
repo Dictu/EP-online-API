@@ -1,961 +1,1054 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://schemas.ep-online.nl/monitoringbestand"
-           xmlns:tns="http://schemas.ep-online.nl/monitoringbestand"
-           xml:lang="nl">
-  <!-- Namespace urn:nl.nen7120.export kunnen we niet meer opnemen omdat het mogelijk moet zijn
-         dat element SurveySourceData verschillende type XML moet kunnen bevatten. -->
-  <!--xmlns:survey="urn:nl.nta.8800.export">-->
-  <!-- Remove xmlns:survey before generating the C# classes -->
+		   targetNamespace="http://schemas.ep-online.nl/monitoringbestand"
+		   xmlns:tns="http://schemas.ep-online.nl/monitoringbestand"
+		   xml:lang="nl">
+	<!-- Namespace urn:nl.nen7120.export kunnen we niet meer opnemen omdat het mogelijk moet zijn
+		 dat element SurveySourceData verschillende type XML moet kunnen bevatten. -->
+	<!--xmlns:survey="urn:nl.nta.8800.export">-->
+	<!-- Remove xmlns:survey before generating the C# classes -->
 
-  <!-- Remove import before generating the C# classes -->
-  <xs:import schemaLocation="Energieprestatie.xsd" namespace="urn:nl.nta.8800.export" />
+	<!-- Remove import before generating the C# classes -->
+	<!--<xs:import schemaLocation="Energieprestatie.xsd" namespace="urn:nl.nta.8800.export" />-->
 
-  <xs:element name="Energieprestatie" type="tns:Energieprestatie" />
+	<xs:element name="Energieprestatie" type="tns:Energieprestatie" />
 
-  <xs:complexType name="Energieprestatie">
-    <xs:sequence>
-      <xs:element name="EPMeta" minOccurs="1" maxOccurs="1">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Version" type="tns:Version" minOccurs="1" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Versiecode van de xml-structuur van het monitoringbestand.</xs:documentation>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="Country" type="tns:Country" minOccurs="1" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Landcode van het monitoringbestand.</xs:documentation>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="Tooling" minOccurs="1" maxOccurs="1">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="VendorSoftwareKey" type="tns:NameSoftware" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Identificatiesleutel van de rekensoftware. Waarde moet overeenkomen met de sleutel van een geregistreerd rekensoftware-pakket.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="VendorSoftwareVersionId" type="tns:VersionSoftware" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Identificatie van de versie van de rekensoftware.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+	<xs:complexType name="Energieprestatie">
+		<xs:sequence>
+			<xs:element name="EPMeta" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Version" type="tns:Version" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Versiecode van de xml-structuur van het monitoringbestand.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Country" type="tns:Country" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Landcode van het monitoringbestand.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Tooling" minOccurs="1" maxOccurs="1">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="VendorSoftwareKey" type="tns:NameSoftware" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Identificatiesleutel van de rekensoftware. Waarde moet overeenkomen met de sleutel van een geregistreerd rekensoftware-pakket.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="VendorSoftwareVersionId" type="tns:VersionSoftware" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Identificatie van de versie van de rekensoftware.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 
-      <xs:element name="EPObject" minOccurs="1" maxOccurs="1">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="MainBuilding" minOccurs="1" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Blok met gegevens over het opnamegebouw.</xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="MainBuildingClass" type="tns:BuildingClass" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Waarde die aangeeft of het opnamegebouw onder woningbouw of utiliteitsbouw valt. De waarde “residential” wordt gebruikt voor woningbouw, “commercial” voor utiliteitsbouw.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="ObjectLocation" type="tns:ObjectLocationType" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Blok met gegevens over locatie van het opnamegebouw.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="ObjectInformation" type="tns:ObjectInformationType" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Blok met aanvullende gegevens over het opnamegebouw.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="MainBuildingUse" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Blok met gebruik van het opnamegebouw. Is verplicht bij MainBuildingClass = Commercial, maar is niet aanwezig bij MainBuildingClass = Residential.</xs:documentation>
-                    </xs:annotation>
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="PrimaryUse" type="tns:BuildingUseType" minOccurs="1" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Blok met detailgegevens voor het primaire gebruik van het opnamegebouw.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element name="SecondaryUse" type="tns:BuildingUseType" minOccurs="0" maxOccurs="10">
-                          <xs:annotation>
-                            <xs:documentation>Blok(ken) met detailgegevens voor secundair, tertiair gebruik etc. van het opnamegebouw.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                  <xs:element name="NumberOfDwellings" type="tns:NumberOfBuildings" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Het aantal woningen of wooneenheden in het gebouw. Voor utiliteitsbouw geldt hier verplicht de waarde 0, voor een regulier energielabel in de woningbouw geldt hier verplicht de waarde 1, voor een energielabel van een complex van woning geldt hier het aantal woningen of wooneenheden in het complex waar de opname op van toepassing is.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="ReferenceBuildingList" minOccurs="0" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Blok met lijst gebouwen waarvoor de energielabels op basis van representativiteit zijn afgegeven.</xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="ReferenceBuilding" minOccurs="1" maxOccurs="unbounded">
-                    <xs:annotation>
-                      <xs:documentation>Blok met gegevens van een enkel gebouw waarvoor het energielabel is afgeven op basis van representativiteit. Dit betreft dus niet het gebouw benoemd onder MainBuilding.</xs:documentation>
-                    </xs:annotation>
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="ObjectLocation" type="tns:ObjectLocationType" minOccurs="1" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Blok met gegevens over locatie van het representatieve pand of verblijfsobject. </xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element name="ObjectInformation" type="tns:ObjectInformationType" minOccurs="1" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Blok met aanvullende gegevens over het representatieve pand of verblijfsobject.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+			<xs:element name="EPObject" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MainBuilding" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Blok met gegevens over het opnamegebouw.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="MainBuildingClass" type="tns:BuildingClass" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Waarde die aangeeft of het opnamegebouw onder woningbouw of utiliteitsbouw valt. De waarde “residential” wordt gebruikt voor woningbouw, “commercial” voor utiliteitsbouw.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ObjectLocation" type="tns:ObjectLocationType" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Blok met gegevens over locatie van het opnamegebouw.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ObjectInformation" type="tns:ObjectInformationType" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Blok met aanvullende gegevens over het opnamegebouw.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="MainBuildingUse" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Blok met gebruik van het opnamegebouw. Is verplicht bij MainBuildingClass = Commercial, maar is niet aanwezig bij MainBuildingClass = Residential.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="PrimaryUse" type="tns:BuildingUseType" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>
+															Blok met detailgegevens voor het primaire gebruik van het opnamegebouw.
+															Om het primaire gebruik te bepalen, sommer de gebruiksoppervlakten per gebruiksfunctie. De gebruiksfunctie met het totale gesommeerde grootste oppervlak, is de primaire gebruiksfunctie.
+														</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="SecondaryUse" type="tns:BuildingUseType" minOccurs="0" maxOccurs="10">
+													<xs:annotation>
+														<xs:documentation>Blok(ken) met detailgegevens voor secundair, tertiair gebruik etc. van het opnamegebouw.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="NumberOfDwellings" type="tns:NumberOfBuildings" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Het aantal woningen of wooneenheden in het gebouw. Voor utiliteitsbouw geldt hier verplicht de waarde 0, voor een regulier energielabel in de woningbouw geldt hier verplicht de waarde 1, voor een energielabel van een complex van woning geldt hier het aantal woningen of wooneenheden in het complex waar de opname op van toepassing is.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ReferenceBuildingList" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Blok met lijst gebouwen waarvoor de energielabels op basis van representativiteit zijn afgegeven.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ReferenceBuilding" minOccurs="1" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Blok met gegevens van een enkel gebouw waarvoor het energielabel is afgeven op basis van representativiteit. Dit betreft dus niet het gebouw benoemd onder MainBuilding.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ObjectLocation" type="tns:ObjectLocationType" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Blok met gegevens over locatie van het representatieve pand of verblijfsobject. </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="ObjectInformation" type="tns:ObjectInformationType" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Blok met aanvullende gegevens over het representatieve pand of verblijfsobject.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 
-      <xs:element name="EPSurvey" minOccurs="1" maxOccurs="1">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Summary" minOccurs="1" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Samenvatting van hoofdkenmerken van het energielabel.</xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="Labelklasse" type="tns:Class" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Energielabelklasse</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="IndicatorEnergiebehoefte" type="tns:EpbdEnergiebehoefteResult" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Energiebehoefte-indicator EweH+C;nd;ventsys=C1. §5.3.1.1</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="IndicatorPrimaireFossieleEnergie" type="tns:EpbdEnergiegebruikResult" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Primaire fossiele energie-indicator EwePTot. §5.3.1.2</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="IndicatorPrimaireFossieleEnergieEMGForfaitair" type="tns:EpbdEnergiegebruikResult" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>EMG forfaitaire waarde van de indicator ‘primaire fossiele energie’. Is verplicht indien er sprake is van een woning met gebiedsgebonden maatregelen (EMG).</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="IndicatorAandeelHernieuwbareEnergie" type="tns:EpbdAandeelHernieuwbaarResult" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Aandeel hernieuwbare energie RERPrenTot. §5.3.1.3</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="IndicatorAandeelHernieuwbareEnergieEMGForfaitair" type="tns:EpbdAandeelHernieuwbaarResult" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>EMG forfaitaire waarde van de indicator ‘aandeel hernieuwbare energie’. Is verplicht indien er sprake is van een woning met gebiedsgebonden maatregelen (EMG).</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="EisEnergiebehoefte" type="tns:EpbdEnergiebehoefteResult" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation></xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="EisPrimaireFossieleEnergie" type="tns:EpbdEnergiegebruikResult" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation></xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="EisAandeelHernieuwbareEnergie" type="tns:EpbdAandeelHernieuwbaarResult" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation></xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="TOjuli" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>De maximale getalswaarde voor het risico van te hoge temperaturen in de maand juli. §5.7</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="NettoWarmtevraagTbvEPV" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Netto warmtevraag t.b.v. de EPV (energieprestatievergoeding).</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="SurveyDate" type="tns:SurveyDate" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Opnamedatum. Notatie YYYYMMDD.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="SurveyMethod" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Blok met gegevens over de gebruikte opnamemethodiek.</xs:documentation>
-                    </xs:annotation>
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="Scope" type="tns:Scope" minOccurs="1" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Scope van de berekening. Met deze waarde wordt aangegeven of de berekening een verblijfsobject betreft of een geheel gebouw betreft. De waarde “specific” betekent dat de berekening een verblijfsobject betreft, de waarde “compound” betekent dat de berekening het overkoepelende gebouw betreft.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element name="TypeCalculation" type="tns:TypeCalculation" minOccurs="1" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Soort berekening. Moet een bij EPBD bekende code zijn.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element name="Status" type="tns:BuildingStatus" minOccurs="1" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Wat de aanleiding is voor het registreren van het gebouw.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element name="AreaEffect" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Waarde die aangeeft of bij de berekening van de energieprestaties gebiedsgebonden maatregelen van toepassing zijn (EMG). De waarde “yes” geeft aan dat EMG van toepassing is.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element name="AreaEffectPercentage" type="tns:EpbdNumericWithNegative" minOccurs="0" maxOccurs="1">
-                          <xs:annotation>
-                            <xs:documentation>Percentage van de energie efficiency veroorzaakt door gebiedsgebonden maatregelen. Een negatieve AreaEffectPercentage treedt alleen op als zowel de EI met EMG als de EI met EMG forfaitair negatief zijn, bijvoorbeeld een gebouw dat ook zonder de EMG-maatregel (bijvoorbeeld stadsverwarming) zeer energiezuinig is.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
+			<xs:element name="EPSurvey" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Summary" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Samenvatting van hoofdkenmerken van het energielabel.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Labelklasse" type="tns:Class" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Energielabelklasse</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IndicatorEnergiebehoefte" type="tns:EpbdEnergiebehoefteResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Energiebehoefte-indicator EweH+C;nd;ventsys=C1. §5.3.1.1</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IndicatorPrimaireFossieleEnergie" type="tns:EpbdEnergiegebruikResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Primaire fossiele energie-indicator EwePTot. §5.3.1.2</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IndicatorPrimaireFossieleEnergieEMGForfaitair" type="tns:EpbdEnergiegebruikResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>EMG forfaitaire waarde van de indicator ‘primaire fossiele energie’. Is verplicht indien er sprake is van een woning met gebiedsgebonden maatregelen (EMG), anders moet het veld weggelaten worden.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IndicatorAandeelHernieuwbareEnergie" type="tns:EpbdAandeelHernieuwbaarResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Aandeel hernieuwbare energie RERPrenTot. §5.3.1.3</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IndicatorHernieuwbareEnergie" type="tns:EpbdEnergiegebruikResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Absolute hoeveelheid hernieuwbare energie in kWh EPrenTot. §5.3.1.3</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IndicatorAandeelHernieuwbareEnergieEMGForfaitair" type="tns:EpbdAandeelHernieuwbaarResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>EMG forfaitaire waarde van de indicator ‘aandeel hernieuwbare energie’. Is verplicht indien er sprake is van een woning met gebiedsgebonden maatregelen (EMG), anders moet het veld weggelaten worden.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IndicatorHernieuwbareEnergieEMGForfaitair" type="tns:EpbdEnergiegebruikResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Absolute hoeveelheid hernieuwbare energie in kWh EPrenTot bij forfaitaire EMG. Is verplicht indien er sprake is van een woning met gebiedsgebonden maatregelen (EMG), anders moet het veld weggelaten worden.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="EisEnergiebehoefte" type="tns:EpbdEnergiebehoefteResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation></xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="EisPrimaireFossieleEnergie" type="tns:EpbdEnergiegebruikResult" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation></xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="EisAandeelHernieuwbareEnergie" type="tns:EpbdAandeelHernieuwbaarResult" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation></xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TOjuliNTA8800" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>De maximale getalswaarde voor het risico van te hoge temperaturen in de maand juli. §5.7</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="EisTOjuliNTA8800" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation></xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TOjuliGTO" type="tns:Number" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Aantal uren temperatuuroverschrijding per jaar.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="EisTOjuliGTO" type="tns:Number" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation></xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="NettoWarmtevraagTbvEPV" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Netto warmtevraag t.b.v. de EPV (energieprestatievergoeding).</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="SurveyDate" type="tns:SurveyDate" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Opnamedatum. Notatie YYYYMMDD.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="SurveyMethod" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Blok met gegevens over de gebruikte opnamemethodiek.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Scope" type="tns:Scope" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Scope van de berekening. Met deze waarde wordt aangegeven of de berekening een verblijfsobject betreft of een geheel gebouw betreft. De waarde “specific” betekent dat de berekening een verblijfsobject betreft, de waarde “compound” betekent dat de berekening het overkoepelende gebouw betreft.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="TypeCalculation" type="tns:TypeCalculation" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Soort berekening. Moet een bij EPBD bekende code zijn.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="Status" type="tns:BuildingStatus" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Wat de aanleiding is voor het registreren van het gebouw.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="AreaEffect" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Waarde die aangeeft of bij de berekening van de energieprestaties gebiedsgebonden maatregelen van toepassing zijn (EMG). De waarde “yes” geeft aan dat EMG van toepassing is.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="AreaEffectPercentage" type="tns:EpbdNumericWithNegative" minOccurs="0" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Percentage van de energie efficiency veroorzaakt door gebiedsgebonden maatregelen. Een negatieve AreaEffectPercentage treedt alleen op als zowel de EI met EMG als de EI met EMG forfaitair negatief zijn, bijvoorbeeld een gebouw dat ook zonder de EMG-maatregel (bijvoorbeeld stadsverwarming) zeer energiezuinig is.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="Opnametype" type="tns:Opnametype" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>indicator of het een basis- of detailopname is.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Gebruiksoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
+									<xs:element name="Verliesoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
+									<xs:element name="StreefwaardeGevel" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="StreefwaardeGevelpanelen" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="StreefwaardeDak" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="StreefwaardeVloer" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="StreefwaardeRamen" type="tns:UWaarde" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="StreefwaardeDeuren" type="tns:UWaarde" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="StreefwaardeLuchtdichtheid" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="StandaardWoningbouw" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="Compactheid" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="Labelklassegrenzen">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Labelklassegrens" minOccurs="12" maxOccurs="12">
+													<xs:complexType>
+														<xs:simpleContent>
+															<xs:extension base="tns:EpbdNumeric">
+																<xs:attribute name="klasse" type="tns:Class" use="required"/>
+															</xs:extension>
+														</xs:simpleContent>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+										<xs:unique name="AlleLabelklassegrenzen">
+											<xs:selector xpath="Labelklassegrens"/>
+											<xs:field xpath="@klasse"/>
+										</xs:unique>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
 
-            <xs:element name="EnergyConsumption" minOccurs="1" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation></xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="TotalValue" type="tns:ValueElectricityType" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Totale energieverbruik van het opnamegebouw. De waarde kan opgegeven worden met schaal “absoluut” of “per m2” en in “kWh”. Een negatieve waarde betekent dat er energie wordt geleverd.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="ValueElectricity" type="tns:ValueElectricityType" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Totale berekende electriciteitsverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke electriciteitsverbruik. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “kWh”. Een negatieve waarde betekent dat er electriciteit wordt geleverd.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="ValueGas" type="tns:ValueGasType" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Totale berekende gasverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke gasverbruik. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “m3”. Een negatieve waarde betekent dat er (bio)gas wordt geleverd.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="ValueHeat" type="tns:ValueHeatType" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Totale berekende warmteverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke warmteverbruik. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “GJ”. Een negatieve waarde betekent dat er warmte wordt geleverd.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="ValueCO2" type="tns:ValueCO2Type" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Totale berekende CO2 uitstoot van het opnamegebouw. Deze waarde kan afwijken van de werkelijke CO2 uitstoot. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “kg”.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="SurveySources" minOccurs="1" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Blok met de bron van de opnamegegevens.</xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="BuildingBluePrint" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Of de opname gebaseerd is op de bouwtekening van het opnamegebouw.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="BuildingObservation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Of de opname gebaseerd is op een observatie ter plekke van het opnamegebouw.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="ClientInformation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Of de opname gebaseerd is op informatie aangeleverd door de eigenaar van het gebouw (anders dan een bouwtekening).</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                  <xs:element name="Calculation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                      <xs:documentation>Of er een energieprestatieberekening ten behoeve van omgevingsvergunning gemaakt is.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-
-            <xs:element name="ObjectAdjustmentList" minOccurs="0" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Blok met verbetermaatregelen voor het opnamegebouw. Voor EPC-berekeningen hoeft dit blok niet te worden opgegeven.</xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="ObjectAdjustment" type="tns:ObjectAdjustmentType" minOccurs="1" maxOccurs="unbounded">
-                    <xs:annotation>
-                      <xs:documentation>Blok met gegevens van een verbetermaatregel.</xs:documentation>
-                    </xs:annotation>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-
-            <!-- <xs:element name="surveysourcedata" minoccurs="1" maxoccurs="1"> -->
-            <!-- <xs:annotation> -->
-            <!-- <xs:documentation>blok met gedetailleerde opnamegegevens volgens het generieke invoer/uitvoer format.</xs:documentation> -->
-            <!-- </xs:annotation> -->
-            <!-- <xs:complextype> -->
-            <!-- <xs:sequence xmlns:n="urn:nl.nta.8800.export"> -->
-            <!-- <xs:element ref="n:energieprestatie" /> -->
-            <!-- </xs:sequence> -->
-            <!-- </xs:complextype> -->
-            <!-- </xs:element> -->
-
-            <!-- replace previous element by the one below before generating the c# classes -->
-            <xs:element name="SurveySourceData" minOccurs="1" maxOccurs="1">
-              <xs:annotation>
-                <xs:documentation>Blok met gedetailleerde opnamegegevens volgens het generieke invoer/uitvoer format.</xs:documentation>
-              </xs:annotation>
-            </xs:element>
-
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="ObjectLocationType">
-    <xs:sequence>
-      <xs:element name="BAGIdentification" type="tns:BAGIdentificationType" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Blok met identificatiegegevens van een opnamegebouw volgens BAG. Omdat de definitie van gebouw volgens EPBD afwijkt van de door BAG gehanteerde definitie van gebouw kan dit blok meerdere BAG-id’s bevatten.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="TPGIdentification" type="tns:TPGIdentificationType" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Blok met identificatiegegevens volgens PostNL-adresaanduiding.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="BAGIdentificationType">
-    <xs:sequence>
-      <xs:element name="BAGResidenceId" type="tns:BagId" minOccurs="1" maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:documentation>
-            BAG verblijfsobject-ID.
-            Bij een registratie met Scope = specific is deze verplicht in het blok “BAGIdentification” en mag het er ook maar 1 zijn.
-            Bij een registratie met Scope = compound moet minimaal 1 BAG verblijfsobject ID zijn opgenomen. Indien het complex meerdere portiekingangen heeft, dient er per portiek één verblijfsobject ID te worden opgenomen.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="BAGBuildingId" type="tns:BagId" minOccurs="1" maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:documentation>
-            BAG Pand-ID. Deze is altijd verplicht in het blok “BAGIdentification”.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="TPGIdentificationType">
-    <xs:sequence>
-      <xs:element name="ZipCode" type="tns:ZipCode" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Postcode van het gebouw.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="Number" type="tns:Number" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Huisnummer van het gebouw.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="Extension" type="tns:Extension" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Huisnummertoevoeging van het gebouw.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="BuildingAnnotation" type="tns:BuildingIdentification" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Volgnummer als de combinatie van postcode, huisnummer en -toevoeging niet uniek is.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="ObjectInformationType">
-    <xs:sequence>
-      <xs:element name="BuildingCategory" type="tns:TypeBuilding" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Indeling voor gebouwen, hoofdtype. Is verplicht indien MainBuildingClass = Residential. Niet aanwezig indien MainBuildingClass = Commercial.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="BuildingCategorySupplement" type="tns:TypeBuildingSupplement" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Subindeling voor gebouwen, subtype. Verplicht voor hoofdtype 2, 4, 5, 6, 7.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="ConstructionYear" type="tns:ConstructionYear" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Bouwjaar van het opnamegebouw.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="YearOfRenovation" type="tns:YearOfRenovation" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Jaar van renovatie van het opnamegebouw.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="SurfaceArea" type="tns:SurfaceArea" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Totale vloeroppervlakte van de begane grond van het opnamegebouw in m² binnen de thermische schil.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="EffectiveSurfaceArea" type="tns:SurfaceArea" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Totale vloeroppervlakte van alle gebruikslagen binnen de thermische schil van het opnamegebouw in m².</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="BuildingUseType">
-    <xs:sequence>
-      <xs:element name="UseType" type="tns:Application" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Code van de gebruiksfunctie.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="Percentage" type="tns:EpbdPercentage" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Percentage van gebruiksfunctie.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="ObjectAdjustmentType">
-    <xs:sequence>
-      <xs:element name="AdjustmentId" type="tns:Improvement" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Identificatiecode van een maatregel uit een vaste lijst met gebouwgebonden verbetermaatregelen.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="EffectiveValue" type="tns:EpbdNumeric" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>De effectieve rekenwaarde te gebruiken bij kosten/batenanalyse van deze verbetermaatregel. Deze waarde moet staan in dezelfde eenheid als de met deze maatregel gekoppelde kengetallen voor woningbouw en utiliteitsbouw.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:attribute name="scale">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="absolute"></xs:enumeration>
-        <xs:enumeration value="m2"></xs:enumeration>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:attribute>
-
-  <!-- EpbdDate: formaat is YYYYMMDD -->
-  <xs:simpleType name="EpbdDate">
-    <xs:restriction base="xs:string">
-      <xs:length value="8"/>
-      <xs:pattern value="([0-9]{4}((0[1-9])|(1[0-2]))((0[1-9])|(([1-2][0-9])|(3[0-1]))))"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- EpbdNonEmptyString: Hulptype voor een string die niet leeg mag zijn. -->
-  <xs:simpleType name="EpbdNonEmptyString">
-    <xs:restriction base="xs:string">
-      <xs:minLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- EpbdNumeric: Algemeen type voor alle numerieke velden.
-            Deze hebben allen een precisie van twee decimalen. -->
-  <xs:simpleType name="EpbdNumeric">
-    <xs:restriction base="xs:decimal">
-      <xs:pattern value="([0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- EpbdNumericWithNegative: Algemeen type voor alle numerieke velden.
-              Deze hebben allen een precisie van twee decimalen. -->
-  <xs:simpleType name="EpbdNumericWithNegative">
-    <xs:restriction base="xs:decimal">
-      <xs:pattern value="(-{0,1}[0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- EpbdBENGResult: BENG1 = energievraag, moet > 0 zijn. -->
-  <xs:simpleType name="EpbdEnergiebehoefteResult">
-    <xs:restriction base="xs:decimal">
-      <xs:pattern value="[0-9]{1,14}\.[0-9]{2}" />
-      <xs:minExclusive value="0.00"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- EpbdBENGResult: BENG2 = energiegebruik, kan < 0 zijn. -->
-  <xs:simpleType name="EpbdEnergiegebruikResult">
-    <xs:restriction base="xs:decimal">
-      <xs:pattern value="-{0,1}[0-9]{1,14}\.[0-9]{2}" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- EpbdBENGResult: BENG3 = aandeel hernieuwbaar, moet >= 0 zijn. -->
-  <xs:simpleType name="EpbdAandeelHernieuwbaarResult">
-    <xs:restriction base="xs:decimal">
-      <xs:pattern value="[0-9]{1,14}\.[0-9]{1}" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- MinusOne: Gebruikt voor waardes die eigenlijk ingevuld zouden
-                   moeten worden, maar niet bestaan in V4. -->
-  <xs:simpleType name="MinusOne">
-    <xs:restriction base="xs:decimal">
-      <xs:pattern value="-1" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EpbdNumericNotZero">
-    <xs:restriction base="tns:EpbdNumeric">
-      <xs:minExclusive value="0.00"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="EpbdPercentage">
-    <xs:restriction base="xs:decimal">
-      <xs:pattern value="([0-9]{1,3}\.[0-9]{2})" />
-      <xs:minInclusive value="0.00" />
-      <xs:maxInclusive value="100.00" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="BagId">
-    <xs:restriction base="xs:long">
-      <xs:pattern value="[0-9]{16}" />
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- EpbdYear: formaat is YYYY -->
-  <xs:simpleType name="EpbdYear">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="([0-9]{4})"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- EpbdYesNo: Algemeen type dat Ja of Nee aangeeft. -->
-  <xs:simpleType name="EpbdYesNo">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Yes"></xs:enumeration>
-      <xs:enumeration value="No"></xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- BuildingStatus: „Energieprestatiebepaling in het kader van ...” -->
-  <xs:simpleType name="BuildingStatus">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Aanvraag omgevingsvergunning"/>
-      <xs:enumeration value="Oplevering nieuw gebouw"/>
-      <xs:enumeration value="Oplevering gerenoveerd gebouw"/>
-      <xs:enumeration value="Verkoop/verhuur"/>
-      <xs:enumeration value="Woningwaarderingsstelsel">
-        <xs:annotation>
-          <xs:documentation>(alleen bij woningbouw)</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
+						<xs:element name="EnergyConsumption" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation></xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="TotalValue" type="tns:ValueElectricityType" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Totale energieverbruik van het opnamegebouw. De waarde kan opgegeven worden met schaal “absoluut” of “per m2” en in “kWh”. Een negatieve waarde betekent dat er energie wordt geleverd.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ValueElectricity" type="tns:ValueElectricityType" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Totale berekende electriciteitsverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke electriciteitsverbruik. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “kWh”. Een negatieve waarde betekent dat er electriciteit wordt geleverd.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ValueGas" type="tns:ValueGasType" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Totale berekende gasverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke gasverbruik. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “m3”. Een negatieve waarde betekent dat er (bio)gas wordt geleverd.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ValueHeat" type="tns:ValueHeatType" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Totale berekende warmteverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke warmteverbruik. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “GJ”. Een negatieve waarde betekent dat er warmte wordt geleverd.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ValueCO2" type="tns:ValueCO2Type" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Totale berekende CO2 uitstoot van het opnamegebouw. Deze waarde kan afwijken van de werkelijke CO2 uitstoot. De waarde kan opgegeven worden met schaal “absolute” of “per m2” en in “kg”.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="SurveySources" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Blok met de bron van de opnamegegevens.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="BuildingBluePrint" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Of de opname gebaseerd is op de bouwtekening van het opnamegebouw.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="BuildingObservation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Of de opname gebaseerd is op een observatie ter plekke van het opnamegebouw.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ClientInformation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Of de opname gebaseerd is op informatie aangeleverd door de eigenaar van het gebouw (anders dan een bouwtekening).</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Calculation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Of er een energieprestatieberekening ten behoeve van omgevingsvergunning gemaakt is.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Surveyor" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>De adviseur die de opname heeft uitgevoerd.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Naam van de opname-adviseur.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="ExamNumber" minOccurs="1" maxOccurs="1">
+													<xs:annotation>
+														<xs:documentation>Examennummer van de opname-adviseur.</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="3"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
 
 
-  <!-- Scope: verblijfsobject (specific) of een overkoepelend gebouw (compound) -->
-  <xs:simpleType name="Scope">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="specific"></xs:enumeration>
-      <xs:enumeration value="compound"></xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="IdentificationMethodType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="BAG"></xs:enumeration>
-      <xs:enumeration value="TPG"></xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="BuildingClass">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="residential"></xs:enumeration>
-      <xs:enumeration value="commercial"></xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
+						<!--<xs:element name="SurveySourceData" minOccurs="1" maxOccurs="1" >
+							<xs:annotation>
+								<xs:documentation>Blok met gedetailleerde opnamegegevens volgens het generieke invoer/uitvoer format.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="tns:Energieprestatie" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>-->
 
-  <!-- BuildingIdentification: Extra informatie om gebouw te identificeren als er meerdere
-     gebouwen op een kavel staan. -->
-  <xs:simpleType name="BuildingIdentification">
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="25"/>
-    </xs:restriction>
-  </xs:simpleType>
+						<!-- Replace previous element by the one below before generating the C# classes -->
+						<xs:element name="SurveySourceData" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Blok met gedetailleerde opnamegegevens volgens het generieke invoer/uitvoer format.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
 
-  <!-- Class: Energieklasse. Uitkomst van de certificaatsoftware. -->
-  <xs:simpleType name="Class">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="A++++"></xs:enumeration>
-      <xs:enumeration value="A+++"></xs:enumeration>
-      <xs:enumeration value="A++"></xs:enumeration>
-      <xs:enumeration value="A+"></xs:enumeration>
-      <xs:enumeration value="A"></xs:enumeration>
-      <xs:enumeration value="B"></xs:enumeration>
-      <xs:enumeration value="C"></xs:enumeration>
-      <xs:enumeration value="D"></xs:enumeration>
-      <xs:enumeration value="E"></xs:enumeration>
-      <xs:enumeration value="F"></xs:enumeration>
-      <xs:enumeration value="G"></xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- ConstructionYear: Bouwjaar. -->
-  <xs:simpleType name="ConstructionYear">
-    <xs:restriction base="tns:EpbdYear" />
-  </xs:simpleType>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 
-  <xs:complexType name="ValueElectricityType">
-    <xs:simpleContent>
-      <xs:extension base="tns:EpbdNumericWithNegative">
-        <xs:attribute ref="tns:scale" use="required"/>
-        <xs:attribute name="dimension" use="required">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:enumeration value="kWh" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:attribute>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
+		</xs:sequence>
+	</xs:complexType>
 
-  <xs:complexType name="ValueGasType">
-    <xs:simpleContent>
-      <xs:extension base="tns:EpbdNumericWithNegative">
-        <xs:attribute ref="tns:scale" use="required"/>
-        <xs:attribute name="dimension" use="required">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:enumeration value="m3" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:attribute>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
+	<xs:complexType name="ObjectLocationType">
+		<xs:sequence>
+			<xs:element name="BAGIdentification" type="tns:BAGIdentificationType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Blok met identificatiegegevens van een opnamegebouw volgens BAG. Omdat de definitie van gebouw volgens EPBD afwijkt van de door BAG gehanteerde definitie van gebouw kan dit blok meerdere BAG-id’s bevatten.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TPGIdentification" type="tns:TPGIdentificationType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Blok met identificatiegegevens volgens PostNL-adresaanduiding.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProvisionalIdentification" type="tns:ProvisionalIdentificationType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Blok met voorlopige identificatiegegevens.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 
-  <xs:complexType name="ValueHeatType">
-    <xs:simpleContent>
-      <xs:extension base="tns:EpbdNumericWithNegative">
-        <xs:attribute ref="tns:scale" use="required"/>
-        <xs:attribute name="dimension" use="required">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:enumeration value="GJ" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:attribute>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
+	<xs:complexType name="BAGIdentificationType">
+		<xs:sequence>
+			<xs:element name="BAGResidenceId" type="tns:BagId" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						BAG verblijfsobject-ID.
+						Bij een registratie met Scope = specific is deze verplicht in het blok “BAGIdentification” en mag het er ook maar 1 zijn.
+						Bij een registratie met Scope = compound moet minimaal 1 BAG verblijfsobject ID zijn opgenomen. Indien het complex meerdere portiekingangen heeft, dient er per portiek één verblijfsobject ID te worden opgenomen.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BAGBuildingId" type="tns:BagId" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						BAG Pand-ID. Deze is altijd verplicht in het blok “BAGIdentification”.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BAGBerthId" type="tns:BagId" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						BAG Ligplaats-ID.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BAGPitchId" type="tns:BagId" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						BAG Standplaats-ID.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 
-  <xs:complexType name="ValueCO2Type">
-    <xs:simpleContent>
-      <xs:extension base="tns:EpbdNumericWithNegative">
-        <xs:attribute ref="tns:scale" use="required"/>
-        <xs:attribute name="dimension" use="required">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:enumeration value="kg" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:attribute>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
+	<xs:complexType name="TPGIdentificationType">
+		<xs:sequence>
+			<xs:element name="ZipCode" type="tns:ZipCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Postcode van het gebouw.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="tns:Number" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Huisnummer van het gebouw.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extension" type="tns:Extension" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Huisnummertoevoeging van het gebouw.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BuildingAnnotation" type="tns:BuildingIdentification" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Volgnummer als de combinatie van postcode, huisnummer en -toevoeging niet uniek is.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 
-  <!-- Country: Internationale landcode, de waarde is altijd NL -->
-  <xs:simpleType name="Country">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NL"></xs:enumeration>
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- Version: Versienummer van het EPG XML-format. De waarde is altijd 7.00. Oudere interface versies worden niet ondersteund. -->
-  <xs:simpleType name="Version">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="7.00"></xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- Extension: Toevoeging huisnummer van de kavel waarop het te certificeren gebouw
-          aanwezig is. -->
-  <xs:simpleType name="Extension">
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="25"/>
-    </xs:restriction>
-  </xs:simpleType>
+	<xs:complexType name="ProvisionalIdentificationType">
+		<xs:sequence>
+			<xs:element name="ProjectName" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Vrij invoerveld voor bv. de naam van het bouwproject van het gebouw.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProjectObject" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Nadere omschrijving van het object waarvoor de berekening is uitgevoerd. Denk aan een perceel- of kavelnummer, of een projectspecifiek woningtype.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProvisionalID" type="tns:ProvisionalIDType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Veld waarin een door EP-online gegenereerde identificatienummer kan worden ingevuld.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 
-  <!-- DeviceEfficiency: Maatregelen om de energie efficiency van het gebouw te verbeteren. De Cx maatregelen zijn voor utiliteitsbouw, de Hx maatregelen voor woningbouw. -->
-  <xs:simpleType name="Improvement">
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="25"/>
-    </xs:restriction>
-  </xs:simpleType>
+	<xs:simpleType name="ProvisionalIDType">
+		<xs:restriction base="xs:string">
+			<xs:length value="32"/>
+			<xs:pattern value="[0-9A-F]{32}"/>
+		</xs:restriction>
+	</xs:simpleType>
 
-  <!-- Application: Gebruiksfuncties (zie ook tabel 6.3 van NTA8800) -->
-  <xs:simpleType name="Application">
-    <xs:restriction base="xs:integer">
-      <xs:enumeration value="1">
-        <xs:annotation>
-          <xs:documentation>Kantoorfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="2">
-        <xs:annotation>
-          <xs:documentation>Gezondheidszorg; bedgebied (klinisch)</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="3">
-        <xs:annotation>
-          <xs:documentation>Gezondheidszorg; andere gezondheidszorgfunctie (niet klinisch)</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="4">
-        <xs:annotation>
-          <xs:documentation>Bijeenkomstfunctie, overig</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="6">
-        <xs:annotation>
-          <xs:documentation>Onderwijsfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="7">
-        <xs:annotation>
-          <xs:documentation>Sportfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="9">
-        <xs:annotation>
-          <xs:documentation>Logiesfunctie in een logiesgebouw</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="10">
-        <xs:annotation>
-          <xs:documentation>Winkelfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="11">
-        <xs:annotation>
-          <xs:documentation>Celfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="12">
-        <xs:annotation>
-          <xs:documentation>Woonfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="13">
-        <xs:annotation>
-          <xs:documentation>Bijeenkomstfunctie voor kinderopvang</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="14">
-        <xs:annotation>
-          <xs:documentation>Industriefunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="15">
-        <xs:annotation>
-          <xs:documentation>Logiesfunctie niet gelegen in een logiesgebouw</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="17">
-        <xs:annotation>
-          <xs:documentation>Overige gebruiksfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="16">
-        <xs:annotation>
-          <xs:documentation>Hulpfunctie</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
 
-  <!-- NameSoftware: Naam van het certificaatsoftwarepakket. -->
-  <xs:simpleType name="NameSoftware">
-    <xs:restriction base="tns:EpbdNonEmptyString">
-      <xs:maxLength value="75"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- Number: Huisnummer van de kavel waarop het te certificeren gebouw aanwezig is. -->
-  <xs:simpleType name="Number">
-    <xs:restriction base="xs:integer" />
-  </xs:simpleType>
-  <!-- NumberOfBuildings: Aantal woningen. -->
-  <xs:simpleType name="NumberOfBuildings">
-    <xs:restriction base="xs:integer" />
-  </xs:simpleType>
-  <!-- SurfaceArea: Totale gebruiksoppervlak (Ag)-->
-  <xs:simpleType name="SurfaceArea">
-    <xs:union memberTypes="tns:EpbdNumeric" />
-  </xs:simpleType>
-  <!-- SurveyDate: Opnamedatum van het certificaat. -->
-  <xs:simpleType name="SurveyDate">
-    <xs:restriction base="tns:EpbdDate" />
-  </xs:simpleType>
-  <!-- TypeBuilding: Woningtype. -->
-  <xs:simpleType name="TypeBuilding">
-    <xs:restriction base="xs:integer">
-      <xs:enumeration value="1">
-        <xs:annotation>
-          <xs:documentation>Vrijstaande woning</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="12">
-        <xs:annotation>
-          <xs:documentation>Twee-onder-één-kap</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="2">
-        <xs:annotation>
-          <xs:documentation>Rijwoning hoek</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="3">
-        <xs:annotation>
-          <xs:documentation>Rijwoning tussen</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="4">
-        <xs:annotation>
-          <xs:documentation>Galerijwoning (appartement met 1 woonlaag)</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="5">
-        <xs:annotation>
-          <xs:documentation>Portiekwoning (appartement met 1 woonlaag)</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="6">
-        <xs:annotation>
-          <xs:documentation>Maisonnette (appartement met meerdere woonlagen)</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="7">
-        <xs:annotation>
-          <xs:documentation>Flatwoning overig (appartement met 1 woonlaag)</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="10">
-        <xs:annotation>
-          <xs:documentation>Appartementengebouw als geheel</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="8">
-        <xs:annotation>
-          <xs:documentation>Woongebouw met niet-zelfstandige woonruimte</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="13">
-        <xs:annotation>
-          <xs:documentation>Woonboot</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="14">
-        <xs:annotation>
-          <xs:documentation>Woonwagen</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
+	<xs:complexType name="ObjectInformationType">
+		<xs:sequence>
+			<xs:element name="BuildingCategory" type="tns:TypeBuilding" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indeling voor gebouwen, hoofdtype. Is verplicht indien MainBuildingClass = Residential. Niet aanwezig indien MainBuildingClass = Commercial.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BuildingCategorySupplement" type="tns:TypeBuildingSupplement" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Subindeling voor gebouwen, subtype. Verplicht voor hoofdtype 2, 4, 5, 6, 7.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConstructionYear" type="tns:ConstructionYear" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Bouwjaar van het opnamegebouw.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="YearOfRenovation" type="tns:YearOfRenovation" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Jaar van renovatie van het opnamegebouw.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SurfaceArea" type="tns:SurfaceArea" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Totale vloeroppervlakte van de begane grond van het opnamegebouw in m² binnen de thermische schil.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EffectiveSurfaceArea" type="tns:SurfaceArea" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Totale vloeroppervlakte van alle gebruikslagen binnen de thermische schil van het opnamegebouw in m².</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 
-  <!--TypeBuildingSupplement: Woning type aanvullende rubricering.-->
-  <xs:simpleType name="TypeBuildingSupplement">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="1">
-        <xs:annotation>
-          <xs:documentation>Hoek/dak</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="2">
-        <xs:annotation>
-          <xs:documentation>Hoek/midden</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="3">
-        <xs:annotation>
-          <xs:documentation>Hoek/vloer</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="4">
-        <xs:annotation>
-          <xs:documentation>Tussen/dak</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="5">
-        <xs:annotation>
-          <xs:documentation>Tussen/midden</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="6">
-        <xs:annotation>
-          <xs:documentation>Tussen/vloer</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="7">
-        <xs:annotation>
-          <xs:documentation>Tussen/dak/vloer</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="8">
-        <xs:annotation>
-          <xs:documentation>Hoek/dak/vloer</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
+	<xs:complexType name="BuildingUseType">
+		<xs:sequence>
+			<xs:element name="UseType" type="tns:Application" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Code van de gebruiksfunctie.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Percentage" type="tns:EpbdPercentage" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Percentage van gebruiksfunctie. Bepaling: Σ(Ag gebruiksfunctie) / Σ(Ag totaal).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 
-  <!-- TypeCalculation: Berekeningswijze.-->
-  <xs:simpleType name="TypeCalculation">
-    <xs:restriction base="tns:EpbdNonEmptyString">
-      <xs:maxLength value="35"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- VersionSoftware: Versienummer van het certificaatsoftwarepakket. -->
-  <xs:simpleType name="VersionSoftware">
-    <xs:restriction base="tns:EpbdNonEmptyString">
-      <xs:maxLength value="75"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <!-- YearOfRenovation: Renovatiejaar gebouw. -->
-  <xs:simpleType name="YearOfRenovation">
-    <xs:restriction base="tns:EpbdYear" />
-  </xs:simpleType>
-  <!-- ZipCode: Postcode van het te certificeren gebouw. -->
-  <xs:simpleType name="ZipCode">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="[0-9]{4}[A-Z]{2}"/>
-    </xs:restriction>
-  </xs:simpleType>
+	<xs:attribute name="scale">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="absolute"></xs:enumeration>
+				<xs:enumeration value="m2"></xs:enumeration>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+
+	<!-- EpbdDate: formaat is YYYYMMDD -->
+	<xs:simpleType name="EpbdDate">
+		<xs:restriction base="xs:string">
+			<xs:length value="8"/>
+			<xs:pattern value="([0-9]{4}((0[1-9])|(1[0-2]))((0[1-9])|(([1-2][0-9])|(3[0-1]))))"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- EpbdNonEmptyString: Hulptype voor een string die niet leeg mag zijn. -->
+	<xs:simpleType name="EpbdNonEmptyString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- EpbdNumeric: Algemeen type voor alle numerieke velden.
+			Deze hebben allen een precisie van twee decimalen. -->
+	<xs:simpleType name="EpbdNumeric">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="([0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- EpbdNumericWithNegative: Algemeen type voor alle numerieke velden.
+			  Deze hebben allen een precisie van twee decimalen. -->
+	<xs:simpleType name="EpbdNumericWithNegative">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(-{0,1}[0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- EpbdBENGResult: BENG1 = energievraag, moet > 0 zijn. -->
+	<xs:simpleType name="EpbdEnergiebehoefteResult">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="[0-9]{1,14}\.[0-9]{2}" />
+			<xs:minExclusive value="0.00"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- EpbdBENGResult: BENG2 = energiegebruik, kan < 0 zijn. -->
+	<xs:simpleType name="EpbdEnergiegebruikResult">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="-{0,1}[0-9]{1,14}\.[0-9]{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- EpbdBENGResult: BENG3 = aandeel hernieuwbaar, moet >= 0 zijn. -->
+	<xs:simpleType name="EpbdAandeelHernieuwbaarResult">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="[0-9]{1,14}\.[0-9]{1}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- MinusOne: Gebruikt voor waardes die eigenlijk ingevuld zouden
+				   moeten worden, maar niet bestaan in V4. -->
+	<xs:simpleType name="MinusOne">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="-1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="EpbdNumericNotZero">
+		<xs:restriction base="tns:EpbdNumeric">
+			<xs:minExclusive value="0.00"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EpbdPercentage">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="([0-9]{1,3}\.[0-9]{2})" />
+			<xs:minInclusive value="0.00" />
+			<xs:maxInclusive value="100.00" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BagId">
+		<xs:restriction base="xs:long">
+			<xs:pattern value="[0-9]{16}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- EpbdYear: formaat is YYYY -->
+	<xs:simpleType name="EpbdYear">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{4})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- EpbdYesNo: Algemeen type dat Ja of Nee aangeeft. -->
+	<xs:simpleType name="EpbdYesNo">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Yes"></xs:enumeration>
+			<xs:enumeration value="No"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- BuildingStatus: „Energieprestatiebepaling in het kader van ...” -->
+	<xs:simpleType name="BuildingStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="vergunningsaanvraag"/>
+			<xs:enumeration value="oplevering"/>
+			<xs:enumeration value="bestaand"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- Scope: verblijfsobject (specific) of een overkoepelend gebouw (compound) -->
+	<xs:simpleType name="Scope">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="specific"></xs:enumeration>
+			<xs:enumeration value="compound"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdentificationMethodType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BAG"></xs:enumeration>
+			<xs:enumeration value="TPG"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BuildingClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="residential"></xs:enumeration>
+			<xs:enumeration value="commercial"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- BuildingIdentification: Extra informatie om gebouw te identificeren als er meerdere
+	 gebouwen op een kavel staan. -->
+	<xs:simpleType name="BuildingIdentification">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Class: Energieklasse. Uitkomst van de certificaatsoftware. -->
+	<xs:simpleType name="Class">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A+++++"></xs:enumeration>
+			<xs:enumeration value="A++++"></xs:enumeration>
+			<xs:enumeration value="A+++"></xs:enumeration>
+			<xs:enumeration value="A++"></xs:enumeration>
+			<xs:enumeration value="A+"></xs:enumeration>
+			<xs:enumeration value="A"></xs:enumeration>
+			<xs:enumeration value="B"></xs:enumeration>
+			<xs:enumeration value="C"></xs:enumeration>
+			<xs:enumeration value="D"></xs:enumeration>
+			<xs:enumeration value="E"></xs:enumeration>
+			<xs:enumeration value="F"></xs:enumeration>
+			<xs:enumeration value="G"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ConstructionYear: Bouwjaar. -->
+	<xs:simpleType name="ConstructionYear">
+		<xs:restriction base="tns:EpbdYear" />
+	</xs:simpleType>
+
+	<xs:complexType name="ValueElectricityType">
+		<xs:simpleContent>
+			<xs:extension base="tns:EpbdNumericWithNegative">
+				<xs:attribute ref="tns:scale" use="required"/>
+				<xs:attribute name="dimension" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="kWh" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="ValueGasType">
+		<xs:simpleContent>
+			<xs:extension base="tns:EpbdNumericWithNegative">
+				<xs:attribute ref="tns:scale" use="required"/>
+				<xs:attribute name="dimension" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="m3" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="ValueHeatType">
+		<xs:simpleContent>
+			<xs:extension base="tns:EpbdNumericWithNegative">
+				<xs:attribute ref="tns:scale" use="required"/>
+				<xs:attribute name="dimension" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="GJ" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="ValueCO2Type">
+		<xs:simpleContent>
+			<xs:extension base="tns:EpbdNumericWithNegative">
+				<xs:attribute ref="tns:scale" use="required"/>
+				<xs:attribute name="dimension" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="kg" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- Country: Internationale landcode, de waarde is altijd NL -->
+	<xs:simpleType name="Country">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NL"></xs:enumeration>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Version: Versienummer van het EPG XML-format. De waarde is altijd 6.00. Oudere interface versies worden niet ondersteund. -->
+	<xs:simpleType name="Version">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="7.00"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Extension: Toevoeging huisnummer van de kavel waarop het te certificeren gebouw
+		  aanwezig is. -->
+	<xs:simpleType name="Extension">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- DeviceEfficiency: Maatregelen om de energie efficiency van het gebouw te verbeteren. De Cx maatregelen zijn voor utiliteitsbouw, de Hx maatregelen voor woningbouw. -->
+	<xs:simpleType name="Improvement">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Application: Gebruiksfuncties (zie ook tabel 6.3 van NTA8800) -->
+	<xs:simpleType name="Application">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Kantoorfunctie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Gezondheidszorg; bedgebied (klinisch)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Gezondheidszorg; andere gezondheidszorgfunctie (niet klinisch)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Bijeenkomstfunctie, overig</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Onderwijsfunctie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Sportfunctie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Logiesfunctie in een logiesgebouw</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Winkelfunctie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Celfunctie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Bijeenkomstfunctie voor kinderopvang</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- NameSoftware: Naam van het certificaatsoftwarepakket. -->
+	<xs:simpleType name="NameSoftware">
+		<xs:restriction base="tns:EpbdNonEmptyString">
+			<xs:maxLength value="75"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Number: Huisnummer van de kavel waarop het te certificeren gebouw aanwezig is. -->
+	<xs:simpleType name="Number">
+		<xs:restriction base="xs:integer" />
+	</xs:simpleType>
+	<!-- NumberOfBuildings: Aantal woningen. -->
+	<xs:simpleType name="NumberOfBuildings">
+		<xs:restriction base="xs:integer" />
+	</xs:simpleType>
+	<!-- SurfaceArea: Totale gebruiksoppervlak (Ag)-->
+	<xs:simpleType name="SurfaceArea">
+		<xs:union memberTypes="tns:EpbdNumeric" />
+	</xs:simpleType>
+	<!-- SurveyDate: Opnamedatum van het certificaat. -->
+	<xs:simpleType name="SurveyDate">
+		<xs:restriction base="tns:EpbdDate" />
+	</xs:simpleType>
+	<!-- TypeBuilding: Woningtype. -->
+	<xs:simpleType name="TypeBuilding">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Vrijstaande woning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Twee-onder-één-kap</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Rijwoning hoek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Rijwoning tussen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Appartement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Appartementengebouw als geheel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Woongebouw met niet-zelfstandige woonruimte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Woonboot bestaande ligplaats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>Woonwagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Woonboot nieuwe ligplaats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>Logieswoning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--TypeBuildingSupplement: Woning type aanvullende rubricering.-->
+	<xs:simpleType name="TypeBuildingSupplement">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Hoek/dak</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Hoek/midden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Hoek/vloer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Tussen/dak</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Tussen/midden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Tussen/vloer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Tussen/dak/vloer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Hoek/dak/vloer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- TypeCalculation: Berekeningswijze.-->
+	<xs:simpleType name="TypeCalculation">
+		<xs:restriction base="tns:EpbdNonEmptyString">
+			<xs:maxLength value="35"/>
+			<xs:enumeration value="NTA_8800"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- VersionSoftware: Versienummer van het certificaatsoftwarepakket. -->
+	<xs:simpleType name="VersionSoftware">
+		<xs:restriction base="tns:EpbdNonEmptyString">
+			<xs:maxLength value="75"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- YearOfRenovation: Renovatiejaar gebouw. -->
+	<xs:simpleType name="YearOfRenovation">
+		<xs:restriction base="tns:EpbdYear" />
+	</xs:simpleType>
+	<!-- ZipCode: Postcode van het te certificeren gebouw. -->
+	<xs:simpleType name="ZipCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{4}[A-Z]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="RcWaarde">
+		<xs:restriction base="tns:EpbdNumeric"/>
+	</xs:simpleType>
+	<xs:simpleType name="UWaarde">
+		<xs:restriction base="tns:EpbdNumeric"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="Opnametype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Opnameprotocol basismethode">
+				<xs:annotation>
+					<xs:documentation>Gegevens zijn gebaseerd op de opname van het gebouw volgens het opnameprotocol (basismethode).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Opnameprotocol detailmethode">
+				<xs:annotation>
+					<xs:documentation>Gegevens zijn gebaseerd op de opname van het gebouw volgens het opnameprotocol (detailmethode).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
 
 </xs:schema>

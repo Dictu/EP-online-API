@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified"
-           targetNamespace="urn:nl.nta.8800.export" xmlns:n="urn:nl.nta.8800.export">
+		   targetNamespace="urn:nl.nta.8800.export" xmlns:n="urn:nl.nta.8800.export">
 
 	<xs:include schemaLocation="Gebouw.xsd"/>
-	<xs:include schemaLocation="Vereenvoudigd_label.xsd"/>
 	<xs:include schemaLocation="Kwaliteitsverklaringen.xsd"/>
 
 	<xs:element name="Energieprestatie">
@@ -21,14 +20,10 @@
 				<xs:element name="Software" type="xs:string">
 					<xs:annotation><xs:documentation>Naam en versie van de software waarmee de XML gegenereerd is. Dit betreft de naam en versie van de software die de gebruikers te zien krijgen, de user-interface dus. Deze hoeft niet geregistreerd te zijn; dit in tegenstelling tot VendorSoftwareKey en VendorSoftwareVersionId in het blok “Tooling”.</xs:documentation></xs:annotation>
 				</xs:element>
-				<xs:choice>
-					<xs:sequence>
-						<xs:element ref="n:Gebouw"/>
-						<xs:element ref="n:Kwaliteitsverklaringen"/>
-						<xs:element ref="n:Vereenvoudigd_Label" minOccurs="0"/>
-					</xs:sequence>
-					<xs:element ref="n:Vereenvoudigd_Label"/>
-				</xs:choice>
+				<xs:sequence>
+					<xs:element ref="n:Gebouw"/>
+					<xs:element ref="n:Kwaliteitsverklaringen"/>
+				</xs:sequence>
 			</xs:sequence>
 		</xs:complexType>
 
