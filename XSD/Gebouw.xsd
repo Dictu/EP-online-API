@@ -9,6 +9,13 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Invoer">
+					<xs:annotation>
+						<xs:documentation>
+							In de XML die afgemeld wordt mogen alleen systemen en componenten staan die daadwerkelijk ‘gebruikt’ zijn bij de bepaling van het energielabel van het gebouw of het deel van het gebouw waar het label betrekking op heeft. Dus als er bijvoorbeeld in een berekening meerdere verwarmingssystemen aangemaakt zijn, maar die zijn niet allemaal gekoppeld aan een rekenzone, dan mogen de niet gekoppelde verwarmingssystemen niet opgenomen worden in de XML. Dit geldt ook voor ventilatiesystemen, tapwatersystemen, gevels, vloeren, etc.
+							En het geldt ook voor een appartementengebouw met een collectief PV-systeem, alleen het deel wat de losse woning ‘toekomt’ wordt op het label getoond.
+							De XML bevat dus alleen die informatie die ook daadwerkelijk gebruikt is in de berekening.
+						</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element ref="n:Projectgegevens"/>
@@ -113,6 +120,7 @@
 										<xs:pattern value="|[0-9]{4} ?[A-Z]{2}"/>
 									</xs:restriction>
 								</xs:simpleType>
+
 							</xs:element>
 							<xs:element name="Plaatsnaam" type="xs:string"/>
 						</xs:sequence>
@@ -331,11 +339,6 @@
 															</xs:simpleContent>
 														</xs:complexType>
 													</xs:element>
-													<!-- zou niet meer nodig moeten zijn  <xs:element name="SubtypeVerwarmingstoestel" type="n:SubtypeVerwarmingstoestelEnumeration">
-							<xs:annotation>
-							  <xs:documentation>Subtype verwarmingstoestel</xs:documentation>
-							</xs:annotation>
-						  </xs:element>-->
 													<xs:element name="VermogenOpwekker" type="xs:double">
 														<xs:annotation>
 															<xs:documentation>Nominaal vermogen van de opwekker [kW]</xs:documentation>
@@ -2584,87 +2587,6 @@
 
 		</xs:restriction>
 	</xs:simpleType>
-
-	<!-- Zou niet meer nodig moeten zijn <xs:simpleType name="SubtypeVerwarmingstoestelEnumeration">
-	<xs:restriction base="xs:string">
-	  <xs:enumeration value=""/>
-	  <xs:enumeration value="Conventioneel">
-		<xs:annotation>
-		  <xs:documentation>CR-ketel of moederhaard</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="VR">
-		<xs:annotation>
-		  <xs:documentation>VR-ketel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="HR100">
-		<xs:annotation>
-		  <xs:documentation>HR100-ketel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="HR104">
-		<xs:annotation>
-		  <xs:documentation>HR104-ketel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="HR107">
-		<xs:annotation>
-		  <xs:documentation>HR107-ketel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="LokaalGasMetAfvoer">
-		<xs:annotation>
-		  <xs:documentation>Lokale gasverwarming inclusief waakvlam, olieverwarming of stoomketel met afvoer verbrandingsgassen</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="LokaalGasZonderAfvoer">
-		<xs:annotation>
-		  <xs:documentation>Lokale gasverwarming inclusief waakvlam, olieverwarming of stoomketel zonder afvoer verbrandingsgassen</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="ElektrischeWarmtepomp">
-		<xs:annotation>
-		  <xs:documentation>Elektrisch aangedreven warmtepomp</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="GasWarmtepomp">
-		<xs:annotation>
-		  <xs:documentation>Gas aangedreven warmtepomp</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="VrijstaandeHoutkachel">
-		<xs:annotation>
-		  <xs:documentation>Vrijstaande houtkachel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="InbouwInzetkachel">
-		<xs:annotation>
-		  <xs:documentation>Inbouw-/inzetkachel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="Pelletkachel">
-		<xs:annotation>
-		  <xs:documentation>Pelletkachel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="AccumulerendToestel">
-		<xs:annotation>
-		  <xs:documentation>Accumulerend toestel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="HandgestookteKetel">
-		<xs:annotation>
-		  <xs:documentation>Met de hand gestookte ketel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	  <xs:enumeration value="AutomatischGestookteKetel">
-		<xs:annotation>
-		  <xs:documentation>Automatisch gestookte ketel</xs:documentation>
-		</xs:annotation>
-	  </xs:enumeration>
-	</xs:restriction>
-  </xs:simpleType>-->
 
 	<xs:simpleType name="SchakelingEnumeration">
 		<xs:restriction base="xs:string">

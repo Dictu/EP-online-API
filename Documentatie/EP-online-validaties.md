@@ -9,14 +9,15 @@
 |	9 sep 2019	|	0.3	|	Peter Zaal	|	Bijgewerkt met uitgesplitste SurveyDate rules.
 |	12 sep 2019	|	0.4	|	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
 |	24 jan 2020 |	0.5 |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
+| 07 jul 2020 | 0.6 | Bas Brouwer  | Geüpdatet aan de hand van de nieuwe XSD versie.
 
 ## Validaties
-Het valideren en verwerken van het registratiebestand gebeurd in een aantal stappen. Als er validaties in een stap niet voldoen, wordt de betreffende bijbehorende melding(en) gegeven en niet verder gegaan naar de volgende stap.
+Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
 
 ## 1. Bepalen versienummer en rekenmethodiek
 |	Technische naam	|	Rule(s)
 |	:------------------------	| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|	CalculationType	|	TypeCalculation, Versie, MainBuildingClass en BronGebouwgegevens worden uitgelezen. Aan de hand hiervan wordt bepaald wat de rekenmethodiek is. De rekenmethodiek moet bestaan in EP-online.
+|	CalculationType	|	TypeCalculation, Versie, MainBuildingClass en Opnametype worden uitgelezen. Aan de hand hiervan wordt bepaald wat de rekenmethodiek is. De rekenmethodiek moet bestaan in EP-online.
 |	CalculationTypeVersion	|	De XSD versie bij de rekenmethodiek moet bestaan in EP-online.
 |	MonitoringVersion	|	Element *EPMeta.Version* moet bestaan en een geldig getal zijn; dit bepaalt de monitorbestandversie.
 |	GenericXmlVersion	|	In de generieke XML moet het veld *Energieprestatie.Versie* gevuld zijn, een geldig getal zijn, en overeenkomen met de generieke XML versie in EP-online.
@@ -36,7 +37,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckBuildingObservation  	|  Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
 |  CheckBuildingType  	|  Bij woningbouw: bij elk gebouw moet het gebouwtype (BuildingCategory) ingevuld zijn. 
 |	| Bij utiliteitsbouw: bij een gebouw mag zowel het gebouwtype (BuildingCategory) als het subtype (BuildingCategorySupplement) niet ingevuld zijn.
-|  CheckBuildingTypeSupplementNta  	|  Alleen voor woningbouw: Voor gebouwtypes (BuildingCategory) 4, 5, 6, 7 moet het subtype (BuildingCategorySupplement) gevuld zijn en een waarde van 1 t/m 8 bevatten. 
+|  CheckBuildingTypeSupplementNta  	|  Alleen voor woningbouw: Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) gevuld zijn en een waarde van 1 t/m 8 bevatten. 
 |	| Bij andere gebouwtypes mag het subtype (BuildingCategorySupplement) niet gevuld zijn.
 |  CheckBuildingUseTypes  	|  Alleen voor utiliteitsbouw: voor alle UseTypes (PrimaryUse en SecondaryUse's) moet het Percentage > 0 zijn en opgeteld tussen 0 en 100 (inclusief) liggen.
 |  CheckCalculationType  	|  De rekenmethodiek (TypeCalculation) moet bestaan in EP-online, niet geblokkeerd zijn, en de gebouwklasse moet overeenkomen met de MainBuildingClass in de XML.
