@@ -87,8 +87,8 @@ De controle wordt niet uitgevoerd voor dwangsomregistraties (dit zijn gewoonlijk
 
 |  Technische naam			|	Rule(s)
 |	---------------------	|	:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|	CheckNoneMoreRecent		|	Er mag geen PreNTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>
-|							|	Er mag geen NTACompliant certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
+|	CheckNoneMoreRecent		|	Er mag geen PreNTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><br/><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>
+|							|	Er mag geen NTACompliant certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><br/><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><br/><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><br/><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
 
 ## 6. Controle op de actie
 
