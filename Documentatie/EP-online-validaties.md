@@ -1,9 +1,8 @@
 # Businessrules registratiebestand EP-online
 
-**1. Versiebeheer**
-
+## 1. Versiebeheer
 | Datum 		| Versie| Auteur  			| Wijzigingen
-| ------------: |	:------------:			|	:------------	|	:-----------------------------------------------
+|--------------:|:-----:|:-----------------:|:----------------------------------------------------------------------------
 |	6 aug 2019	|	0.1	|	Peter Zaal		|	Initiële versie.
 |				|	0.2	|	Peter Zaal		|	Foutjes eruit gehaald.
 |	9 sep 2019	|	0.3	|	Peter Zaal		|	Bijgewerkt met uitgesplitste SurveyDate rules.
@@ -15,82 +14,77 @@
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
 
-## 2.1. Bepalen versienummer en rekenmethodiek
+### 2.1. Ophalen en valideren gebruiker (CH) en organisatie
+Gegevens omtrent de CH en organisatie worden opgehaald. Er vinden validaties plaats dat de gegevens gevonden kunnen worden. Indien dit niet lukt, wordt er geen functionele foutmelding gegeven, maar treed er een technische fout op. Al deze gegevens zijn al eerder gevalideerd dus moeten nog steeds bestaan.
+
+### 2.2. Bepalen versienummer en rekenmethodiek
 |	Technische naam				|	Rule(s)
-|	:------------------------	| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|-------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |	CalculationType				|	TypeCalculation, Versie, MainBuildingClass en Opnametype worden uitgelezen. Aan de hand hiervan wordt bepaald wat de rekenmethodiek is. De rekenmethodiek moet bestaan in EP-online.
 |	CalculationTypeVersion		|	De XSD versie bij de rekenmethodiek moet bestaan in EP-online.
 |	MonitoringVersion			|	Element *EPMeta.Version* moet bestaan en een geldig getal zijn; dit bepaalt de monitorbestandversie.
 |	GenericXmlVersion			|	In de generieke XML moet het veld *Energieprestatie.Versie* gevuld zijn, een geldig getal zijn, en overeenkomen met de generieke XML versie in EP-online.
 
-## 2.2 XSD validatie
+### 2.3. XSD validatie
 | Technische naam		| Rule(s)
-| :---------------------	| :-----------------------------------------------------------------------------------------------------
+|-----------------------|:-----------------------------------------------------------------------------------------------------
 | MainSchemeValidator	| De XML wordt gevalideerd tegen de monitor XSD (exclusief het element *SurveySourceData* )
 | SurveyDataValidator	| Het element *SurveySourceData* moet bestaan en wordt gevalideerd tegen de XSD van het generieke deel.
 
-## 3. Inhoudelijke controles
+### 2.4. Conversie van XML naar intern object
+De XML wordt omgezet naar een code-object en alle waarden die van belang zijn voor de verdere verwerking en validatie worden overgezet naar een nieuw ‘monitorfile’ object. Hierna wordt alleen nog maar gebruik gemaakt van dit object.
+Er zitten nog enkele controles, maar deze zouden nooit fout kunnen gaan omdat deze al door de XSD worden afgevangen. Zitten er in voor het geval er een programmeerfout wordt gemaakt, zodat dit tijdens het ontwikkelen nog wordt opgemerkt.
+
+### 2.5. Inhoudelijke controles
 Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. Indien er meerdere validaties falen, dan worden alle bijbehorende foutmeldingen geretourneerd.
 
-| Technische naam 	| Rule(s)
-| :-------------------------------------------------------------	| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  CheckBagBerthId	|	BagResidenceId, BagBuildingId en BagPitchId mogen niet ingevuld zijn wanneer BagBerthId ingevuld is.
-|  CheckBagBuildingIdAndOrResidenceId	|	BagPitchId en BagBerthId mogen niet ingevuld zijn wanneer BagResidenceId en/of BagBuildingId ingevuld is/zijn.
-|  CheckBagPitchId	|	BagResidenceId, BagBuildingId en BagBerthId mogen niet ingevuld zijn wanneer BagPitchId ingevuld is.	
-|  CheckBuildingIdentifiedByBagHasUniqueBagIds  	|  Alle pand-id's (BagBuildingId) mogen slecht één keer voorkomen in het bestand.
-|  CheckBuildingObservation  	|  Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
-|  CheckBuildingType  	|  Bij woningbouw: bij elk gebouw moet het gebouwtype (BuildingCategory) ingevuld zijn. 
-|	| Bij utiliteitsbouw: bij een gebouw mag zowel het gebouwtype (BuildingCategory) als het subtype (BuildingCategorySupplement) niet ingevuld zijn.
-|  CheckBuildingTypeSupplement  	|  Alleen voor woningbouw: Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) gevuld zijn en een waarde van 1 t/m 8 bevatten. 
-|	| Bij andere gebouwtypes mag het subtype (BuildingCategorySupplement) niet gevuld zijn.
-|  CheckBuildingUseTypes  	|  Alleen voor utiliteitsbouw: voor alle UseTypes (PrimaryUse en SecondaryUse's) moet het Percentage > 0 zijn en opgeteld tussen 0 en 100 (inclusief) liggen.
-|  CheckCalculationType  	|  De rekenmethodiek (TypeCalculation) moet bestaan in EP-online, niet geblokkeerd zijn, en de gebouwklasse moet overeenkomen met de MainBuildingClass in de XML.
-|	| NB: voor de NTA_8800 rekenmethodiek wordt deze door code door de webservice aangevuld met de indicatie basis/detailopname en indicatie woningbouw/utiliteitsbouw (in EP-online bestaan er dus 4 NTA-8800 rekenmethodieken).
-|  CommercialAndCompoundBuildingsAreIdentyfiedByBagId  	|  Bij  utiliteitsbouw of bij een appartementencomplex (Scope = compound) mag geen enkel gebouw met alleen een adres (TPGIdentification) geïdentificeerd zijn (moet dus met VBO-Id(s) geïdentificeerd zijn).
-|  CheckConstructionAndRenovationYear  	| Als de status niet "Aanvraag omgevingsvergunning" is, dan mogen het bouwjaar (ConstructionYear) en het jaar van renovatie (YearOfRenovation) niet in de toekomst liggen.
-|  CheckContractor  	|  De contractor (degene die registreert) moet bestaan als gebruiker in EP-online, de rol contracthouder (CH) hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
-|  CheckDuplicateAddresses  	|  Alle adressen (ZipCode+Number+Extension+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
-|  CheckDuplicateBagResidenceIds  	|  Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
-|  CheckEpcVersion  	|  Het versienummer van het monitorbestand moet geldig zijn op moment van registratie.
-|  CheckMainBuildingCertificateByBag  	|  Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een VBO-Id (BAGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is voor het (eerste) VBO-Id van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
-|  CheckMainBuildingCertificateByTpg  	|  Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een adres (TPGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is  voor het adres van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
-|  CheckMainBuildingUse  	|  Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
-|  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds	| Bij meerdere Pand-Id’s mogen er niet meerdere VBO-Id’s opgegeven zijn.
-|  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification	|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
-|  CheckNotPermitPreNtaStatusCompletionWithBagIdentification	|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
-|  CheckNumberOfDwellings  |  Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
-|  CheckPermitPreNta  |  Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘True’ is dan moet de BAGIdentification worden gevuld en mag de ProvisionalIdentification niet zijn toegevoegd.
-|  CheckSoftwareTool  |  De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
-|  CheckStatusExistingMustHaveBagIdentifcationAndNotProvisionalIdentification |  Bij registratie met status 'bestaand' is het verplicht om subelement BAGIdentification op te nemen en mag subelement ProvisionalIdentification niet worden opgenomen.
-|  CheckSurveyDate |  De opnamedatum (SurveyDate) moet binnen de registratie periode voor NTA labels liggen.
-|  CheckSurveyDateHasValue  	|  De opnamedatum (SurveyDate) moet ingevuld zijn.
-|  CheckSurveyDateNotInFuture |  De opnamedatum (SurveyDate) mag niet in de toekomst liggen.
+| Technische naam 																| Rule(s)
+|-------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  CheckBagBerthId																|	BagResidenceId, BagBuildingId en BagPitchId mogen niet ingevuld zijn wanneer BagBerthId ingevuld is.
+|  CheckBagBuildingIdAndOrResidenceId											|	BagPitchId en BagBerthId mogen niet ingevuld zijn wanneer BagResidenceId en/of BagBuildingId ingevuld is/zijn.
+|  CheckBagPitchId																|	BagResidenceId, BagBuildingId en BagBerthId mogen niet ingevuld zijn wanneer BagPitchId ingevuld is.	
+|  CheckBuildingIdentifiedByBagHasUniqueBagIds  								|	Alle pand-id's (BagBuildingId) mogen slecht één keer voorkomen in het bestand.
+|  CheckBuildingObservation  													|	Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
+|  CheckBuildingType  															|	Bij woningbouw: bij elk gebouw moet het gebouwtype (BuildingCategory) ingevuld zijn. <br/> Bij utiliteitsbouw: bij een gebouw mag zowel het gebouwtype (BuildingCategory) als het subtype (BuildingCategorySupplement) niet ingevuld zijn.
+|  CheckBuildingTypeSupplement  												|	Alleen voor woningbouw: Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) gevuld zijn en een waarde van 1 t/m 8 bevatten. <br/> Bij andere gebouwtypes mag het subtype (BuildingCategorySupplement) niet gevuld zijn.
+|  CheckBuildingUseTypes  														|	Alleen voor utiliteitsbouw: voor alle UseTypes (PrimaryUse en SecondaryUse's) moet het Percentage > 0 zijn en opgeteld tussen 0 en 100 (inclusief) liggen.
+|  CheckCalculationType  														|	De rekenmethodiek (TypeCalculation) moet bestaan in EP-online, niet geblokkeerd zijn, en de gebouwklasse moet overeenkomen met de MainBuildingClass in de XML. <br/> <b>NB:</b> voor de NTA_8800 rekenmethodiek wordt deze door code door de webservice aangevuld met de indicatie basis/detailopname en indicatie woningbouw/utiliteitsbouw (in EP-online bestaan er dus 4 NTA-8800 rekenmethodieken).
+|  CheckConstructionAndRenovationYear  											|	Als de status niet "Aanvraag omgevingsvergunning" is, dan mogen het bouwjaar (ConstructionYear) en het jaar van renovatie (YearOfRenovation) niet in de toekomst liggen.
+|  CheckContractor  															|	De contractor (degene die registreert) moet bestaan als gebruiker in EP-online, de rol contracthouder (CH) hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
+|  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Extension+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
+|  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
+|  CheckEpcVersion  															|	Het versienummer van het monitorbestand moet geldig zijn op moment van registratie.
+|  CheckMainBuildingCertificateByBag  											|	Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een VBO-Id (BAGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is voor het (eerste) VBO-Id van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
+|  CheckMainBuildingCertificateByTpg  											|	Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een adres (TPGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is  voor het adres van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
+|  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
+|  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere Pand-Id’s mogen er niet meerdere VBO-Id’s opgegeven zijn.
+|  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
+|  CheckNotPermitPreNtaStatusCompletionWithBagIdentification					|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
+|  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
+|  CheckPermitPreNta  															|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘True’ is dan moet de BAGIdentification worden gevuld en mag de ProvisionalIdentification niet zijn toegevoegd.
+|  CheckSoftwareTool  															|	De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
+|  CheckStatusExistingMustHaveBagIdentifcationAndNotProvisionalIdentification	|	Bij registratie met status 'bestaand' is het verplicht om subelement BAGIdentification op te nemen en mag subelement ProvisionalIdentification niet worden opgenomen.
+|  CheckSurveyDate 																|	De opnamedatum (SurveyDate) moet binnen de registratie periode voor NTA labels liggen.
+|  CheckSurveyDateHasValue  													|	De opnamedatum (SurveyDate) moet ingevuld zijn.
+|  CheckSurveyDateNotInFuture 													|	De opnamedatum (SurveyDate) mag niet in de toekomst liggen.
 
-## 4. BAG controle
-
-Voor elk adres (VBO-id of PHT) wordt gecontroleerd of deze valide is. De validaties zijn afhankelijk of de identificatie d.m.v. een VBO-id en/of Pand-Id is (BAGIdentification is gevuld), d.m.v. een adres is (TPGIdentification is gevuld).
-
-|  Situatie  	|  Rule(s)
-|--------------------------------------------------------------------------------------- |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### 2.6. BAG controle
+Voor elk adres (VBO-id of PHT) wordt gecontroleerd of deze valide is. De validaties zijn afhankelijk of de identificatie d.m.v. een VBO-id en/of Pand-Id is (BAGIdentification is gevuld), d.m.v. een adres is (TPGIdentification is gevuld) en of het om een niet-NTA of NTA registratie gaat.
+|  Situatie  							|  Rule(s)
+|---------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |  BagResultCheckAddressMustExistbyBag  |  De objecten (op basis van VBO-ID en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
 |  BagResultCheckBagHasMatchingAddress  |  Het ingevulde TPGIdentification adres moet overeenkomen (op basis van adres) met het resultaat uit BAG op basis van de ingevulde BAGIdentification.
 |  BagResultCheckValidateBuildingIds	|  De opgegeven Pand-Id’s dienen overeen te komen met de Pand-Id’s vanuit BAG.
 |  BagResultCheckValidateResidenceIds	|  De opgegeven VBO-Id’s dienen overeen te komen met de VBO-Id’s vanuit BAG.
 
-## 5. Controle op recenter certificaat
-
-Voor elk gebouw wordt gecontroleerd dat er niet al een recenter certificaat aanwezig is op basis van 
-- het opgegeven adres (in geval van identificatie d.m.v. TPGIdentification), of 
-- het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAGIdentification).
-
-De controle wordt niet uitgevoerd voor dwangsomregistraties (dit zijn gewoonlijk juist registraties in het verleden door de oude eigenaar waarbij het niet uitmaakt of er al een recenter certificaat, bijvoorbeeld door de nieuw eigenaar, is geregistreerd).
+### 2.7. Controle op recenter certificaat
+Voor elk gebouw wordt gecontroleerd dat er niet al een recenter certificaat aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAGIdentification).
 
 |  Technische naam			|	Rule(s)
-|	---------------------	|	:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|	CheckNoneMoreRecent		|	Er mag geen PreNTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul><br/>Er mag geen NTACompliant certificaat gevonden worden, op hetzelfde adres, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
+|---------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|	CheckNoneMoreRecent		|	Er mag geen PreNTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTACompliant certificaat gevonden worden, op hetzelfde adres, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
 
-## 6. Controle op de actie
-
+### 2.8. Controle op de actie
 Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' of 'UitbreidenExtra' betreft en daarop de validaties uitgevoerd.
 
 |  Actie  			|	Status									|  Rule(s)
