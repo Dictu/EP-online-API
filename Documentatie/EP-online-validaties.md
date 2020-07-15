@@ -15,7 +15,7 @@
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
 
 ### 2.1. Ophalen en valideren gebruiker (CH) en organisatie
-Gegevens omtrent de CH en organisatie worden opgehaald. Er vinden validaties plaats dat de gegevens gevonden kunnen worden. Indien dit niet lukt, wordt er geen functionele foutmelding gegeven, maar treed er een technische fout op. Al deze gegevens zijn al eerder gevalideerd dus moeten nog steeds bestaan.
+Gegevens omtrent de CH en organisatie worden opgehaald. Er vinden validaties plaats dat de gegevens gevonden kunnen worden.
 
 ### 2.2. Bepalen versienummer en rekenmethodiek
 |	Technische naam				|	Rule(s)
@@ -31,11 +31,7 @@ Gegevens omtrent de CH en organisatie worden opgehaald. Er vinden validaties pla
 | MainSchemeValidator	| De XML wordt gevalideerd tegen de monitor XSD (exclusief het element *SurveySourceData* )
 | SurveyDataValidator	| Het element *SurveySourceData* moet bestaan en wordt gevalideerd tegen de XSD van het generieke deel.
 
-### 2.4. Conversie van XML naar intern object
-De XML wordt omgezet naar een code-object en alle waarden die van belang zijn voor de verdere verwerking en validatie worden overgezet naar een nieuw ‘monitorfile’ object. Hierna wordt alleen nog maar gebruik gemaakt van dit object.
-Er zitten nog enkele controles, maar deze zouden nooit fout kunnen gaan omdat deze al door de XSD worden afgevangen. Zitten er in voor het geval er een programmeerfout wordt gemaakt, zodat dit tijdens het ontwikkelen nog wordt opgemerkt.
-
-### 2.5. Inhoudelijke controles
+### 2.4. Inhoudelijke controles
 Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. Indien er meerdere validaties falen, dan worden alle bijbehorende foutmeldingen geretourneerd.
 
 | Technische naam 																| Rule(s)
@@ -68,7 +64,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckSurveyDateHasValue  													|	De opnamedatum (SurveyDate) moet ingevuld zijn.
 |  CheckSurveyDateNotInFuture 													|	De opnamedatum (SurveyDate) mag niet in de toekomst liggen.
 
-### 2.6. BAG controle
+### 2.5. BAG controle
 Voor elk adres (VBO-Id in de BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is.
 
 |  Situatie  							|  Rule(s)
@@ -78,20 +74,20 @@ Voor elk adres (VBO-Id in de BAGIdentification) wordt gecontroleerd aan de hand 
 |  BagResultCheckValidateBuildingIds	|  De opgegeven Pand-Id’s dienen overeen te komen met de Pand-Id’s vanuit BAG.
 |  BagResultCheckValidateResidenceIds	|  De opgegeven VBO-Id’s dienen overeen te komen met de VBO-Id’s vanuit BAG.
 
-### 2.7. Controle op recenter certificaat
+### 2.6. Controle op recenter certificaat
 Voor elk gebouw wordt gecontroleerd dat er niet al een recenter certificaat aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAGIdentification).
 
 |  Technische naam			|	Rule(s)
 |---------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|	CheckNoneMoreRecent		|	Er mag geen PreNTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTACompliant certificaat gevonden worden, op hetzelfde adres, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
+|	CheckNoneMoreRecent		|	Er mag geen pre-NTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
 
-### 2.8. Controle op de actie
+### 2.7. Controle op de actie
 Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' of 'UitbreidenExtra' betreft en daarop de validaties uitgevoerd.
 
 |  Actie  			|	Status									|  Rule(s)
 |------------------	|:-----------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |	Toevoegen		|	Vergunningsaanvraag						|	Het is verplicht om minimaal subelement BAGIdentification of subelement ProvisionalIdentification op te nemen. Hierbij mag veld ProvisionalID niet zijn gevuld. Dit geldt voor alle gebouwen uit het registratiebestand.
-|					|	Vergunningsaanvraag/Oplevering/bestaand	|	Op de opnamedatum (SurveyDate) mag er niet al een certificaat zijn met dezelfde scope en gebouwklasse, waarbij een adres overeenkomt met een adres van het opnamegebouw. 
+|					|	Vergunningsaanvraag/Oplevering/bestaand	|	Op de opnamedatum (SurveyDate) mag er niet al een certificaat zijn met dezelfde scope en gebouwklasse, waarbij een van de adressen overeenkomt met een adres van het opnamegebouw. 
 |	Vervangen		|	Vergunningsaanvraag						|	Op de opnamedatum (SurveyDate) dient er al een certificaat te zijn met dezelfde scope en gebouwklasse, waarbij het ProvisionalId overeenkomt met het ProvisionalId van het opnamegebouw. Mocht er niks gevonden worden op basis van de ProvisionalIdentification dan wordt er gekeken of op basis van een adres een certificaat gevonden kan worden (zie status Oplevering/bestaand).
 |					|	Oplevering/bestaand						|	Op de opnamedatum (SurveyDate) dient er al een certificaat te zijn met dezelfde scope en gebouwklasse, waarbij een adres overeenkomt met een adres van het opnamegebouw. 
 |					|	Vergunningsaanvraag/Oplevering/bestaand	|	Wanneer er een certificaat gevonden is gelden de volgende regels:<br/><ul><li>De huidige datum moet in de geldigheidperiode liggen van het bestaande certificaat (tussen Opnamedatum en Geldig tot).</li></ul> <b>Aanvulende validaties (gelden niet voor Beheerders): </b><br/> <ul><li> Het huidige certificaat moet geregistreerd zijn door de, huidige ingelogde, gebruiker van de EnergielabelApi.</li><li>De registratiedatum van het bestaande certificaat mag slechts een maximaal aantal dagen in het verleden liggen (a.d.h.v. EP-online stamgegevens Registreren - Vervangperiode in dagen), of de ingelogde gebruiker heeft de rol ‘Certificaat Vervanger’ en de verloopdatum van deze rol bij de gebruiker is ingevuld en nog niet verstreken.</li></ul>
