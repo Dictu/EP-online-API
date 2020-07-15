@@ -8,8 +8,8 @@
 |	9 sep 2019	|	0.3	|	Peter Zaal		|	Bijgewerkt met uitgesplitste SurveyDate rules.
 |	12 sep 2019	|	0.4	|	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
 |	24 jan 2020	|	0.5 |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
-|	07 jul 2020 |	0.6 |	Bas Brouwer  	| Geüpdatet aan de hand van de nieuwe XSD versie.
-|	10 jul 2020 |	0.6 |	Paul Kamps  	| Business Rules geüpdatet en toegevoegd.
+|	07 jul 2020	|	0.6 |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
+|	10 jul 2020	|	0.6 |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
