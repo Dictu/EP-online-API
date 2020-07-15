@@ -9,7 +9,7 @@
 |	12 sep 2019	|	0.4	|	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
 |	24 jan 2020	|	0.5 |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
 |	07 jul 2020	|	0.6 |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
-|	10 jul 2020	|	0.6 |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
+|	10 jul 2020	|	0.7 |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -69,7 +69,8 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckSurveyDateNotInFuture 													|	De opnamedatum (SurveyDate) mag niet in de toekomst liggen.
 
 ### 2.6. BAG controle
-Voor elk adres (VBO-id of PHT) wordt gecontroleerd of deze valide is. De validaties zijn afhankelijk of de identificatie d.m.v. een VBO-id en/of Pand-Id is (BAGIdentification is gevuld), d.m.v. een adres is (TPGIdentification is gevuld) en of het om een niet-NTA of NTA registratie gaat.
+Voor elk adres (VBO-id) wordt gecontroleerd of deze valide is. De validaties zijn afhankelijk of de identificatie d.m.v. een VBO-id en/of Pand-Id is (BAGIdentification is gevuld).
+
 |  Situatie  							|  Rule(s)
 |---------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |  BagResultCheckAddressMustExistbyBag  |  De objecten (op basis van VBO-ID en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
