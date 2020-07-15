@@ -87,9 +87,7 @@ De controle wordt niet uitgevoerd voor dwangsomregistraties (dit zijn gewoonlijk
 
 |  Technische naam			|	Rule(s)
 |	---------------------	|	:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|	CheckNoneMoreRecent		|	Er mag geen PreNTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan:
-  -	‘Geldig tot’ ligt in de toekomst.
-  -	‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.
+|	CheckNoneMoreRecent		|	Er mag geen PreNTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan:  -	‘Geldig tot’ ligt in de toekomst. -	‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.
 |							|	Er mag geen NTACompliant certificaat gevonden worden, op hetzelfde adres, die voldoet aan:
   -	‘Geldig tot’ ligt in de toekomst.
   -	'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.
