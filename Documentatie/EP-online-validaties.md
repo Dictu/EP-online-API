@@ -37,11 +37,9 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 
 | Technische naam 																| Rule(s)
 |-------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  CheckBagBerthId																|	BagResidenceId, BagBuildingId en BagPitchId mogen niet ingevuld zijn wanneer BagBerthId ingevuld is.
 |  CheckBagBuildingId															|	Het is verplicht een BAG Verblijfsobject Id op te geven wanneer er een Pand Id is opgegeven.
-|  CheckBagBuildingIdAndOrResidenceId											|	BagPitchId en BagBerthId mogen niet ingevuld zijn wanneer BagResidenceId en/of BagBuildingId ingevuld is/zijn.
+|  CheckBagIdCombination														|	<ul><li> BagPitchId en BagBerthId mogen niet ingevuld zijn wanneer BagResidenceId en/of BagBuildingId ingevuld is/zijn.</li><li> BagResidenceId, BagBuildingId en BagPitchId mogen niet ingevuld zijn wanneer BagBerthId ingevuld is.</li><li> BagResidenceId, BagBuildingId en BagBerthId mogen niet ingevuld zijn wanneer BagPitchId ingevuld is.</li></ul>
 |  CheckBagOrProvisionalIdentification											|	Het is verplicht om voor ieder gebouw minimaal een identificatie via BAG of een provisional identificatie op te geven.
-|  CheckBagPitchId																|	BagResidenceId, BagBuildingId en BagBerthId mogen niet ingevuld zijn wanneer BagPitchId ingevuld is.	
 |  CheckBagResidenceId															|	Het is verplicht een BAG Pand Id op te geven wanneer er een Verblijfsobject Id is opgegeven.
 |  CheckBuildingIdentifiedByBagHasUniqueBagIds  								|	Alle pand-id's (BagBuildingId) mogen slecht één keer voorkomen in het bestand.
 |  CheckBuildingObservation  													|	Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
