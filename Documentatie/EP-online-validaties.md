@@ -10,7 +10,7 @@
 |	24 jan 2020	|	0.5 |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
 |	07 jul 2020	|	0.6 |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
 |	10 jul 2020	|	0.7 |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
-|	17 jul 2020	|	0.8 |	Bas Brouwer  	| 	Vier business rules toegevoegd.
+|	17 jul 2020	|	0.8 |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
