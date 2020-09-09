@@ -11,6 +11,7 @@
 |	07 jul 2020	|	0.6 |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
 |	10 jul 2020	|	0.7 |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
 |	17 jul 2020	|	0.8 |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
+|	09 sep 2020	|	0.9 |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -39,6 +40,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |-------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |  CheckBagBuildingId															|	Het is verplicht een Verblijfsobject Id op te geven wanneer er een Pand Id is opgegeven.
 |  CheckBagIdCombination														|	<ul><li> Standplaats Id en Ligplaats Id mogen niet ingevuld zijn wanneer Verblijfsobject Id en/of Pand Id ingevuld is/zijn.</li><li> Verblijfsobject Id, Pand Id en Standplaats Id mogen niet ingevuld zijn wanneer Ligplaats Id ingevuld is.</li><li> Verblijfsobject Id, Pand Id en Ligplaats Id mogen niet ingevuld zijn wanneer Standplaats Id ingevuld is.</li></ul>
+|  CheckBagIdentificationForStatusCompletion									|	Bij Status ‘Oplevering’ en een ingevuld provisional identificatie, moet er een BAG identificatie ingevuld zijn.
 |  CheckBagOrProvisionalIdentification											|	Het is verplicht om voor ieder gebouw minimaal een identificatie via BAG of een provisional identificatie op te geven.
 |  CheckBagResidenceId															|	Het is verplicht een Pand Id op te geven wanneer er een Verblijfsobject Id is opgegeven.
 |  CheckBuildingIdentifiedByBagHasUniqueBagIds  								|	Alle pand-id's (BagBuildingId) mogen slecht één keer voorkomen in het bestand.
@@ -67,21 +69,23 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckTpgIdentification														|	Een TPG identificatie mag alleen worden opgegeven voor een gebouw als er ook een BAG identificatie is opgegeven.
 
 ### 2.5. BAG controle
-Voor elk adres (VBO-Id in de BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is.
+Voor elk adres (VBO-Id, Ligplaats-Id of Standplaats-Id in BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is. 
 
 |  Situatie  							|  Rule(s)
 |---------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  BagResultCheckAddressMustExistbyBag  |  De objecten (op basis van VBO-ID en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
+|  BagResultCheckAddressMustExistbyBag  |  De objecten (op basis van Ligplaats-Id, Standplaats-Id of VBO-ID en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
 |  BagResultCheckBagHasMatchingAddress  |  Het ingevulde TPGIdentification adres moet overeenkomen (op basis van adres) met het resultaat uit BAG op basis van de ingevulde BAGIdentification.
+|  BagResultCheckValidateBerthIds		|  Het opgegeven Ligplaats-Id dient overeen te komen met het  Ligplaats-Id  vanuit BAG.
 |  BagResultCheckValidateBuildingIds	|  De opgegeven Pand-Id’s dienen overeen te komen met de Pand-Id’s vanuit BAG.
+|  BagResultCheckValidatePitchIds		|  Het opgegeven Standplaats-Id dient overeen te komen met de  Standplaats-Id vanuit BAG.
 |  BagResultCheckValidateResidenceIds	|  De opgegeven VBO-Id’s dienen overeen te komen met de VBO-Id’s vanuit BAG.
 
 ### 2.6. Controle op recenter certificaat
-Voor elk gebouw wordt gecontroleerd dat er niet al een recenter certificaat aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAGIdentification).
+Voor elk gebouw wordt gecontroleerd dat er niet al een recenter certificaat aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAG identificatie) of ProvisionalId in Projectgegevens (in geval van identificatie d.m.v. Provisional identificatie).
 
 |  Technische naam			|	Rule(s)
 |---------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|	CheckNoneMoreRecent		|	Er mag geen pre-NTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
+|	CheckNoneMoreRecent		|	Er mag geen pre-NTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTA certificaat gevonden worden, op hetzelfde adres of project, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
 
 ### 2.7. Controle op de actie
 Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' of 'UitbreidenExtra' betreft en daarop de validaties uitgevoerd.
