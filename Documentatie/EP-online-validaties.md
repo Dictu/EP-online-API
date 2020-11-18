@@ -2,16 +2,17 @@
 
 ## 1. Versiebeheer
 | Datum 		| Versie| Auteur  			| Wijzigingen
-|--------------:|:-----:|:-----------------:|:----------------------------------------------------------------------------
-|	6 aug 2019	|	0.1	|	Peter Zaal		|	Initiële versie.
-|				|	0.2	|	Peter Zaal		|	Foutjes eruit gehaald.
-|	9 sep 2019	|	0.3	|	Peter Zaal		|	Bijgewerkt met uitgesplitste SurveyDate rules.
-|	12 sep 2019	|	0.4	|	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
-|	24 jan 2020	|	0.5 |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
-|	07 jul 2020	|	0.6 |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
-|	10 jul 2020	|	0.7 |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
-|	17 jul 2020	|	0.8 |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
-|	09 sep 2020	|	0.9 |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
+|--------------:|:------:|:-----------------:|:----------------------------------------------------------------------------
+|	6 aug 2019	|	0.1	 |	Peter Zaal		|	Initiële versie.
+|				|	0.2	 |	Peter Zaal		|	Foutjes eruit gehaald.
+|	9 sep 2019	|	0.3	 |	Peter Zaal		|	Bijgewerkt met uitgesplitste SurveyDate rules.
+|	12 sep 2019	|	0.4	 |	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
+|	24 jan 2020	|	0.5  |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
+|	07 jul 2020	|	0.6  |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
+|	10 jul 2020	|	0.7  |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
+|	17 jul 2020	|	0.8  |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
+|	09 sep 2020	|	0.9  |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
+|	18 nov 2020	|	1.0  |	Paul Kamps		|	Business Rule geüpdatet.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -46,7 +47,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckBuildingIdentifiedByBagHasUniqueBagIds  								|	Alle pand-id's (BagBuildingId) mogen slecht één keer voorkomen in het bestand.
 |  CheckBuildingObservation  													|	Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
 |  CheckBuildingType  															|	Bij woningbouw: bij elk gebouw moet het gebouwtype (BuildingCategory) ingevuld zijn. <br/> Bij utiliteitsbouw: bij een gebouw mag zowel het gebouwtype (BuildingCategory) als het subtype (BuildingCategorySupplement) niet ingevuld zijn.
-|  CheckBuildingTypeSupplement  												|	Alleen voor woningbouw: Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) gevuld zijn en een waarde van 1 t/m 8 bevatten. <br/> Bij andere gebouwtypes mag het subtype (BuildingCategorySupplement) niet gevuld zijn.
+|  CheckBuildingTypeSupplement  												|	Alleen voor woningbouw:<br/><br/> <b>Scope is specific:</b><br/>Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) gevuld zijn en een waarde van 1 t/m 8 bevatten. <br/> Bij andere gebouwtypes mag het subtype (BuildingCategorySupplement) niet gevuld zijn.<br/><br/><b>Scope is compound:</b><br/> Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) niet gevuld zijn.
 |  CheckBuildingUseTypes  														|	Alleen voor utiliteitsbouw: voor alle UseTypes (PrimaryUse en SecondaryUse's) moet het Percentage > 0 zijn en opgeteld tussen 0 en 100 (inclusief) liggen.
 |  CheckCalculationType  														|	De rekenmethodiek (TypeCalculation) moet bestaan in EP-online, niet geblokkeerd zijn, en de gebouwklasse moet overeenkomen met de MainBuildingClass in de XML. <br/> <b>NB:</b> voor de NTA_8800 rekenmethodiek wordt deze door code door de webservice aangevuld met de indicatie basis/detailopname en indicatie woningbouw/utiliteitsbouw (in EP-online bestaan er dus 4 NTA-8800 rekenmethodieken).
 |  CheckConstructionAndRenovationYear  											|	Als de status niet "Vergunningsaanvraag" is, dan mogen het bouwjaar (ConstructionYear) en het jaar van renovatie (YearOfRenovation) niet in de toekomst liggen.
