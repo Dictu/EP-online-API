@@ -13,6 +13,7 @@
 |	17 jul 2020	|	0.8  |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
 |	09 sep 2020	|	0.9  |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
 |	18 nov 2020	|	1.0  |	Paul Kamps		|	Business Rule geüpdatet.
+|	30 nov 2020	|	1.1	 |	Paul Kamps		|	Business Rules voor labelletter toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -54,6 +55,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckContractor  															|	De contractor (degene die registreert) moet bestaan als gebruiker in EP-online, de rol contracthouder (CH) hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
 |  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Extension+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
 |  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
+|  CheckEpcClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
 |  CheckEpcVersion  															|	Het versienummer van het monitorbestand moet geldig zijn op moment van registratie.
 |  CheckMainBuildingCertificateByBag  											|	Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een VBO-Id (BAGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is voor het (eerste) VBO-Id van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
@@ -62,6 +64,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckNotPermitPreNtaStatusCompletionWithBagIdentification					|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
 |  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
 |  CheckPermitPreNtaNoProvisionalIdentification  								|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘True’ is dan moet de BAGIdentification worden gevuld en mag de ProvisionalIdentification niet zijn toegevoegd.
+|  CheckScopeSpecificMustHaveEpcClassId											|	Wanneer een registratie wordt gedaan met scope Specific dan moet de Labelklasse ingevuld zijn.
 |  CheckSoftwareTool  															|	De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
 |  CheckStatusExistingMustHaveBagIdentifcationAndNotProvisionalIdentification	|	Bij registratie met status 'bestaand' is het verplicht om subelement BAGIdentification op te nemen en mag subelement ProvisionalIdentification niet worden opgenomen.
 |  CheckSurveyDate 																|	De opnamedatum (SurveyDate) moet binnen de registratie periode voor NTA labels liggen.
