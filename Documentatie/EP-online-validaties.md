@@ -14,6 +14,7 @@
 |	09 sep 2020	|	0.9  |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
 |	18 nov 2020	|	1.0  |	Paul Kamps		|	Business Rule geüpdatet.
 |	30 nov 2020	|	1.1	 |	Paul Kamps		|	Business Rules voor labelletter toegevoegd.
+|	14 dec 2020	|	1.2  |	Robert Boonstra	|	Bag controle voor BuildingAnnotation toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -57,9 +58,9 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
 |  CheckEpcClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
 |  CheckEpcVersion  															|	Het versienummer van het monitorbestand moet geldig zijn op moment van registratie.
-|  CheckMainBuildingCertificateByBag  											|	Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een VBO-Id (BAGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is voor het (eerste) VBO-Id van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
+|  CheckMainBuildingCertificateByBag  											|	Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een VBO-ID (BAGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is voor het (eerste) VBO-Id van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
-|  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere Pand-Id’s mogen er niet meerdere VBO-Id’s opgegeven zijn.
+|  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere Pand-Id’s mogen er niet meerdere VBO-ID’s opgegeven zijn.
 |  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
 |  CheckNotPermitPreNtaStatusCompletionWithBagIdentification					|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
 |  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
@@ -74,16 +75,17 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckTpgIdentification														|	Een TPG identificatie mag alleen worden opgegeven voor een gebouw als er ook een BAG identificatie is opgegeven.
 
 ### 2.5. BAG controle
-Voor elk adres (VBO-Id, Ligplaats-Id of Standplaats-Id in BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is. 
+Voor elk adres (VBO-ID, Ligplaats-Id of Standplaats-Id in BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is. 
 
 |  Situatie  							|  Rule(s)
 |---------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |  BagResultCheckAddressMustExistbyBag  |  De objecten (op basis van Ligplaats-Id, Standplaats-Id of VBO-ID en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
 |  BagResultCheckBagHasMatchingAddress  |  Het ingevulde TPGIdentification adres moet overeenkomen (op basis van adres) met het resultaat uit BAG op basis van de ingevulde BAGIdentification.
+|  BagResultCheckBagHasMatchingIds		|  Als het ingevulde VBO-ID niet behoort tot het ingevulde Pand-Id, dan dient de BuildingAnnotation leeg te zijn.
 |  BagResultCheckValidateBerthIds		|  Het opgegeven Ligplaats-Id dient overeen te komen met het  Ligplaats-Id  vanuit BAG.
 |  BagResultCheckValidateBuildingIds	|  De opgegeven Pand-Id’s dienen overeen te komen met de Pand-Id’s vanuit BAG.
 |  BagResultCheckValidatePitchIds		|  Het opgegeven Standplaats-Id dient overeen te komen met de  Standplaats-Id vanuit BAG.
-|  BagResultCheckValidateResidenceIds	|  De opgegeven VBO-Id’s dienen overeen te komen met de VBO-Id’s vanuit BAG.
+|  BagResultCheckValidateResidenceIds	|  De opgegeven VBO-ID’s dienen overeen te komen met de VBO-ID’s vanuit BAG.
 
 ### 2.6. Controle op recenter certificaat
 Voor elk gebouw wordt gecontroleerd dat er niet al een recenter certificaat aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAG identificatie) of ProvisionalId in Projectgegevens (in geval van identificatie d.m.v. Provisional identificatie).
