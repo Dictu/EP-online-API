@@ -16,6 +16,7 @@
 |	30 nov 2020	|	1.1	 |	Paul Kamps		|	Business Rules voor labelletter toegevoegd.
 |	14 dec 2020	|	1.2  |	Robert Boonstra	|	Bag controle voor BuildingAnnotation toegevoegd.
 |	13 jan 2021	|	1.3  |	Robert Boonstra	|	Business Rules voor BuildingCategory toegevoegd.
+|	13 jan 2021	|	1.4  |	Bas Brouwer		|	Business Rule verwijderd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -46,7 +47,6 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckBagIdCombination														|	<ul><li> Standplaats Id en Ligplaats Id mogen niet ingevuld zijn wanneer Verblijfsobject Id en/of Pand Id ingevuld is/zijn.</li><li> Verblijfsobject Id, Pand Id en Standplaats Id mogen niet ingevuld zijn wanneer Ligplaats Id ingevuld is.</li><li> Verblijfsobject Id, Pand Id en Ligplaats Id mogen niet ingevuld zijn wanneer Standplaats Id ingevuld is.</li></ul>
 |  CheckBagIdentificationForStatusCompletion									|	Bij Status ‘Oplevering’ en een ingevuld provisional identificatie, moet er een BAG identificatie ingevuld zijn.
 |  CheckBagOrProvisionalIdentification											|	Het is verplicht om voor ieder gebouw minimaal een identificatie via BAG of een provisional identificatie op te geven.
-|  CheckBagResidenceId															|	Het is verplicht een Pand Id op te geven wanneer er een Verblijfsobject Id is opgegeven.
 |  CheckBuildingIdentifiedByBagHasUniqueBagIds  								|	Alle pand-id's (BagBuildingId) mogen slecht één keer voorkomen in het bestand.
 |  CheckBuildingObservation  													|	Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
 |  CheckBuildingType  															|	Bij woningbouw: bij elk gebouw moet het gebouwtype (BuildingCategory) ingevuld zijn. <br/> Bij utiliteitsbouw: bij een gebouw mag zowel het gebouwtype (BuildingCategory) als het subtype (BuildingCategorySupplement) niet ingevuld zijn.
