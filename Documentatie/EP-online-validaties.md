@@ -17,7 +17,7 @@
 |	14 dec 2020	|	1.2  |	Robert Boonstra	|	Bag controle voor BuildingAnnotation toegevoegd.
 |	13 jan 2021	|	1.3  |	Robert Boonstra	|	Business Rules voor BuildingCategory toegevoegd.
 |	13 jan 2021	|	1.4  |	Bas Brouwer		|	Business Rule verwijderd.
-| 21 jun 2021 | 1.5  |  Mischa Vreeburg | Business Rules aangepast en typo gefixt.
+| 21 jun 2021 | 1.5  |	Mischa Vreeburg	|	Business Rules aangepast en typo gefixt.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
