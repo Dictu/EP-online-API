@@ -60,7 +60,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckCalculationType  														|	De rekenmethodiek (TypeCalculation) moet bestaan in EP-online, niet geblokkeerd zijn, en de gebouwklasse moet overeenkomen met de MainBuildingClass in de XML. <br/> <b>NB:</b> voor de NTA_8800 rekenmethodiek wordt deze door code door de webservice aangevuld met de indicatie basis/detailopname en indicatie woningbouw/utiliteitsbouw (in EP-online bestaan er dus 4 NTA-8800 rekenmethodieken).
 |  CheckConstructionAndRenovationYear  											|	Als de status niet "Vergunningsaanvraag" is, dan mogen het bouwjaar (ConstructionYear) en het jaar van renovatie (YearOfRenovation) niet in de toekomst liggen.
 |  CheckContractor  															|	De contractor (degene die registreert) moet bestaan als gebruiker in EP-online, de rol contracthouder (adviseur) hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
-|  CheckDetailForStatusOpleveringAndVergunningsAanvraag							|	Bij Status ‘Vergunningsaanvraag’ en bij Status ‘Oplevering’ moet het Opnameprotocol 'Detail' zijn.
+|  CheckDetailForStatusOpleveringAndVergunningsAanvraag							|	Bij Status ‘Vergunningsaanvraag’ en bij Status ‘Oplevering’ moet het opnameprotocol 'Detail' zijn.
 |  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Extension+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
 |  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
 |  CheckEpcClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
