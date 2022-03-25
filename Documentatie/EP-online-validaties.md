@@ -20,6 +20,7 @@
 |	21 jun 2021	|	1.5  |	Mischa Vreeburg	|	Business Rules aangepast en typo gefixt.
 |	09 sep 2021	|	1.6	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	17 sep 2021	|	1.7	 |	Paul Kamps		|	Business Rule toegevoegd.
+|	25 mrt 2022	|	1.8	 |	Paul Kamps		|	Business Rule toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -77,6 +78,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckScopeSpecificMustHaveEpcClassId											|	Wanneer een registratie wordt gedaan met scope Specific dan moet de Labelklasse ingevuld zijn.
 |  CheckSoftwareTool  															|	De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
 |  CheckStatusExistingMustHaveBagIdentifcationAndNotProvisionalIdentification	|	Bij registratie met status 'bestaand' is het verplicht om subelement BAGIdentification op te nemen en mag subelement ProvisionalIdentification niet worden opgenomen.
+|  CheckSurveyAndRegistrationNotSameAdvisor										|	Wanneer een registratie wordt gedaan met OpnameEnRegistratieZelfdeAdviseur is 'Yes', dan mag het blok 'Surveyor' niet gevuld zijn.<br/><br/> Wanneer een registratie wordt gedaan met OpnameEnRegistratieZelfdeAdviseur is 'No', dan mogen 'Name' en 'ExamNumber' in het blok 'Surveyor' niet leeg zijn.
 |  CheckSurveyDate 																|	De opnamedatum (SurveyDate) moet binnen de registratie periode voor NTA labels liggen. Deze periode is anders voor het vervangen ten opzichte van het toevoegen of uitbreiden van labels.
 |  CheckSurveyDateHasValue  													|	De opnamedatum (SurveyDate) moet ingevuld zijn.
 |  CheckSurveyDateNotInFuture 													|	De opnamedatum (SurveyDate) mag niet in de toekomst liggen.
