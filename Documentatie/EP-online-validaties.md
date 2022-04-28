@@ -1,26 +1,27 @@
 # Businessrules registratiebestand EP-online
 
 ## 1. Versiebeheer
-| Datum 		| Versie| Auteur  			| Wijzigingen
-|--------------:|:------:|:-----------------:|:----------------------------------------------------------------------------
-|	6 aug 2019	|	0.1	 |	Peter Zaal		|	Initiële versie.
-|				|	0.2	 |	Peter Zaal		|	Foutjes eruit gehaald.
-|	9 sep 2019	|	0.3	 |	Peter Zaal		|	Bijgewerkt met uitgesplitste SurveyDate rules.
-|	12 sep 2019	|	0.4	 |	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
-|	24 jan 2020	|	0.5  |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
-|	07 jul 2020	|	0.6  |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
-|	10 jul 2020	|	0.7  |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
-|	17 jul 2020	|	0.8  |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
-|	09 sep 2020	|	0.9  |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
-|	18 nov 2020	|	1.0  |	Paul Kamps		|	Business Rule geüpdatet.
-|	30 nov 2020	|	1.1	 |	Paul Kamps		|	Business Rules voor labelletter toegevoegd.
-|	14 dec 2020	|	1.2  |	Robert Boonstra	|	Bag controle voor BuildingAnnotation toegevoegd.
-|	13 jan 2021	|	1.3  |	Robert Boonstra	|	Business Rules voor BuildingCategory toegevoegd.
-|	13 jan 2021	|	1.4  |	Bas Brouwer		|	Business Rule verwijderd.
-|	21 jun 2021	|	1.5  |	Mischa Vreeburg	|	Business Rules aangepast en typo gefixt.
-|	09 sep 2021	|	1.6	 |	Paul Kamps		|	Business Rule toegevoegd.
-|	17 sep 2021	|	1.7	 |	Paul Kamps		|	Business Rule toegevoegd.
-|	25 mrt 2022	|	1.8	 |	Paul Kamps		|	Business Rule toegevoegd.
+| Datum 			| Versie| Auteur  			| Wijzigingen
+|------------------:|:------:|:-----------------:|:----------------------------------------------------------------------------
+|	6 aug 2019		|	0.1	 |	Peter Zaal		|	Initiële versie.
+|					|	0.2	 |	Peter Zaal		|	Foutjes eruit gehaald.
+|	9 sep 2019		|	0.3	 |	Peter Zaal		|	Bijgewerkt met uitgesplitste SurveyDate rules.
+|	12 sep 2019		|	0.4	 |	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
+|	24 jan 2020		|	0.5  |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
+|	07 jul 2020		|	0.6  |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
+|	10 jul 2020		|	0.7  |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
+|	17 jul 2020		|	0.8  |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
+|	09 sep 2020		|	0.9  |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
+|	18 nov 2020		|	1.0  |	Paul Kamps		|	Business Rule geüpdatet.
+|	30 nov 2020		|	1.1	 |	Paul Kamps		|	Business Rules voor labelletter toegevoegd.
+|	14 dec 2020		|	1.2  |	Robert Boonstra	|	Bag controle voor BuildingAnnotation toegevoegd.
+|	13 jan 2021		|	1.3  |	Robert Boonstra	|	Business Rules voor BuildingCategory toegevoegd.
+|	13 jan 2021		|	1.4  |	Bas Brouwer		|	Business Rule verwijderd.
+|	21 jun 2021		|	1.5  |	Mischa Vreeburg	|	Business Rules aangepast en typo gefixt.
+|	09 sep 2021		|	1.6	 |	Paul Kamps		|	Business Rule toegevoegd.
+|	17 sep 2021		|	1.7	 |	Paul Kamps		|	Business Rule toegevoegd.
+|	25 mrt 2022		|	1.8	 |	Paul Kamps		|	Business Rule toegevoegd.
+|	28 april 2022	|	1.9	 |	Paul Kamps		|	Controle bij vervangen toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
