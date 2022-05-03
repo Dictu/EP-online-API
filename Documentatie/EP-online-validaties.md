@@ -22,6 +22,7 @@
 |	17 sep 2021	|	1.7	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	25 mrt 2022	|	1.8	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	28 apr 2022	|	1.9	 |	Paul Kamps		|	Controle bij vervangen toegevoegd.
+|	03 mei 2022	|	1.10 |	Paul Kamps		|	Business Rule verwijdert.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -67,7 +68,6 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
 |  CheckEpcClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
 |  CheckEpcVersion  															|	Het versienummer van het monitorbestand moet geldig zijn op moment van registratie.
-|  CheckMainBuildingCertificateByBag  											|	Wanneer bij woningbouw voor het opnamegebouw (MainBuilding) een VBO-ID (BAGIdentification) is opgegeven en er referentiewoningen (ReferenceBuildingList) zijn meegegeven: indien er op de opnamedatum (SurveyDate) al een certificaat is voor het (eerste) VBO-Id van het opnamegebouw, dan moet het versienummer van dit certificaat gelijk of hoger zijn dan die in het registratiebestand.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
 |  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere Pand-Id’s mogen er niet meerdere VBO-ID’s opgegeven zijn.
 |  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
