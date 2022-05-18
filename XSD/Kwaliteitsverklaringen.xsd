@@ -16,10 +16,6 @@
 							<xs:element name="Documentnummer" type="xs:string">
 								<xs:annotation><xs:documentation>Het BCRG-nummer van de kwaliteitsverklaring.</xs:documentation></xs:annotation>
 							</xs:element>
-							<xs:element name="GeldigTot" type="xs:date" minOccurs="0"/>
-							<xs:element name="Uitgever" type="xs:string" minOccurs="0"/>
-							<xs:element name="URL" type="xs:anyURI" minOccurs="0"/>
-							<xs:element name="Opmerkingen" type="xs:string" minOccurs="0"/>
 							<xs:element name="Waardes">
 								<xs:annotation>
 									<xs:documentation>Alle waardes uit de kwaliteitsverklaring die zijn gebruikt in de berekening.</xs:documentation>

@@ -13,7 +13,7 @@
 					<xs:simpleType>
 						<xs:restriction base="xs:decimal">
 							<!-- Bij oplevering van een nieuwe versie moet onderstaande value worden opgehoogd -->
-							<xs:enumeration value="4.0"/>
+							<xs:enumeration value="4.1"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
