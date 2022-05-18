@@ -261,11 +261,6 @@
 														<xs:documentation>Waarde die aangeeft of bij de berekening van de energieprestaties gebiedsgebonden maatregelen van toepassing zijn (EMG). De waarde “yes” geeft aan dat EMG van toepassing is.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element name="AreaEffectPercentage" type="tns:EpbdNumericWithNegative" minOccurs="0" maxOccurs="1">
-													<xs:annotation>
-														<xs:documentation>Percentage van de energie efficiency veroorzaakt door gebiedsgebonden maatregelen. Een negatieve AreaEffectPercentage treedt alleen op als zowel de EI met EMG als de EI met EMG forfaitair negatief zijn, bijvoorbeeld een gebouw dat ook zonder de EMG-maatregel (bijvoorbeeld stadsverwarming) zeer energiezuinig is.</xs:documentation>
-													</xs:annotation>
-												</xs:element>
 												<xs:element name="Opnametype" type="tns:Opnametype" minOccurs="1" maxOccurs="1">
 													<xs:annotation>
 														<xs:documentation>indicator of het een basis- of detailopname is.</xs:documentation>
@@ -276,13 +271,6 @@
 									</xs:element>
 									<xs:element name="Gebruiksoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
 									<xs:element name="Verliesoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
-									<xs:element name="StreefwaardeGevel" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
-									<xs:element name="StreefwaardeGevelpanelen" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
-									<xs:element name="StreefwaardeDak" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
-									<xs:element name="StreefwaardeVloer" type="tns:RcWaarde" minOccurs="0" maxOccurs="1"/>
-									<xs:element name="StreefwaardeRamen" type="tns:UWaarde" minOccurs="0" maxOccurs="1"/>
-									<xs:element name="StreefwaardeDeuren" type="tns:UWaarde" minOccurs="0" maxOccurs="1"/>
-									<xs:element name="StreefwaardeLuchtdichtheid" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
 									<xs:element name="StandaardWoningbouw" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
 									<xs:element name="Compactheid" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
 									<xs:element name="Labelklassegrenzen">
@@ -371,6 +359,11 @@
 									<xs:element name="Calculation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
 											<xs:documentation>Of er een energieprestatieberekening ten behoeve van omgevingsvergunning gemaakt is.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="OpnameEnRegistratieZelfdeAdviseur" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>Of de opname en registratie door dezelfde adviseur zijn uitgevoerd.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="Surveyor" minOccurs="0" maxOccurs="1">
@@ -494,7 +487,12 @@
 					<xs:documentation>Huisnummer van het gebouw.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Extension" type="tns:Extension" minOccurs="0" maxOccurs="1">
+			<xs:element name="Letter" type="tns:Letter" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Huisletter van het gebouw.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Addition" type="tns:Addition" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Huisnummertoevoeging van het gebouw.</xs:documentation>
 				</xs:annotation>
@@ -814,14 +812,21 @@
 	<!-- Version: Versienummer van het EPG XML-format. De waarde is altijd 6.00. Oudere interface versies worden niet ondersteund. -->
 	<xs:simpleType name="Version">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="7.00"></xs:enumeration>
+			<xs:enumeration value="8.00"></xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
-	<!-- Extension: Toevoeging huisnummer van de kavel waarop het te certificeren gebouw
-		  aanwezig is. -->
-	<xs:simpleType name="Extension">
+	<!-- Letter: 'huisletter' - Een hoofdletter (A – Z) of kleine letter (a – z). -->
+	<xs:simpleType name="Letter">
 		<xs:restriction base="xs:string">
-			<xs:maxLength value="25"/>
+			<xs:maxLength value="1"/>
+			<xs:pattern value="[A-Za-z]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Extension: 'huisnummertoevoeging' - Maximaal vier alfanumerieke tekens bestaande uit een combinatie van hoofdletters (A – Z), kleine letters (a – z) en/of cijfers (0 – 9). -->
+	<xs:simpleType name="Addition">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[A-Za-z0-9]{0,4}"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -1017,6 +1022,7 @@
 		<xs:restriction base="tns:EpbdNonEmptyString">
 			<xs:maxLength value="35"/>
 			<xs:enumeration value="NTA_8800"/>
+			<xs:enumeration value="NTA_8800:2022"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!-- VersionSoftware: Versienummer van het certificaatsoftwarepakket. -->
