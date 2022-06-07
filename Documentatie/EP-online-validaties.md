@@ -23,6 +23,7 @@
 |	25 mrt 2022	|	1.8	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	28 apr 2022	|	1.9	 |	Paul Kamps		|	Controle bij vervangen toegevoegd.
 |	03 mei 2022	|	1.10 |	Paul Kamps		|	Business Rule verwijdert.
+|	07 jun 2022	|	1.11 |	Paul Kamps		|	Business Rule toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -75,6 +76,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
 |  CheckPermitPreNtaNoProvisionalIdentification  								|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘True’ is dan moet de BAGIdentification worden gevuld en mag de ProvisionalIdentification niet zijn toegevoegd.
 |  CheckProjectNameAndObjectRequiredForVergunningsAanvraag						|	Wanneer een registratie wordt gedaan waarbij de BAG identificatie en de TPG identificatie leeg zijn, dan moeten de Project Name en Project Object gevuld zijn binnen de Provisional Identification.
+|  CheckResidentialMultipleVboIds												|	Wanneer bij woningbouw een registratie wordt gedaan met meerdere VBO-Id's op één en het zelfde opnameadres, dan moet het gebouwtype (BuildingCategory) 'Woongebouw met niet-zelfstandige woonruimte' zijn.
 |  CheckScopeCompoundEpcClassId													|	Wanneer een registratie wordt gedaan met scope Compound dan moet de Labelklasse niet ingevuld zijn.
 |  CheckScopeSpecificMustHaveEpcClassId											|	Wanneer een registratie wordt gedaan met scope Specific dan moet de Labelklasse ingevuld zijn.
 |  CheckSoftwareTool  															|	De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
