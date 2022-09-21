@@ -22,10 +22,11 @@
 |	17 sep 2021	|	1.7	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	25 mrt 2022	|	1.8	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	28 apr 2022	|	1.9	 |	Paul Kamps		|	Controle bij vervangen toegevoegd.
-|	03 mei 2022	|	1.10 |	Paul Kamps		|	Business Rule verwijdert.
+|	03 mei 2022	|	1.10 |	Paul Kamps		|	Business Rule verwijderd.
 |	07 jun 2022	|	1.11 |	Paul Kamps		|	Business Rule toegevoegd.
 |	01 jul 2022	|	1.12 |	Bas Brouwer		|	Business Rule geüpdatet.
 |	06 jul 2022 |	1.13 | 	Paul Kamps		|	Business Rule toegevoegd.
+|	21 sep 2022	|	1.14 |	Paul Kamps		|	Business Rule verwijderd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -95,7 +96,6 @@ Voor elk adres (VBO-ID, Ligplaats-Id of Standplaats-Id in BAGIdentification) wor
 
 |  Situatie  							|  Rule(s)
 |---------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  BagResultCheckAddressMustExistbyBag  |  De objecten (op basis van Ligplaats-Id, Standplaats-Id of VBO-ID en evt. alle Pand-Id’s) moeten gevonden worden in de BAG.
 |  BagResultCheckBagHasMatchingAddress  |  Het ingevulde TPGIdentification adres moet overeenkomen (op basis van adres) met het resultaat uit BAG op basis van de ingevulde BAGIdentification.
 |  BagResultCheckBagHasMatchingIds		|  Als het ingevulde VBO-ID niet behoort tot het ingevulde Pand-Id, dan dient de BuildingAnnotation leeg te zijn.
 |  BagResultCheckValidateBerthIds		|  Het opgegeven Ligplaats-Id dient overeen te komen met het  Ligplaats-Id  vanuit BAG.
