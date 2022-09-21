@@ -22,11 +22,11 @@
 |	17 sep 2021	|	1.7	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	25 mrt 2022	|	1.8	 |	Paul Kamps		|	Business Rule toegevoegd.
 |	28 apr 2022	|	1.9	 |	Paul Kamps		|	Controle bij vervangen toegevoegd.
-|	03 mei 2022	|	1.10 |	Paul Kamps		|	Business Rule verwijdert.
+|	03 mei 2022	|	1.10 |	Paul Kamps		|	Business Rule verwijderd.
 |	07 jun 2022	|	1.11 |	Paul Kamps		|	Business Rule toegevoegd.
 |	01 jul 2022	|	1.12 |	Bas Brouwer		|	Business Rule geüpdatet.
 |	06 jul 2022 |	1.13 | 	Paul Kamps		|	Business Rule toegevoegd.
-|	21 sep 2022	|	1.14 |	Paul Kamps		|	Business Rule verwijdert.
+|	21 sep 2022	|	1.14 |	Paul Kamps		|	Business Rule verwijderd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
