@@ -27,6 +27,7 @@
 |	01 jul 2022	|	1.12 |	Bas Brouwer		|	Business Rule geüpdatet.
 |	06 jul 2022 |	1.13 | 	Paul Kamps		|	Business Rule toegevoegd.
 |	21 sep 2022	|	1.14 |	Paul Kamps		|	Business Rule verwijderd.
+|	15 dec 2022	|	1.15 |	Paul Kamps		|	Business Rule CheckProjectNameAndObjectDoesNotAlreadyExists toegevoegd, Business Rule CheckEpcVersion is verwijderd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -71,13 +72,13 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Extension+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
 |  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
 |  CheckEpcClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
-|  CheckEpcVersion  															|	Het versienummer van het monitorbestand moet geldig zijn op moment van registratie.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
 |  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere Pand-Id’s mogen er niet meerdere VBO-ID’s opgegeven zijn.
 |  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
 |  CheckNotPermitPreNtaStatusCompletionWithBagIdentification					|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
 |  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
 |  CheckPermitPreNtaNoProvisionalIdentification  								|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘True’ is dan moet de BAGIdentification worden gevuld en mag de ProvisionalIdentification niet zijn toegevoegd.
+|  CheckProjectNameAndObjectDoesNotAlreadyExists								|	Er mag geen andere actieve registratie zijn met dezelfde combinatie "ProjectNaam" en "ProjectObject".
 |  CheckProjectNameAndObjectRequiredForVergunningsAanvraag						|	Wanneer een registratie wordt gedaan waarbij de BAG identificatie en de TPG identificatie leeg zijn, dan moeten de Project Name en Project Object gevuld zijn binnen de Provisional Identification.
 |  CheckProjectNameAndProjectObjectCannotChangeWhenExpanding					|	Bij uitbreiden van een project is het niet toegestaan de projectgegevens te wijzigen.
 |  CheckResidentialMultipleVboIds												|	Wanneer bij woningbouw een registratie wordt gedaan met meerdere VBO-Id's op één en het zelfde opnameadres, dan moet het gebouwtype (BuildingCategory) 'Woongebouw met niet-zelfstandige woonruimte' zijn, of 'Appartement' in combinatie met scope Compound.
