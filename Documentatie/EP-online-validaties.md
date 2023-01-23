@@ -28,6 +28,7 @@
 |	06 jul 2022 |	1.13 | 	Paul Kamps		|	Business Rule toegevoegd.
 |	21 sep 2022	|	1.14 |	Paul Kamps		|	Business Rule verwijderd.
 |	15 dec 2022	|	1.15 |	Paul Kamps		|	Business Rule CheckProjectNameAndObjectDoesNotAlreadyExists toegevoegd, Business Rule CheckEpcVersion is verwijderd.
+|	23 jan 2023	|	1.16 |	Paul Kamps		|	Business Rules CheckEpcVersion, CheckInterpunction en CheckLinkVergunningsAanvraagToOpleveringSameScope toegevoegd. De naam van Business Rules CheckRegistrationAdvisor en CheckEpClassIdResidential zijn gewijzigd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
@@ -67,11 +68,14 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckBuildingUseTypes  														|	Alleen voor utiliteitsbouw: voor alle UseTypes (PrimaryUse en SecondaryUse's) moet het Percentage > 0 zijn en opgeteld tussen 0 en 100 (inclusief) liggen.
 |  CheckCalculationType  														|	De rekenmethodiek (TypeCalculation) moet bestaan in EP-online, niet geblokkeerd zijn, en de gebouwklasse moet overeenkomen met de MainBuildingClass in de XML. <br/> <b>NB:</b> voor de NTA_8800 rekenmethodiek wordt deze door code door de webservice aangevuld met de indicatie basis/detailopname en indicatie woningbouw/utiliteitsbouw (in EP-online bestaan er dus 4 NTA-8800 rekenmethodieken).
 |  CheckConstructionAndRenovationYear  											|	Als de status niet "Vergunningsaanvraag" is, dan mogen het bouwjaar (ConstructionYear) en het jaar van renovatie (YearOfRenovation) niet in de toekomst liggen.
-|  CheckContractor  															|	De contractor (degene die registreert) moet bestaan als gebruiker in EP-online, de rol contracthouder (adviseur) hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
+|  CheckRegistrationAdvisor														|	De registratie adviseur moet bestaan als gebruiker in EP-online, de rol adviseur hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
 |  CheckDetailForStatusOpleveringAndVergunningsAanvraag							|	Bij Status ‘Vergunningsaanvraag’ en bij Status ‘Oplevering’ moet het opnameprotocol 'Detail' zijn.
-|  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Extension+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
+|  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Letter+Addition+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
 |  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
-|  CheckEpcClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
+|  CheckEpClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
+|  CheckEpcVersion																|	De gebruikte versie moet geldig zijn.
+|  CheckInterpunction															|	Voor Projectnaam, ProjectObject en BuildingAnnotation mogen de volgende karakters gebruikt worden: "a-z", "A-Z", "0-9", "\", "-", "_", "'", "`", ",".
+|  CheckLinkVergunningsAanvraagToOpleveringSameScope							|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is, de actie "Toevoegen" of "Uitbreiden" is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn dan dient de Scope (Specific of Compound) van de oplevering identiek zijn aan die van de vergunningsaanvraag.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
 |  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere Pand-Id’s mogen er niet meerdere VBO-ID’s opgegeven zijn.
 |  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
