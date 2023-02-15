@@ -45,7 +45,7 @@ Voor elk adres (verblijfsobject-id, ligplaats-id of standplaats-id in BAGIdentif
 |  BagResultCheckValidateBerthIds		|  Het opgegeven ligplaats-id dient overeen te komen met het ligplaats-id dat terug is gekomen vanuit de BAG.
 |  BagResultCheckValidateBuildingIds	|  De opgegeven pand-id’s dienen overeen te komen met de pand-id’s die terug zijn gekomen vanuit de BAG.
 |  BagResultCheckValidatePitchIds		|  Het opgegeven standplaats-id dient overeen te komen met het standplaats-id dat terug is gekomen vanuit BAG.
-|  BagResultCheckValidateResidenceIds	|  De opgegeven verblijfsobject-id’s dienen overeen te komen met de verblijfsobject-id’s die terug zijn gekomen vanuit de BAG..
+|  BagResultCheckValidateResidenceIds	|  De opgegeven verblijfsobject-id’s dienen overeen te komen met de verblijfsobject-id’s die terug zijn gekomen vanuit de BAG.
 
 ### 2.6. Controle op recenter maatwerkadvies
 Voor elk adres wordt gecontroleerd dat er niet al een recenter maatwerkadvies aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG.
@@ -55,7 +55,7 @@ Voor elk adres wordt gecontroleerd dat er niet al een recenter maatwerkadvies aa
 |	Er mag geen maatwerkadvies registratie worden gevonden, op hetzelfde adres met dezelfde gebouwklasse (woningbouw of utiliteitsbouw) met een recentere adviesdatum.
 
 ### 2.7. Controle op de actie
-Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' of 'UitbreidenExtra' betreft en daarop de validaties uitgevoerd.
+Controle of de actie 'Toevoegen' betreft en daarop de validaties uitgevoerd.
 
 |  Actie  			|  	Rule(s)
 |------------------	|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
