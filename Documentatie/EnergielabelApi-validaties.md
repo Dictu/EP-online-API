@@ -31,10 +31,10 @@
 |	23 jan 2023	|	1.16 |	Paul Kamps		|	Business Rules CheckEpcVersion, CheckInterpunction en CheckLinkVergunningsAanvraagToOpleveringSameScope toegevoegd. De naam van Business Rules CheckRegistrationAdvisor en CheckEpClassIdResidential zijn gewijzigd.
 
 ## 2. Validaties
-Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de betreffende bijbehorende meldingen gegeven en niet verder gegaan naar de volgende stap.
+Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de bijbehorende meldingen terug gegeven en wordt niet verder gegaan naar de volgende stap.
 
 ### 2.1. Ophalen en valideren gebruiker (adviseur) en organisatie
-Gegevens omtrent de adviseur en organisatie worden opgehaald. Er vinden validaties plaats dat de gegevens gevonden kunnen worden.
+Er wordt gevalideerd dat de gegevens gevonden kunnen worden.
 
 ### 2.2. Bepalen versienummer en rekenmethodiek
 |	Technische naam				|	Rule(s)
@@ -55,11 +55,11 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 
 | Technische naam 																| Rule(s)
 |-------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  CheckBagBuildingId															|	Het is verplicht een Verblijfsobject Id op te geven wanneer er een Pand Id is opgegeven.
-|  CheckBagIdCombination														|	<ul><li> Standplaats Id en Ligplaats Id mogen niet ingevuld zijn wanneer Verblijfsobject Id en/of Pand Id ingevuld is/zijn.</li><li> Verblijfsobject Id, Pand Id en Standplaats Id mogen niet ingevuld zijn wanneer Ligplaats Id ingevuld is.</li><li> Verblijfsobject Id, Pand Id en Ligplaats Id mogen niet ingevuld zijn wanneer Standplaats Id ingevuld is.</li></ul>
+|  CheckBagBuildingId															|	Het is verplicht een verblijfsobject id op te geven wanneer er een pand id is opgegeven.
+|  CheckBagIdCombination														|	<ul><li> standplaats id en ligplaats id mogen niet ingevuld zijn wanneer verblijfsobject id en/of pand id ingevuld is/zijn.</li><li> verblijfsobject id, pand id en standplaats id mogen niet ingevuld zijn wanneer ligplaats id ingevuld is.</li><li> verblijfsobject id, pand id en ligplaats id mogen niet ingevuld zijn wanneer standplaats id ingevuld is.</li></ul>
 |  CheckBagIdentificationForStatusCompletion									|	Bij Status ‘Oplevering’ en een ingevuld provisional identificatie, moet er een BAG identificatie ingevuld zijn.
 |  CheckBagOrProvisionalIdentification											|	Het is verplicht om voor ieder gebouw minimaal een identificatie via BAG of een provisional identificatie op te geven.
-|  CheckBuildingIdentifiedByBagHasUniqueBagIds  								|	Alle pand-id's (BagBuildingId) mogen slecht één keer voorkomen in het bestand.
+|  CheckBuildingIdentifiedByBagHasUniqueBagIds  								|	Alle pand id's (BagBuildingId) mogen slechts één keer voorkomen in het bestand.
 |  CheckBuildingObservation  													|	Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
 |  CheckBuildingType  															|	Bij woningbouw: bij elk gebouw moet het gebouwtype (BuildingCategory) ingevuld zijn. <br/> Bij utiliteitsbouw: bij een gebouw mag zowel het gebouwtype (BuildingCategory) als het subtype (BuildingCategorySupplement) niet ingevuld zijn.
 |  CheckBuildingTypeBagBerth													|	Bij gebruik van BagBerthId zijn enkel gebouwtype (BuildingCategory) 13 (Woonboot bestaande ligplaats) en 15 (Woonboot nieuwe ligplaats) toegestaan.
@@ -71,13 +71,15 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckRegistrationAdvisor														|	De registratie adviseur moet bestaan als gebruiker in EP-online, de rol adviseur hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
 |  CheckDetailForStatusOpleveringAndVergunningsAanvraag							|	Bij Status ‘Vergunningsaanvraag’ en bij Status ‘Oplevering’ moet het opnameprotocol 'Detail' zijn.
 |  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Letter+Addition+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
-|  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobjecten Id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
 |  CheckEpClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
 |  CheckEpcVersion																|	De gebruikte versie moet geldig zijn.
 |  CheckInterpunction															|	Voor Projectnaam, ProjectObject en BuildingAnnotation mogen de volgende karakters gebruikt worden: "a-z", "A-Z", "0-9", "\", "-", "_", "'", "`", ",".
 |  CheckLinkVergunningsAanvraagToOpleveringSameScope							|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is, de actie "Toevoegen" of "Uitbreiden" is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn dan dient de Scope (Specific of Compound) van de oplevering identiek zijn aan die van de vergunningsaanvraag.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
-|  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere Pand-Id’s mogen er niet meerdere VBO-ID’s opgegeven zijn.
+|  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere pand id’s mogen er niet meerdere verblijfsobject id’s opgegeven zijn.
+|  CheckNoDuplicateBAGBerthIds													|	Alle ligplaats id's (BagBerthId) mogen slechts één keer voorkomen in het bestand.
+|  CheckNoDuplicateBAGPitchIds													|	Alle standplaats id's (BagPitchId) mogen slechts één keer voorkomen in het bestand.
+|  CheckNoDuplicateBAGResidenceIds												|	Alle verblijfsobject id's (BagResidenceId) mogen slechts één keer voorkomen in het bestand.
 |  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
 |  CheckNotPermitPreNtaStatusCompletionWithBagIdentification					|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
 |  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
@@ -85,7 +87,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckProjectNameAndObjectDoesNotAlreadyExists								|	Er mag geen andere actieve registratie zijn met dezelfde combinatie "ProjectNaam" en "ProjectObject".
 |  CheckProjectNameAndObjectRequiredForVergunningsAanvraag						|	Wanneer een registratie wordt gedaan waarbij de BAG identificatie en de TPG identificatie leeg zijn, dan moeten de Project Name en Project Object gevuld zijn binnen de Provisional Identification.
 |  CheckProjectNameAndProjectObjectCannotChangeWhenExpanding					|	Bij uitbreiden van een project is het niet toegestaan de projectgegevens te wijzigen.
-|  CheckResidentialMultipleVboIds												|	Wanneer bij woningbouw een registratie wordt gedaan met meerdere VBO-Id's op één en het zelfde opnameadres, dan moet het gebouwtype (BuildingCategory) 'Woongebouw met niet-zelfstandige woonruimte' zijn, of 'Appartement' in combinatie met scope Compound.
+|  CheckResidentialMultipleVboIds												|	Wanneer bij woningbouw een registratie wordt gedaan met meerdere verblijfsobject id's op één en het zelfde opnameadres, dan moet het gebouwtype (BuildingCategory) 'Woongebouw met niet-zelfstandige woonruimte' zijn, of 'Appartement' in combinatie met scope Compound.
 |  CheckScopeCompoundEpcClassId													|	Wanneer een registratie wordt gedaan met scope Compound dan moet de Labelklasse niet ingevuld zijn.
 |  CheckScopeSpecificMustHaveEpcClassId											|	Wanneer een registratie wordt gedaan met scope Specific dan moet de Labelklasse ingevuld zijn.
 |  CheckSoftwareTool  															|	De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
@@ -97,26 +99,26 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckTpgIdentification														|	Een TPG identificatie mag alleen worden opgegeven voor een gebouw als er ook een BAG identificatie is opgegeven.
 
 ### 2.5. BAG controle
-Voor elk adres (VBO-ID, Ligplaats-Id of Standplaats-Id in BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is. 
+Voor elk adres (verblijfsobject id, ligplaats id of standplaats id in BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is. 
 
 |  Situatie  							|  Rule(s)
 |---------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |  BagResultCheckBagHasMatchingAddress  |  Het ingevulde TPGIdentification adres moet overeenkomen (op basis van adres) met het resultaat uit BAG op basis van de ingevulde BAGIdentification.
-|  BagResultCheckBagHasMatchingIds		|  Als het ingevulde VBO-ID niet behoort tot het ingevulde Pand-Id, dan dient de BuildingAnnotation leeg te zijn.
-|  BagResultCheckValidateBerthIds		|  Het opgegeven Ligplaats-Id dient overeen te komen met het  Ligplaats-Id  vanuit BAG.
-|  BagResultCheckValidateBuildingIds	|  De opgegeven Pand-Id’s dienen overeen te komen met de Pand-Id’s vanuit BAG.
-|  BagResultCheckValidatePitchIds		|  Het opgegeven Standplaats-Id dient overeen te komen met de  Standplaats-Id vanuit BAG.
-|  BagResultCheckValidateResidenceIds	|  De opgegeven VBO-ID’s dienen overeen te komen met de VBO-ID’s vanuit BAG.
+|  BagResultCheckBagHasMatchingIds		|  Als het ingevulde verblijfsobject id niet behoort tot het ingevulde pand id, dan dient de BuildingAnnotation leeg te zijn.
+|  BagResultCheckValidateBerthIds		|  Het opgegeven ligplaats id dient overeen te komen met het ligplaats id dat terug is gekomen vanuit de BAG.
+|  BagResultCheckValidateBuildingIds	|  De opgegeven pand id’s dienen overeen te komen met de pand id’s die terug zijn gekomen vanuit de BAG.
+|  BagResultCheckValidatePitchIds		|  Het opgegeven standplaats id dient overeen te komen met het standplaats id dat terug is gekomen vanuit BAG.
+|  BagResultCheckValidateResidenceIds	|  De opgegeven verblijfsobject id’s dienen overeen te komen met de verblijfsobject id’s die terug zijn gekomen vanuit de BAG.
 
 ### 2.6. Controle op recenter certificaat
 Voor elk gebouw wordt gecontroleerd dat er niet al een recenter certificaat aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAG identificatie) of ProvisionalId in Projectgegevens (in geval van identificatie d.m.v. Provisional identificatie).
 
-|  Technische naam			|	Rule(s)
-|---------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Technische naam						|	Rule(s)
+|---------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |	CheckNoMoreRecentLabelExists		|	Er mag geen pre-NTA certificaat gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTA certificaat gevonden worden, op hetzelfde adres of project, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
 
 ### 2.7. Controle op de actie
-Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' of 'UitbreidenExtra' betreft en daarop de validaties uitgevoerd.
+Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' betreft en daarop de validaties uitgevoerd.
 
 |  Actie  			|	Status									|  Rule(s)
 |------------------	|:-----------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -124,5 +126,6 @@ Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij
 |					|	Vergunningsaanvraag/Oplevering/bestaand	|	Op de opnamedatum (SurveyDate) mag er niet al een certificaat zijn met dezelfde scope en gebouwklasse, waarbij een van de adressen overeenkomt met een adres van het opnamegebouw. 
 |	Vervangen		|	Vergunningsaanvraag						|	Op de opnamedatum (SurveyDate) dient er al een certificaat te zijn met dezelfde scope en gebouwklasse, waarbij het ProvisionalId overeenkomt met het ProvisionalId van het opnamegebouw. Daarnaast dienen alle projectgegevens overeen te komen met de projectgegevens zoals deze bekend zijn in de originele registratie. Mocht er niks gevonden worden op basis van de ProvisionalIdentification dan wordt er gekeken of op basis van een adres een certificaat gevonden kan worden (zie status Oplevering/bestaand).
 |					|	Oplevering/bestaand						|	Op de opnamedatum (SurveyDate) dient er al een certificaat te zijn met dezelfde scope en gebouwklasse, waarbij een van de adressen overeenkomt met een adres van het opnamegebouw. Daarnaast dienen alle adressen overeen te komen met de adressen zoals deze bekend zijn in de originele registratie.
-|					|	Vergunningsaanvraag/Oplevering/bestaand	|	Wanneer er een certificaat gevonden is gelden de volgende regels:<br/><ul><li>De huidige datum moet in de geldigheidperiode liggen van het bestaande certificaat (tussen Opnamedatum en Geldig tot).</li></ul> <b>Aanvullende validaties (gelden niet voor Beheerders): </b><br/> <ul><li> Het huidige certificaat moet geregistreerd zijn door de, huidige ingelogde, gebruiker van de EnergielabelApi.</li><li>De registratiedatum van het bestaande certificaat mag slechts een maximaal aantal dagen in het verleden liggen (deze periode is anders voor vergunningsaanvraag ten opzichte van oplevering of bestaand), of de ingelogde gebruiker heeft de rol ‘Certificaat Vervanger’ en de verloopdatum van deze rol bij de gebruiker is ingevuld en nog niet verstreken.</li></ul>
+|					|	Vergunningsaanvraag/Oplevering/bestaand	|	Wanneer er een certificaat gevonden is gelden de volgende regels:<br/><ul><li>De huidige datum moet in de geldigheidperiode liggen van het bestaande certificaat (tussen Opnamedatum en Geldig tot).</li></ul> <b>Aanvullende validaties (gelden niet voor Beheerders): </b><br/> <ul><li> Het huidige certificaat moet geregistreerd zijn door de, huidige ingelogde, gebruiker van de EnergielabelApi.</li><li>De registratiedatum van het bestaande certificaat mag 
+s een maximaal aantal dagen in het verleden liggen (deze periode is anders voor vergunningsaanvraag ten opzichte van oplevering of bestaand), of de ingelogde gebruiker heeft de rol ‘Certificaat Vervanger’ en de verloopdatum van deze rol bij de gebruiker is ingevuld en nog niet verstreken.</li></ul>
 |	Uitbreiden		|											|	**Situatie met opnamegebouw o.b.v. adres:**	<br/><ul><li> Op de opnamedatum (SurveyDate) dient er al een opnamegebouw te bestaan met dezelfde scope en gebouwklasse, met minimaal dezelfde adressen van het opnamegebouw.</li><li> Op de opnamedatum (SurveyDate) dient er al een certificaat te zijn met dezelfde scope en gebouwklasse, waarbij een adres overeenkomt met een adres van het opnamegebouw. </li></ul> **Situatie met opnamegebouw o.b.v. ProvisionalId:** <br/><ul><li> Op de opnamedatum (SurveyDate) dient er al een opnamegebouw te bestaan met dezelfde scope en gebouwklasse, met minimaal dezelfde adressen van het opnamegebouw.</li><br/><li> Op de opnamedatum (SurveyDate) dient er al een certificaat te zijn met dezelfde scope en gebouwklasse, waarbij een adres overeenkomt met een adres van het opnamegebouw. </li></ul> **Geldt voor alle situaties:** <br/><ul><li> De rekenmethodiek van het bestaande certificaat is gelijk aan die van het registratiebestand. </li><li> Er worden <b>geen</b> gebouwen toegevoegd die nog niet in het bestaande certificaat zitten, maar waarvoor wel al een ander certificaat bestaat. </li><li> Er zijn gebouwen in het registratiebestand die nog niet bij het bestaande certificaat aanwezig zijn. </li></ul>
