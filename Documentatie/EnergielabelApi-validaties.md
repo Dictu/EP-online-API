@@ -71,13 +71,15 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckRegistrationAdvisor														|	De registratie adviseur moet bestaan als gebruiker in EP-online, de rol adviseur hebben en gemachtigd zijn voor registraties met de rekenmethodiek (TypeCalculation) in EP-online.
 |  CheckDetailForStatusOpleveringAndVergunningsAanvraag							|	Bij Status ‘Vergunningsaanvraag’ en bij Status ‘Oplevering’ moet het opnameprotocol 'Detail' zijn.
 |  CheckDuplicateAddresses  													|	Alle adressen (ZipCode+Number+Letter+Addition+BuildingAnnotation uit TPGIdentification) mogen slechts één keer voorkomen in het bestand.
-|  CheckDuplicateBagResidenceIds  												|	Alle verblijfsobject id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
 |  CheckEpClassIdResidential													|	Bij een registratie voor woningbouw is de hoogst haalbare labelletter A++++. 
 |  CheckEpcVersion																|	De gebruikte versie moet geldig zijn.
 |  CheckInterpunction															|	Voor Projectnaam, ProjectObject en BuildingAnnotation mogen de volgende karakters gebruikt worden: "a-z", "A-Z", "0-9", "\", "-", "_", "'", "`", ",".
 |  CheckLinkVergunningsAanvraagToOpleveringSameScope							|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is, de actie "Toevoegen" of "Uitbreiden" is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn dan dient de Scope (Specific of Compound) van de oplevering identiek zijn aan die van de vergunningsaanvraag.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
 |  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere pand id’s mogen er niet meerdere verblijfsobject id’s opgegeven zijn.
+|  CheckNoDuplicateBAGBerthIds													|	Alle ligplaats id's (BagBerthId) mogen slecht één keer voorkomen in het bestand.
+|  CheckNoDuplicateBAGPitchIds													|	Alle standplaats id's (BagPitchId) mogen slecht één keer voorkomen in het bestand.
+|  CheckNoDuplicateBAGResidenceIds												|	Alle verblijfsobject id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
 |  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
 |  CheckNotPermitPreNtaStatusCompletionWithBagIdentification					|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
 |  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
