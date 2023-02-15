@@ -29,9 +29,9 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckAdviceDateNotInFuture													|	De opgegeven adviesdatum mag niet in de toekomst liggen.
 |  CheckBagBuildingIdMustHaveBagResidenceId										|	Wanneer een pand id is opgegeven, dan is het verplicht om een verblijfsobject id op te geven.
 |  CheckBuildingIdentificationForIncorrectCharacters							|	Wanneer een BuildingAnnotation is opgegeven dan mag deze naast letters en cijfers alleen de volgende karakters bevatten: "a-z", "A-Z", "0-9", "\", "-", "_", "'", "`", ",".
-|  CheckNoDuplicateBAGBerthIds													|	Alle ligplaats id's (BagBerthId) mogen slecht één keer voorkomen in het bestand.
-|  CheckNoDuplicateBAGPitchIds													|	Alle standplaats id's (BagPitchId) mogen slecht één keer voorkomen in het bestand.
-|  CheckNoDuplicateBAGResidenceIds												|	Alle verblijfsobject id's (BagResidenceId) mogen slecht één keer voorkomen in het bestand.
+|  CheckNoDuplicateBAGBerthIds													|	Alle ligplaats id's (BagBerthId) mogen slechts één keer voorkomen in het bestand.
+|  CheckNoDuplicateBAGPitchIds													|	Alle standplaats id's (BagPitchId) mogen slechts één keer voorkomen in het bestand.
+|  CheckNoDuplicateBAGResidenceIds												|	Alle verblijfsobject id's (BagResidenceId) mogen slechts één keer voorkomen in het bestand.
 |  CheckRegistrationAdvisorHasCorrectCalculationType							|	De registratieadviseur dient de correcte bevoegdheid (rekenmethodiek) in EP-Online te hebben om een maatwerkadvies te mogen registreren.
 |  CheckSoftwareToolAndCalculationTypeAreValid  								|	De opgegeven softwaretool (in de XML) dient bekend te zijn binnen EP-Online en te corresponderen met de correcte rekenmethodiek. Zowel de softwaretool als de rekenmethodiek dienen actief te zijn.
 |  CheckSurveyAndRegistrationNotSameAdvisor										|	Wanneer een registratie wordt gedaan met OpnameEnRegistratieZelfdeAdviseur is 'true', dan mag het blok 'Surveyor' niet gevuld zijn.<br/><br/> Wanneer een registratie wordt gedaan met OpnameEnRegistratieZelfdeAdviseur is 'false', dan mogen 'Name' en 'ExamNumber' in het blok 'Surveyor' niet leeg zijn.
