@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:TailoredAdvice xmlns:tns="http://schemas.ep-online.nl/maatwerkadviesbestand" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<TAMeta>
+		<Version>1.00</Version>
+		<Tooling>
+			<VendorSoftwareKey>Test_NTA_8800:MWA</VendorSoftwareKey>
+			<VendorSoftwareVersionId>1.00</VendorSoftwareVersionId>
+		</Tooling>
+	</TAMeta>
+	<TAObject>
+		<BuildingClass>residential</BuildingClass>
+		<ObjectLocationList>
+			<ObjectLocation>
+				<BAGIdentification>
+					<BAGResidence>
+						<BAGResidenceId>0363010000554876</BAGResidenceId> <!-- 1018LP 3 -->
+					</BAGResidence>
+				</BAGIdentification>
+			</ObjectLocation>
+		</ObjectLocationList>
+	</TAObject>
+	<TAAdvice>
+		<AdviceSources>
+			<AdviceDate>20230201</AdviceDate>
+			<SurveyorIsRegistrationAdvisor>false</SurveyorIsRegistrationAdvisor>
+			<Surveyor>
+				<Name>TestAdviseur</Name>
+				<ExamNumber>1234</ExamNumber>
+			</Surveyor>
+		</AdviceSources>
+		<SoftwareSpecific software="">
+			<anyElement/>
+		</SoftwareSpecific>
+	</TAAdvice>
+</tns:TailoredAdvice>
