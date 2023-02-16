@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schemas.ep-online.nl/maatwerkadviesbestand" xmlns:tns="http://schemas.ep-online.nl/maatwerkadviesbestand" xml:lang="nl">
+	<xs:element name="TailoredAdvice" type="tns:TailoredAdvice" />
+	<xs:complexType name="TailoredAdvice">
+		<xs:sequence>
+			<xs:element name="TAMeta">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Version" type="tns:Version">
+							<xs:annotation>
+								<xs:documentation>Versiecode van de xml-structuur van het maatwerkadviesbestand.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Tooling">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="VendorSoftwareKey" type="tns:NameSoftware">
+										<xs:annotation>
+											<xs:documentation>Identificatiesleutel van de rekensoftware. Waarde moet overeenkomen met de sleutel van een geregistreerd rekensoftware-pakket.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="VendorSoftwareVersionId" type="tns:VersionSoftware">
+										<xs:annotation>
+											<xs:documentation>Identificatie van de versie van de rekensoftware.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TAObject">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BuildingClass" type="tns:BuildingClass">
+							<xs:annotation>
+								<xs:documentation>Geeft aan of de opname onder woningbouw of utiliteitsbouw valt. De waarde 'residential' wordt gebruikt voor woningbouw, 'commercial' voor utiliteitsbouw.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ObjectLocationList">
+							<xs:annotation>
+								<xs:documentation>Lijst van locatieidentificaties waarvoor het maatwerkadvies geldt.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ObjectLocation" type="tns:ObjectLocationType" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Blok met gegevens over de locatie van het pand of adresseerbaar object.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TAAdvice">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AdviceSources">
+							<xs:annotation>
+								<xs:documentation>Blok met brongegevens van het maatwerkadvies.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AdviceDate" type="tns:AdviceDate">
+										<xs:annotation>
+											<xs:documentation>Datum waarop de maatwerkadviesparameters zijn opgenomen. Notatie YYYYMMDD. Deze datum moet op of voor de registratiedatum liggen.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="SurveyorIsRegistrationAdvisor" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>Geeft aan of de opname en registratie van het maatwerkadvies door dezelfde adviseur zijn uitgevoerd. Als false, dan moet Surveyor gevuld worden.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Surveyor" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>De adviseur die de maatwerkadviesparameters heeft opgenomen en het advies heeft afgegeven.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Name" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Naam van de maatwerkadvies-opname-adviseur.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="ExamNumber">
+													<xs:annotation>
+														<xs:documentation>Examennummer van de maatwerkadvies-opname-adviseur.</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="3" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="SoftwareSpecific" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Softwarespecifieke informatie die anders niet in deze XML-structuur past.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="skip" />
+								</xs:sequence>
+								<xs:attribute name="software" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Identifier van de software waarvoor dit blok bedoeld is (naam en versie).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Version: Versienummer van het maatwerkadviesbestand XML-format. Initiëel is de enige
+	mogelijke waarde 1.00. -->
+	<xs:simpleType name="Version">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1.00" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- NameSoftware: Naam van het softwarepakket. -->
+	<xs:simpleType name="NameSoftware">
+		<xs:restriction base="tns:EpbdNonEmptyString">
+			<xs:maxLength value="75" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- VersionSoftware: Versienummer van het softwarepakket. -->
+	<xs:simpleType name="VersionSoftware">
+		<xs:restriction base="tns:EpbdNonEmptyString">
+			<xs:maxLength value="75" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ObjectLocationType">
+		<xs:sequence>
+			<xs:element name="BAGIdentification" type="tns:BAGIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Blok met identificatiegegevens van een gebouw volgens BAG.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BuildingAnnotation" type="tns:BuildingIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Extra identificatie als de combinatie van postcode, huisnummer en -toevoeging niet uniek is.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BAGIdentificationType">
+		<xs:choice>
+			<xs:element name="BAGResidence">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BAGResidenceId" type="tns:BagId">
+							<xs:annotation>
+								<xs:documentation>BAG verblijfsobject-ID.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:sequence>
+							<xs:element name="BAGBuildingId" type="tns:BagBuildingId" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>BAG Pand-ID.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BAGBerthId" type="tns:BagId">
+				<xs:annotation>
+					<xs:documentation>BAG Ligplaats-ID.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BAGPitchId" type="tns:BagId">
+				<xs:annotation>
+					<xs:documentation>BAG Standplaats-ID.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="BagId">
+		<xs:restriction base="xs:long">
+			<xs:pattern value="([0-9]{4}(01|02|03)[0-9]{10})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BagBuildingId">
+		<xs:restriction base="xs:long">
+			<xs:pattern value="([0-9]{4}10[0-9]{10})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- BuildingClass: Geeft aan of het gaat om woningbouw of utiliteitsbouw -->
+	<xs:simpleType name="BuildingClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="residential"></xs:enumeration>
+			<xs:enumeration value="commercial"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- BuildingIdentification: Extra informatie om een gebouw te identificeren waar geen adres voor beschikbaar is.-->
+	<xs:simpleType name="BuildingIdentification">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="25" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- SurveyDate: Opnamedatum van het maatwerkadvies. -->
+	<xs:simpleType name="AdviceDate">
+		<xs:restriction base="tns:EpbdDate" />
+	</xs:simpleType>
+	<!-- EpbdNonEmptyString: Hulptype voor een string die niet leeg mag zijn. -->
+	<xs:simpleType name="EpbdNonEmptyString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- EpbdDate: formaat is YYYYMMDD -->
+	<xs:simpleType name="EpbdDate">
+		<xs:restriction base="xs:string">
+			<xs:length value="8" />
+			<xs:pattern value="([0-9]{4}((0[1-9])|(1[0-2]))((0[1-9])|(([1-2][0-9])|(3[0-1]))))" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
