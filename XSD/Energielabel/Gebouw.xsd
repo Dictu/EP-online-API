@@ -21,12 +21,12 @@
 							<xs:element ref="n:Samenvatting"/>
 							<xs:element ref="n:Verwarmingssystemen"/>
 							<xs:element ref="n:Tapwatersystemen"/>
-							<xs:element ref="n:Koelsystemen"/>
-							<xs:element ref="n:Bevochtigingssystemen"/>
+							<xs:element ref="n:Koelsystemen" minOccurs="0"/>
+							<xs:element ref="n:Bevochtigingssystemen" minOccurs="0"/>
 							<xs:element ref="n:Ventilatiesystemen"/>
-							<xs:element ref="n:ZonneEnergiesystemen"/>
+							<xs:element ref="n:ZonneEnergiesystemen" minOccurs="0"/>
 							<xs:element ref="n:Rekenzones"/>
-							<xs:element ref="n:OnverwarmdeRuimten"/>
+							<xs:element ref="n:OnverwarmdeRuimten" minOccurs="0"/>
 							<xs:element ref="n:Energiedragers"/>
 						</xs:sequence>
 					</xs:complexType>
@@ -160,9 +160,24 @@
 						<xs:documentation>Oppervlaktegewogen gemiddelde van qv10;spec van alle rekenzones [dm³/(s×m²)]. §11.2.5</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element name="Gebouwhoogte" type="xs:double">
+					<xs:annotation>
+						<xs:documentation>Buitenwerkse gebouwhoogte [m].</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VerticaleLeidingen" type="n:VerticaleLeidingenEnumeration">
+					<xs:annotation>
+						<xs:documentation>Verticale leidingen door thermische schil.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 				<xs:element name="OpwekkertypeVerwarming" type="n:HoofdtypeVerwarmingstoestelEnumeration">
 					<xs:annotation>
 						<xs:documentation>Warmteopwekker voor ruimteverwarming van het preferente toestel van de verwarmingsinstallatie met de grootste aangesloten oppervlakte.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VerwarmingCollectief" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>Of de verwarmingsinstallatie met de grootste aangesloten oppervlakte een collectieve installatie betreft.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="DistributiemediumVerwarming" type="n:WarmtedistributieEnumeration">
@@ -172,7 +187,12 @@
 				</xs:element>
 				<xs:element name="OpwekkertypeTapwater" type="n:TapwatertoesteltypeEnumeration">
 					<xs:annotation>
-						<xs:documentation>Preferente Tapwateropwekker voor tapwatersysteem dat het grootste aangesloten AG bediend.</xs:documentation>
+						<xs:documentation>Preferente tapwateropwekker voor tapwatersysteem dat het grootste aangesloten Ag bedient.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TapwaterCollectief" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>Of het tapwatersysteem dat het grootste aangesloten Ag bedient, een collectieve installatie betreft.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="DoucheWTWAanwezig" type="xs:boolean">
@@ -294,6 +314,11 @@
 															<xs:documentation>Is het toestel binnen de thermische zone geplaatst?</xs:documentation>
 														</xs:annotation>
 													</xs:element>
+													<xs:element name="Waakvlam" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Is er een waakvlam aanwezig?</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 													<xs:element name="BronWarmtepomp" type="n:BronWarmtepompEnumeration" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>Bron van de warmtepomp</xs:documentation>
@@ -327,6 +352,11 @@
 										<xs:element name="DistributiesysteemIngeregeld" type="n:WarmtedistributieIngeregeldEnumeration">
 											<xs:annotation>
 												<xs:documentation>Is bij distributie door water of lucht en water het distributiesysteem ingeregeld?</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="WarmtemeterAanwezig" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Is er een warmtemeter in de distributieleiding aanwezig?</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="Leidinglengte" type="xs:double">
@@ -399,11 +429,21 @@
 															</xs:simpleContent>
 														</xs:complexType>
 													</xs:element>
+													<xs:element name="VermogenOpwekker" type="xs:double" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Nominaal vermogen per toestel [kW].</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 													<xs:element ref="n:Energiedrager"/>
 													<xs:element name="CWklasse" type="n:CWKlasseEnumeration" minOccurs="0"/>
 													<xs:element name="BinnenThermischeSchil" type="xs:boolean">
 														<xs:annotation>
 															<xs:documentation>Toestel bevindt zich binnen de verwarmde gebouwschil.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Waakvlam" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Toestel bevat een waakvlam.</xs:documentation>
 														</xs:annotation>
 													</xs:element>
 												</xs:sequence>
@@ -439,16 +479,10 @@
 										<xs:element name="Distributieleidingen">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="Distributieleiding" minOccurs="0" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:sequence>
-																<xs:element name="Leidinglengte" type="xs:double">
-																	<xs:annotation>
-																		<xs:documentation>Leidinglengte [m]</xs:documentation>
-																	</xs:annotation>
-																</xs:element>
-															</xs:sequence>
-														</xs:complexType>
+													<xs:element name="Leidinglengte" type="xs:double">
+														<xs:annotation>
+															<xs:documentation>Leidinglengte [m]</xs:documentation>
+														</xs:annotation>
 													</xs:element>
 													<xs:element name="Leidingisolatie" type="n:TapwaterleidingisolatieEnumeration">
 														<xs:annotation>
@@ -503,11 +537,7 @@
 															</xs:annotation>
 															<xs:complexType>
 																<xs:sequence>
-																	<xs:element name="Keukentappunt" type="xs:boolean">
-																		<xs:annotation>
-																			<xs:documentation>Tappunt is in de keuken</xs:documentation>
-																		</xs:annotation>
-																	</xs:element>
+																	<xs:element name="LocatieTappunt" type="n:LocatieTappuntEnumeration"/>
 																	<xs:element name="LengteUittapleiding" type="n:LengteUittapleidingEnumeration">
 																		<xs:annotation>
 																			<xs:documentation>Leidinglengte van dit tappunt [m]</xs:documentation>
@@ -541,6 +571,11 @@
 										<xs:element name="HorizontaalAangesloten" type="xs:boolean">
 											<xs:annotation>
 												<xs:documentation>Douche-WTW is horizontaal aangesloten</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AantalAangeslotenDouches" type="xs:nonNegativeInteger" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Aantal douches aangesloten op douche-WTW.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 									</xs:sequence>
@@ -591,6 +626,11 @@
 															</xs:simpleContent>
 														</xs:complexType>
 													</xs:element>
+													<xs:element name="VermogenOpwekker" type="xs:double" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Nominaal vermogen per toestel [kW].</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 													<xs:element name="SubtypeKoeltoestel" type="n:SubtypeKoeltoestelEnumeration" minOccurs="0"/>
 													<xs:element ref="n:Energiedrager"/>
 													<xs:element name="ElektrVermogen" type="n:ElektrischVermogenEnumeration"/>
@@ -603,30 +643,42 @@
 							<xs:element name="Koudedistributie">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="DistributieMedium" type="n:KoeldistributieMediumEnumeration">
-											<xs:annotation>
-												<xs:documentation>Distributiemedium</xs:documentation>
-											</xs:annotation>
-										</xs:element>
-										<xs:element name="DistributiesysteemIngeregeld" type="n:WaterzijdigeInregelingtypeEnumeration" minOccurs="0">
-											<xs:annotation>
-												<xs:documentation>Is bij distributie door water of lucht en water het distributiesysteem ingeregeld?</xs:documentation>
-											</xs:annotation>
-										</xs:element>
-										<xs:element name="Leidingisolatie" type="n:LeidingisolatieEnumeration" minOccurs="0">
-											<xs:annotation>
-												<xs:documentation>Zijn de distributieleidingen geïsoleerd?</xs:documentation>
-											</xs:annotation>
-										</xs:element>
-										<xs:element name="LeidingenInOnverwarmdeRuimte" type="xs:boolean" minOccurs="0">
-											<xs:annotation>
-												<xs:documentation>Lopen er distributieleidigen door onverwarmde ruimte(n)?</xs:documentation>
-											</xs:annotation>
-										</xs:element>
-										<xs:element name="IngebedInConstructie" type="xs:boolean" minOccurs="0">
-											<xs:annotation>
-												<xs:documentation>Zijn de distributieleidingen ingebouwd in de bouwkundige constructie?</xs:documentation>
-											</xs:annotation>
+										<xs:element name="Ontwerptemperatuur" type="n:OntwerptemperatuurEnumeration" minOccurs="0"/>
+										<xs:element name="Distributieleidingen">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="DistributieMedium" type="n:KoeldistributieMediumEnumeration">
+														<xs:annotation>
+															<xs:documentation>Distributiemedium</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="DistributiesysteemIngeregeld" type="n:WaterzijdigeInregelingtypeEnumeration" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Is bij distributie door water of lucht en water het distributiesysteem ingeregeld?</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Leidinglengte" type="xs:double">
+														<xs:annotation>
+															<xs:documentation>Leidinglengte [m]</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Leidingisolatie" type="n:LeidingisolatieEnumeration" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Zijn de distributieleidingen geïsoleerd?</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="LeidingenInOnverwarmdeRuimte" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Lopen er distributieleidigen door onverwarmde ruimte(n)?</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="IngebedInConstructie" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Zijn de distributieleidingen ingebouwd in de bouwkundige constructie?</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
 									<xs:attribute name="kwaliteitsverklaring" type="xs:positiveInteger" use="optional"/>
@@ -733,6 +785,16 @@
 												<xs:documentation>Zijn de kanalen tussen buiten en de WTW geïsoleerd</xs:documentation>
 											</xs:annotation>
 										</xs:element>
+										<xs:element name="Koudeterugwinning" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Is er sprake van koudeterugwinning via WTW?</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="LengteToevoerkanaalVanBuitenNaarWTW" type="xs:double" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Lengte toevoerkanaal van buiten naar WTW [m].</xs:documentation>
+											</xs:annotation>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -747,6 +809,16 @@
 										<xs:element name="BinnenThermischeZone" type="xs:boolean">
 											<xs:annotation>
 												<xs:documentation>Staat de LBK binnen de thermische zone</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="VerwarmingsbatterijAanwezig" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Is er een verwarmingsbatterij in luchtbehandelingskast?</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="KoelbatterijAanwezig" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Is er een koelbatterij in luchtbehandelingskast?</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 									</xs:sequence>
@@ -779,15 +851,11 @@
 															<xs:documentation>Is het een gelijkstroomventilator</xs:documentation>
 														</xs:annotation>
 													</xs:element>
-													<xs:choice>
-														<xs:sequence>
-															<xs:element name="Installatiejaar" type="n:VentilatorInstallatiejaarEnumeration">
-																<xs:annotation>
-																	<xs:documentation>Installatiejaar van de ventilator</xs:documentation>
-																</xs:annotation>
-															</xs:element>
-														</xs:sequence>
-													</xs:choice>
+													<xs:element name="Installatiejaar" type="n:VentilatorInstallatiejaarEnumeration">
+														<xs:annotation>
+															<xs:documentation>Installatiejaar van de ventilator</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 												</xs:sequence>
 												<xs:attribute name="id" type="xs:nonNegativeInteger" use="optional" />
 											</xs:complexType>
@@ -808,6 +876,20 @@
 												<xs:documentation>Hoe wordt de zomernachtventilatie bediend</xs:documentation>
 											</xs:annotation>
 										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Voorverwarming" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Is er sprake van natuurlijke toevoerroosters met voorverwarming?</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="VoorverwarmingAanwezig" type="xs:boolean"/>
+										<xs:element name="AandeelVanVoorverwarming" type="n:AandeelVanVoorverwarmingEnumeration" minOccurs="0"/>
+										<xs:element name="MaximaalVermogenVoorverwarming" type="xs:double" minOccurs="0"/>
+										<xs:element name="BuitenluchttemperatuurWaarbijDeVoorverwarmingInschakelt" type="xs:double" minOccurs="0"/>
+										<xs:element name="MaximaleInblaastemperatuurWaaropDeVoorverwarmingRegelt" type="xs:double" minOccurs="0"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -861,6 +943,8 @@
 			<xs:element name="Vsto" type="xs:double"/>
 			<xs:element name="MethodeBbijlageI" type="xs:boolean"/>
 			<xs:element name="TypeVerwarming" type="n:ZonnecollectorVoorNaVerwarmingEnumeration"/>
+			<xs:element name="FabricagejaarBoilervat" type="n:FabricagejaarBoilervatEnumeration" minOccurs="0"/>
+			<xs:element name="EnergielabelBoilervat" type="n:EnergielabelOnbekendEnumeration" minOccurs="0"/>
 			<xs:element name="QWsol45zuidAnForf" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>de jaarlijkse zonbijdrage aan warm tapwater van de zonneboiler op het zuiden georiënteerd en geplaatst onder 45° [MJ]</xs:documentation>
@@ -929,7 +1013,7 @@
 						<xs:element name="Links" type="n:Zijbelemmering" minOccurs="0"/>
 						<xs:element name="Rechts" type="n:Zijbelemmering" minOccurs="0"/>
 					</xs:sequence>
-					<xs:element name="ConstanteHoogte">
+					<xs:element name="ConstanteHoogte" minOccurs="0">
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element name="Afstand" type="xs:double">
@@ -945,7 +1029,7 @@
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="Overstek">
+					<xs:element name="Overstek" minOccurs="0">
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element name="Diepte" type="xs:double">
@@ -1082,11 +1166,25 @@
 							<xs:element name="ThermischeCapaciteit">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Bouwwijze" type="n:BouwwijzeEnumeration"/>
-										<xs:element name="MassaVloerConstructie" type="n:MassaVloerConstructieEnumeration"/>
+										<xs:element name="BouwwijzeVloeren" type="n:BouwwijzeVloerenEnumeration"/>
+										<xs:element name="BouwwijzeWanden" type="n:BouwwijzeWandenEnumeration"/>
 										<xs:element name="GeslotenPlafond" type="xs:boolean"/>
 										<xs:element name="CmForfaitair" type="xs:boolean"/>
 										<xs:element name="Cm" type="xs:double"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Leidingdoorvoeren" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="VerticaleLeiding" minOccurs="1" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AantalVerticaleLeidingdoorvoeren" type="xs:nonNegativeInteger"/>
+													<xs:element name="TypeLeidingisolatieDoorvoeren" type="n:TypeLeidingisolatieDoorvoerenEnumeration"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -1126,11 +1224,6 @@
 														</xs:complexType>
 													</xs:element>
 													<xs:element name="Technologie" type="n:VerlichtingstechnologieEnumeration" minOccurs="0"/>
-													<xs:element name="Nieuwwaardecompensatie" type="xs:double" minOccurs="0">
-														<xs:annotation>
-															<xs:documentation>Verlichtingssysteem heeft technologie met nieuwwaarde-compensatie. §14.4, T14.4</xs:documentation>
-														</xs:annotation>
-													</xs:element>
 													<xs:element name="Verlichtingsregeling">
 														<xs:complexType>
 															<xs:simpleContent>
@@ -1255,7 +1348,7 @@
 								<xs:element name="GrenstAanAORuimte" type="n:Reference"/>
 							</xs:choice>
 							<xs:element ref="n:Hellingshoek"/>
-							<xs:element name="Orientatie" type="n:OrientatieEnumeration"/>
+							<xs:element name="Orientatie" type="n:OrientatieOnbekendEnumeration" />
 							<xs:element name="Oppervlakte" type="xs:double"/>
 							<xs:element name="Vlaktype" type="n:VlaktypeEnumeration"/>
 							<xs:choice>
@@ -2187,6 +2280,14 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="VerticaleLeidingenEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="geen verticale leidingen door thermische schil"/>
+			<xs:enumeration value="verticale leidingen door thermische schil bekend"/>
+			<xs:enumeration value="verticale leidingen door thermische schil onbekend"/>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:simpleType name="HoofdtypeVerwarmingstoestelEnumeration">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Absorptiewarmtepomp">
@@ -2402,6 +2503,10 @@
 					<xs:documentation>oppervlaktewater</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="hogetemperatuurbron: ≥ 15°C en &lt; 20°C"/>
+			<xs:enumeration value="hogetemperatuurbron: ≥ 20°C en &lt; 40°C"/>
+			<xs:enumeration value="hogetemperatuurbron: ≥ 40°C"/>
+			<xs:enumeration value="hogetemperatuurbron: onbekend"/>
 			<xs:enumeration value="Overig">
 				<xs:annotation>
 					<xs:documentation>overige bronnen</xs:documentation>
@@ -2417,6 +2522,20 @@
 			<xs:enumeration value="eenpijpssysteem gerenoveerd"/>
 			<xs:enumeration value="eenpijps- of tweepijpssysteem onbekend"/>
 			<xs:enumeration value="geen watergedragen distributiesysteem aanwezig"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="OntwerptemperatuurEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aanvoer 6° - retour 12°"/>
+			<xs:enumeration value="aanvoer 12° - retour 16°"/>
+			<xs:enumeration value="aanvoer 12° - retour 18°"/>
+			<xs:enumeration value="aanvoer 17° - retour 21°"/>
+			<xs:enumeration value="aanvoer- en retourtemperatuur onbekend, hele systeem zelfde type afgiftesysteem">
+				<xs:annotation>
+					<xs:documentation>aanvoer- en retourtemperatuur onbekend, hele systeem zelfde type afgiftesysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -2542,6 +2661,13 @@
 			<xs:enumeration value="Ongeïsoleerd"/>
 			<xs:enumeration value="≥ 10 mm"/>
 			<xs:enumeration value="≥ 20 mm"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LocatieTappuntEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="keukentappunt"/>
+			<xs:enumeration value="badkamertappunt"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -2796,6 +2922,31 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="FabricagejaarBoilervatEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="voor 2018"/>
+			<xs:enumeration value="2018 en nieuwer"/>
+			<xs:enumeration value="onbekend"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="EnergielabelEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A+"/>
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="B"/>
+			<xs:enumeration value="C"/>
+			<xs:enumeration value="D"/>
+			<xs:enumeration value="E"/>
+			<xs:enumeration value="F"/>
+			<xs:enumeration value="G"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="EnergielabelOnbekendEnumeration">
+		<xs:union memberTypes="n:EnergielabelEnumeration n:OnbekendEnumeration"/>
+	</xs:simpleType>
+
 	<xs:simpleType name="ZonnecollectorWarmteopslagEnumeration">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Verwarmd">
@@ -2872,31 +3023,38 @@
 			<xs:enumeration value="Enthalpiewisselaar"/>
 			<xs:enumeration value="Tegenstroomwarmtewisselaar, aluminium"/>
 			<xs:enumeration value="Tegenstroomwarmtewisselaar, kunststof"/>
-			<xs:enumeration value="Kwaliteitsverklaring"/>
+			<xs:enumeration value="WTW rendement volgens EN13141-7, EN13141-8"/>
+			<xs:enumeration value="WTW rendement volgens EN13142"/>
+			<xs:enumeration value="WTW rendement volgens NEN-EN 13053"/>
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="MassaVloerConstructieEnumeration">
+	<xs:simpleType name="BouwwijzeVloerenEnumeration">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="MinderDan250"/>
-			<xs:enumeration value="250tot500"/>
-			<xs:enumeration value="500tot750"/>
-			<xs:enumeration value="MeerDan750"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="BouwwijzeEnumeration">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="betonnen wand-vloer skeletbouw met massieve en niet-massieve betonnen vloeren"/>
-			<xs:enumeration value="dragend metselwerk met massieve betonnen vloeren"/>
-			<xs:enumeration value="dragend metselwerk met niet-massieve betonnen vloeren"/>
-			<xs:enumeration value="dragend metselwerk met houten vloeren"/>
-			<xs:enumeration value="betonnen kolom-ligger skeletbouw met niet-massieve betonnen vloeren"/>
-			<xs:enumeration value="hsb, sfb of staalskeletbouw met staalbeton of niet-massieve betonnen vloeren"/>
-			<xs:enumeration value="staalskeletbouw met hsb of sfb vloeren"/>
-			<xs:enumeration value="staalframebouw (sfb) met hsb of sfb vloeren"/>
-			<xs:enumeration value="houtskeletbouw (hsb) met hsb of sfb vloeren"/>
+			<xs:enumeration value="hsb, sfb of hout"/>
+			<xs:enumeration value="geïsoleerd aan binnenzijde"/>
+			<xs:enumeration value="staal-beton of niet-massief beton"/>
+			<xs:enumeration value="massief beton"/>
 			<xs:enumeration value="volgens bijlage B"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BouwwijzeWandenEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="hsb, sfb of staalskeletbouw"/>
+			<xs:enumeration value="geïsoleerd aan binnenzijde"/>
+			<xs:enumeration value="dragend metselwerk"/>
+			<xs:enumeration value="betonnen kolom-ligger skeletbouw"/>
+			<xs:enumeration value="betonnen wand-vloer skeletbouw"/>
+			<xs:enumeration value="volgens bijlage B"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="TypeLeidingisolatieDoorvoerenEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="geïsoleerd"/>
+			<xs:enumeration value="ongeïsoleerd"/>
+			<xs:enumeration value="n.v.t."/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -3172,6 +3330,9 @@
 					<xs:documentation>Kunststof tegenstroomwarmtewisselaar</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="WTW rendement volgens EN13141-7, EN13141-8"/>
+			<xs:enumeration value="WTW rendement volgens EN13142"/>
+			<xs:enumeration value="WTW rendement volgens NEN-EN 13053"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -3269,6 +3430,13 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="AandeelVanVoorverwarmingEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="voorverwarming in alle toevoerroosters"/>
+			<xs:enumeration value="voorverwarming in deel toevoerroosters"/>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:simpleType name="VlaktypeEnumeration">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="dak"/>
@@ -3345,14 +3513,17 @@
 			<xs:enumeration value="screen (buiten), wit"/>
 			<xs:enumeration value="screen (buiten), zwart, antraciet, donkerbruin"/>
 			<xs:enumeration value="screen (buiten), overige kleuren"/>
+			<xs:enumeration value="screen (buiten), onbekende kleur"/>
 			<xs:enumeration value="jaloezieën (buiten), wit"/>
 			<xs:enumeration value="jaloezieën (buiten), zwart, antraciet, donkerbruin"/>
 			<xs:enumeration value="jaloezieën (buiten), overige kleuren"/>
+			<xs:enumeration value="jaloezieën (buiten), onbekende kleur"/>
 			<xs:enumeration value="gemetalliseerd weefsel (binnenzonwering)"/>
 			<xs:enumeration value="uitvalscherm"/>
 			<xs:enumeration value="knikarmscherm"/>
 			<xs:enumeration value="rolluiken (buiten), wit"/>
 			<xs:enumeration value="rolluiken (buiten), overige kleuren"/>
+			<xs:enumeration value="rolluiken (buiten), onbekende kleur"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -3381,6 +3552,12 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="OnbekendEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbekend"/>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:simpleType name="OrientatieEnumeration">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="N"/>
@@ -3393,6 +3570,10 @@
 			<xs:enumeration value="NW"/>
 			<xs:enumeration value="horizontaal"/>
 		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="OrientatieOnbekendEnumeration">
+		<xs:union memberTypes="n:OrientatieEnumeration n:OnbekendEnumeration"/>
 	</xs:simpleType>
 
 	<xs:simpleType name="RisicoEnumeration">
