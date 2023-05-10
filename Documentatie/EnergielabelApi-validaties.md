@@ -29,6 +29,7 @@
 |	21 sep 2022	|	1.14 |	Paul Kamps		|	Business Rule verwijderd.
 |	15 dec 2022	|	1.15 |	Paul Kamps		|	Business Rule CheckProjectNameAndObjectDoesNotAlreadyExists toegevoegd, Business Rule CheckEpcVersion is verwijderd.
 |	23 jan 2023	|	1.16 |	Paul Kamps		|	Business Rules CheckEpcVersion, CheckInterpunction en CheckLinkVergunningsAanvraagToOpleveringSameScope toegevoegd. De naam van Business Rules CheckRegistrationAdvisor en CheckEpClassIdResidential zijn gewijzigd.
+|   10 mei 2023 |   1.17 |	Paul Kamps		|	Business Rule CheckBuildingTypeBagPitch bijgewerkt om meer gebouwtypes te ondersteunen.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de bijbehorende meldingen terug gegeven en wordt niet verder gegaan naar de volgende stap.
@@ -63,7 +64,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckBuildingObservation  													|	Opname heeft plaatsgevonden in het gebouw (BuildingObservation = Yes).
 |  CheckBuildingType  															|	Bij woningbouw: bij elk gebouw moet het gebouwtype (BuildingCategory) ingevuld zijn. <br/> Bij utiliteitsbouw: bij een gebouw mag zowel het gebouwtype (BuildingCategory) als het subtype (BuildingCategorySupplement) niet ingevuld zijn.
 |  CheckBuildingTypeBagBerth													|	Bij gebruik van BagBerthId zijn enkel gebouwtype (BuildingCategory) 13 (Woonboot bestaande ligplaats) en 15 (Woonboot nieuwe ligplaats) toegestaan.
-|  CheckBuildingTypeBagPitch													|	Bij gebruik van BagPitchId is enkel gebouwtype (BuildingCategory) 14 (Woonwagen) toegestaan.
+|  CheckBuildingTypeBagPitch													|	Bij gebruik van BagPitchId zijn enkel gebouwtypes 1 (Vrijstaande woning), 2 (Rijwoning hoek), 3 (Rijwoning tussen), 12 (Twee-onder-één-kap), 14 (Woonwagen) en 16 (Logieswoning) toegestaan.
 |  CheckBuildingTypeSupplement  												|	Alleen voor woningbouw:<br/><br/> <b>Scope is specific:</b><br/>Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) gevuld zijn en een waarde van 1 t/m 8 bevatten. <br/> Bij andere gebouwtypes mag het subtype (BuildingCategorySupplement) niet gevuld zijn.<br/><br/><b>Scope is compound:</b><br/> Voor gebouwtype (BuildingCategory) 7 moet het subtype (BuildingCategorySupplement) niet gevuld zijn.
 |  CheckBuildingUseTypes  														|	Alleen voor utiliteitsbouw: voor alle UseTypes (PrimaryUse en SecondaryUse's) moet het Percentage > 0 zijn en opgeteld tussen 0 en 100 (inclusief) liggen.
 |  CheckCalculationType  														|	De rekenmethodiek (TypeCalculation) moet bestaan in EP-online, niet geblokkeerd zijn, en de gebouwklasse moet overeenkomen met de MainBuildingClass in de XML. <br/> <b>NB:</b> voor de NTA_8800 rekenmethodiek wordt deze door code door de webservice aangevuld met de indicatie basis/detailopname en indicatie woningbouw/utiliteitsbouw (in EP-online bestaan er dus 4 NTA-8800 rekenmethodieken).
