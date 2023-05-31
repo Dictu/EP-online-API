@@ -256,7 +256,7 @@
 														<xs:documentation>Wat de aanleiding is voor het registreren van het gebouw.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element name="AreaEffect" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+												<xs:element name="AreaEffect" type="xs:boolean" minOccurs="1" maxOccurs="1">
 													<xs:annotation>
 														<xs:documentation>Waarde die aangeeft of bij de berekening van de energieprestaties gebiedsgebonden maatregelen van toepassing zijn (EMG). De waarde “yes” geeft aan dat EMG van toepassing is.</xs:documentation>
 													</xs:annotation>
@@ -271,7 +271,7 @@
 									</xs:element>
 									<xs:element name="Gebruiksoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
 									<xs:element name="Verliesoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
-									<xs:element name="StandaardWoningbouw" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="Standaard" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
 									<xs:element name="Compactheid" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
 									<xs:element name="Labelklassegrenzen">
 										<xs:complexType>
@@ -341,27 +341,27 @@
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="BuildingBluePrint" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+									<xs:element name="BuildingBluePrint" type="xs:boolean" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
 											<xs:documentation>Of de opname gebaseerd is op de bouwtekening van het opnamegebouw.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="BuildingObservation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+									<xs:element name="BuildingObservation" type="xs:boolean" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
 											<xs:documentation>Of de opname gebaseerd is op een observatie ter plekke van het opnamegebouw.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="ClientInformation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+									<xs:element name="ClientInformation" type="xs:boolean" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
 											<xs:documentation>Of de opname gebaseerd is op informatie aangeleverd door de eigenaar van het gebouw (anders dan een bouwtekening).</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="Calculation" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+									<xs:element name="Calculation" type="xs:boolean" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
 											<xs:documentation>Of er een energieprestatieberekening ten behoeve van omgevingsvergunning gemaakt is.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="OpnameEnRegistratieZelfdeAdviseur" type="tns:EpbdYesNo" minOccurs="1" maxOccurs="1">
+									<xs:element name="OpnameEnRegistratieZelfdeAdviseur" type="xs:boolean" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
 											<xs:documentation>Of de opname en registratie door dezelfde adviseur zijn uitgevoerd.</xs:documentation>
 										</xs:annotation>
@@ -674,13 +674,6 @@
 			<xs:pattern value="([0-9]{4})"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<!-- EpbdYesNo: Algemeen type dat Ja of Nee aangeeft. -->
-	<xs:simpleType name="EpbdYesNo">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Yes"></xs:enumeration>
-			<xs:enumeration value="No"></xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
 
 	<!-- BuildingStatus: „Energieprestatiebepaling in het kader van ...” -->
 	<xs:simpleType name="BuildingStatus">
@@ -812,7 +805,7 @@
 	<!-- Version: Versienummer van het EPG XML-format. De waarde is altijd 6.00. Oudere interface versies worden niet ondersteund. -->
 	<xs:simpleType name="Version">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="8.00"></xs:enumeration>
+			<xs:enumeration value="9.00"></xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<!-- Letter: 'huisletter' - Een hoofdletter (A – Z) of kleine letter (a – z). -->
@@ -1023,6 +1016,7 @@
 			<xs:maxLength value="35"/>
 			<xs:enumeration value="NTA_8800"/>
 			<xs:enumeration value="NTA_8800:2022"/>
+			<xs:enumeration value="NTA_8800:2023"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!-- VersionSoftware: Versienummer van het certificaatsoftwarepakket. -->

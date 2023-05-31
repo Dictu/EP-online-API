@@ -888,7 +888,8 @@
 										<xs:element name="VoorverwarmingAanwezig" type="xs:boolean"/>
 										<xs:element name="AandeelVanVoorverwarming" type="n:AandeelVanVoorverwarmingEnumeration" minOccurs="0"/>
 										<xs:element name="MaximaalVermogenVoorverwarming" type="xs:double" minOccurs="0"/>
-										<xs:element name="BuitenluchttemperatuurWaarbijDeVoorverwarmingInschakelt" type="xs:double" minOccurs="0"/>
+                    <xs:element name="MaximaleTemperatuursprongVanDeLucht" type="xs:double" minOccurs="0"/>
+                    <xs:element name="BuitenluchttemperatuurWaarbijDeVoorverwarmingInschakelt" type="xs:double" minOccurs="0"/>
 										<xs:element name="MaximaleInblaastemperatuurWaaropDeVoorverwarmingRegelt" type="xs:double" minOccurs="0"/>
 									</xs:sequence>
 								</xs:complexType>
@@ -2804,7 +2805,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="Kantoortuin">
 				<xs:annotation>
-					<xs:documentation>een gebied binnen een kantoorfunctie groter dan 30 m² dat wordt verlicht door een groep armaturen die gezamenlijk (handmatig of automatisch) worden aan- en uitgezet. Vergaderzalen moeten hiervan worden uitgezonderd (ongeacht de oppervlakte die valt onder één schakelaar en/of één detector), tenzij ze een centrale aan-regeling hebben, zoals bedoeld onder het vorige punt.</xs:documentation>
+					<xs:documentation>een gebied binnen een kantoorfunctie groter dan 30 m² dat wordt verlicht door een groep armaturen die gezamenlijk (handmatig of automatisch) worden aan- en uitgezet. Vergaderzalen moeten hiervan worden uitgezonderd (ongeacht de oppervlakte die valt onder één schakelaar en/of één detector), tenzij ze een centrale aan-regeling hebben, zoals bedoeld onder het vorige punt.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<!-- Systemen zonder automatische aan- of afwezigheidsdetectie -->

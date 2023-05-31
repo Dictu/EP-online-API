@@ -13,7 +13,7 @@
 					<xs:simpleType>
 						<xs:restriction base="xs:decimal">
 							<!-- Bij oplevering van een nieuwe versie moet onderstaande value worden opgehoogd -->
-							<xs:enumeration value="4.1"/>
+							<xs:enumeration value="4.2"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
@@ -22,7 +22,7 @@
 				</xs:element>
 				<xs:sequence>
 					<xs:element ref="n:Gebouw"/>
-					<xs:element ref="n:Kwaliteitsverklaringen"/>
+					<xs:element ref="n:Kwaliteitsverklaringen" minOccurs="0"/>
 				</xs:sequence>
 			</xs:sequence>
 		</xs:complexType>
