@@ -31,6 +31,7 @@
 |	23 jan 2023	|	1.16 |	Paul Kamps		|	Business Rules CheckEpcVersion, CheckInterpunction en CheckLinkVergunningsAanvraagToOpleveringSameScope toegevoegd. De naam van Business Rules CheckRegistrationAdvisor en CheckEpClassIdResidential zijn gewijzigd.
 |   10 mei 2023 |   1.17 |	Paul Kamps		|	Business Rule CheckBuildingTypeBagPitch bijgewerkt om meer gebouwtypes te ondersteunen.
 |	1  aug 2023 |	1.18 |  Paul Kamps		|	Business Rule CheckExpandNotAllowedForProjects toegevoegd. Business rule CheckProjectNameAndProjectObjectCannotChangeWhenExpanding verwijderd.
+|	6  sep 2023	|	1.19 |	Paul Kamps		|	Business rules CheckLinkVergunningsAanvraagToOpleveringSameScope, CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification, CheckNotPermitPreNtaStatusCompletionWithBagIdentification en CheckPermitPreNtaNoProvisionalIdentification verwijderd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de bijbehorende meldingen terug gegeven en wordt niet verder gegaan naar de volgende stap.
@@ -77,16 +78,12 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckExpandNotAllowedForProjects												|	Een uitbreiding van Status ‘Vergunningsaanvraag’ is niet toegestaan. 
 |  CheckEpcVersion																|	De gebruikte versie moet geldig zijn.
 |  CheckInterpunction															|	Voor Projectnaam, ProjectObject en BuildingAnnotation mogen de volgende karakters gebruikt worden: "a-z", "A-Z", "0-9", "\", "-", "_", "'", "`", ",".
-|  CheckLinkVergunningsAanvraagToOpleveringSameScope							|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is, de actie "Toevoegen" of "Uitbreiden" is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn dan dient de Scope (Specific of Compound) van de oplevering identiek zijn aan die van de vergunningsaanvraag.
 |  CheckMainBuildingUse  														|	Bij utiliteitsbouw moet het primaire gebruik (MainBuildingUse.PrimaryUse) zijn opgegeven. Bij woningbouw mag het primaire gebruik juist niet zijn opgegeven.
 |  CheckMultipleBagBuildingIdsWithMultipleBagResidenceIds						|	Bij meerdere pand id’s mogen er niet meerdere verblijfsobject id’s opgegeven zijn.
 |  CheckNoDuplicateBAGBerthIds													|	Alle ligplaats id's (BagBerthId) mogen slechts één keer voorkomen in het bestand.
 |  CheckNoDuplicateBAGPitchIds													|	Alle standplaats id's (BagPitchId) mogen slechts één keer voorkomen in het bestand.
 |  CheckNoDuplicateBAGResidenceIds												|	Alle verblijfsobject id's (BagResidenceId) mogen slechts één keer voorkomen in het bestand.
-|  CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification		|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en zowel de BAGIdentification als de ProvisionalIdentification gevuld zijn, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met de ProvisionalId te worden gevonden.
-|  CheckNotPermitPreNtaStatusCompletionWithBagIdentification					|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘False’ is en enkel de BAGIdentification is gevuld, dient er een overeenkomstige registratie met status 'vergunningsaanvraag' met BAGIdentification te worden gevonden.
 |  CheckNumberOfDwellings  														|	Het aantal wooneenheden (NumberOfDwellings) moet bij utiliteitsbouw 0 zijn en bij woningbouw 1 of hoger.
-|  CheckPermitPreNtaNoProvisionalIdentification  								|	Wanneer de buildingstatus ‘Oplevering’ is, de PermitPreNTA ‘True’ is dan moet de BAGIdentification worden gevuld en mag de ProvisionalIdentification niet zijn toegevoegd.
 |  CheckProjectNameAndObjectDoesNotAlreadyExists								|	Er mag geen andere actieve registratie zijn met dezelfde combinatie "ProjectNaam" en "ProjectObject".
 |  CheckProjectNameAndObjectRequiredForVergunningsAanvraag						|	Wanneer een registratie wordt gedaan waarbij de BAG identificatie en de TPG identificatie leeg zijn, dan moeten de Project Name en Project Object gevuld zijn binnen de Provisional Identification.
 |  CheckResidentialMultipleVboIds												|	Wanneer bij woningbouw een registratie wordt gedaan met meerdere verblijfsobject id's op één en het zelfde opnameadres, dan moet het gebouwtype (BuildingCategory) 'Woongebouw met niet-zelfstandige woonruimte' zijn, of 'Appartement' in combinatie met scope Compound.
