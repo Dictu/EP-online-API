@@ -32,6 +32,7 @@
 |   10 mei 2023 |   1.17 |	Paul Kamps		|	Business Rule CheckBuildingTypeBagPitch bijgewerkt om meer gebouwtypes te ondersteunen.
 |	1  aug 2023 |	1.18 |  Paul Kamps		|	Business Rule CheckExpandNotAllowedForProjects toegevoegd. Business rule CheckProjectNameAndProjectObjectCannotChangeWhenExpanding verwijderd.
 |	6  sep 2023	|	1.19 |	Paul Kamps		|	Business rules CheckLinkVergunningsAanvraagToOpleveringSameScope, CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification, CheckNotPermitPreNtaStatusCompletionWithBagIdentification en CheckPermitPreNtaNoProvisionalIdentification verwijderd.
+|	10 apr 2024 |	1.20 |	Paul Kamps		| 	Business Rule CheckSurveyorFieldLengths toegevoegd.
 
 ## 2. Validaties
 Het valideren en verwerken van het registratiebestand gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de bijbehorende meldingen terug gegeven en wordt niet verder gegaan naar de volgende stap.
@@ -92,6 +93,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 |  CheckSoftwareTool  															|	De naam (VendorSoftwareKey) en versienummer (VendorSoftwareVersionId) van de softwaretool moet ingevuld zijn, bestaan als SoftwareTool in EP-online, en daar geldig (actief) zijn op datum van registratie (huidige datum). Het versienummer van het registratiebestand (Version) moet overeenkomen met de XSD versie van de softwaretool in EP-online. De gebruikte rekenmethodiek (TypeCalculation) moet geldig (aangevinkt) zijn bij de softwaretool in EP-online.
 |  CheckStatusExistingMustHaveBagIdentifcationAndNotProvisionalIdentification	|	Bij registratie met status 'bestaand' is het verplicht om subelement BAGIdentification op te nemen en mag subelement ProvisionalIdentification niet worden opgenomen.
 |  CheckSurveyAndRegistrationNotSameAdvisor										|	Wanneer een registratie wordt gedaan met OpnameEnRegistratieZelfdeAdviseur is 'Yes', dan mag het blok 'Surveyor' niet gevuld zijn.<br/><br/> Wanneer een registratie wordt gedaan met OpnameEnRegistratieZelfdeAdviseur is 'No', dan mogen 'Name' en 'ExamNumber' in het blok 'Surveyor' niet leeg zijn.
+|  CheckSurveyorFieldLengths													|	Voor de opnameadviseur mag het veld 'Voorletters' niet meer dan 20, het veld 'Tussenvoegsels' niet meer dan 50 en het veld 'Achternaam' niet meer dan 50 karakters bevatten.
 |  CheckSurveyDate 																|	De opnamedatum (SurveyDate) moet binnen de registratie periode voor NTA labels liggen. Deze periode is anders voor het vervangen ten opzichte van het toevoegen of uitbreiden van labels.
 |  CheckSurveyDateHasValue  													|	De opnamedatum (SurveyDate) moet ingevuld zijn.
 |  CheckSurveyDateNotInFuture 													|	De opnamedatum (SurveyDate) mag niet in de toekomst liggen.

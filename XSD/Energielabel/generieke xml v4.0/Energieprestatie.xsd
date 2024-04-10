@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified"
+		   targetNamespace="urn:nl.nta.8800.export" xmlns:n="urn:nl.nta.8800.export">
+
+	<xs:include schemaLocation="Gebouw.xsd"/>
+	<xs:include schemaLocation="Kwaliteitsverklaringen.xsd"/>
+
+	<xs:element name="Energieprestatie">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Versie">
+					<xs:annotation><xs:documentation>Versienummer van deze XML-indeling.</xs:documentation></xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<!-- Bij oplevering van een nieuwe versie moet onderstaande value worden opgehoogd -->
+							<xs:enumeration value="4.0"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Software" type="xs:string">
+					<xs:annotation><xs:documentation>Naam en versie van de software waarmee de XML gegenereerd is. Dit betreft de naam en versie van de software die de gebruikers te zien krijgen, de user-interface dus. Deze hoeft niet geregistreerd te zijn; dit in tegenstelling tot VendorSoftwareKey en VendorSoftwareVersionId in het blok “Tooling”.</xs:documentation></xs:annotation>
+				</xs:element>
+				<xs:sequence>
+					<xs:element ref="n:Gebouw"/>
+					<xs:element ref="n:Kwaliteitsverklaringen"/>
+				</xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+
+		<xs:key name="KV">
+			<xs:selector xpath="n:Kwaliteitsverklaringen/n:Kwaliteitsverklaring"/>
+			<xs:field xpath="@id"/>
+		</xs:key>
+		<xs:keyref name="KVREF" refer="n:KV">
+			<xs:selector xpath=".//n:*"/>
+			<xs:field xpath="@kwaliteitsverklaring"/>
+		</xs:keyref>
+
+	</xs:element>
+
+</xs:schema>
