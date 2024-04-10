@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:nl.nta.8800.export"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+		   xmlns:n="urn:nl.nta.8800.export">
+
+	<xs:element name="Kwaliteitsverklaringen">
+		<xs:annotation>
+			<xs:documentation>Overzicht van alle gebruikte kwaliteitsverklaringen.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Kwaliteitsverklaring" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Titel" type="xs:string"/>
+							<xs:element name="Documentnummer" type="xs:string">
+								<xs:annotation><xs:documentation>Het BCRG-nummer van de kwaliteitsverklaring.</xs:documentation></xs:annotation>
+							</xs:element>
+							<xs:element name="GeldigTot" type="xs:date" minOccurs="0"/>
+							<xs:element name="Uitgever" type="xs:string" minOccurs="0"/>
+							<xs:element name="URL" type="xs:anyURI" minOccurs="0"/>
+							<xs:element name="Opmerkingen" type="xs:string" minOccurs="0"/>
+							<xs:element name="Waardes">
+								<xs:annotation>
+									<xs:documentation>Alle waardes uit de kwaliteitsverklaring die zijn gebruikt in de berekening.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Waarde" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:double">
+														<xs:attribute name="naam" type="xs:string" use="required"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="id" type="xs:positiveInteger" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
