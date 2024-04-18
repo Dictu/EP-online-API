@@ -314,12 +314,12 @@
 								<xs:sequence>
 									<xs:element name="TotalValue" type="tns:ValueElectricityType" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
-											<xs:documentation>Totale energieverbruik van het opnamegebouw. De waarde moet opgegeven worden met schaal “per m2” en in “kWh”. Een negatieve waarde betekent dat er energie wordt geleverd.</xs:documentation>
+											<xs:documentation>Totale primaire energieverbruik van het opnamegebouw. De waarde moet opgegeven worden met schaal “per m2” en in “kWh”. Een negatieve waarde betekent dat er energie wordt geleverd.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="ValueElectricity" type="tns:ValueElectricityType" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
-											<xs:documentation>Totale berekende electriciteitsverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke electriciteitsverbruik. De waarde moet opgegeven worden met schaal “per m2” en in “kWh”. Een negatieve waarde betekent dat er electriciteit wordt geleverd.</xs:documentation>
+											<xs:documentation>Totale berekende electriciteitsverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke electriciteitsverbruik. De waarde moet opgegeven worden met schaal “per m2” en in “kWh”. Een negatieve waarde betekent dat er electriciteit wordt geleverd. Het gaat om het (niet-primaire) verbruik minus de opwekking per m² (formule 5.15 uit de NTA8800).</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="ValueGas" type="tns:ValueGasType" minOccurs="1" maxOccurs="1">
@@ -329,7 +329,7 @@
 									</xs:element>
 									<xs:element name="ValueHeat" type="tns:ValueHeatType" minOccurs="1" maxOccurs="1">
 										<xs:annotation>
-											<xs:documentation>Totale berekende warmteverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke warmteverbruik. De waarde moet opgegeven worden met schaal “per m2” en in “GJ”. Een negatieve waarde betekent dat er warmte wordt geleverd.</xs:documentation>
+											<xs:documentation>Totale berekende warmteverbruik van het opnamegebouw. Deze waarde kan afwijken van het werkelijke warmteverbruik. De waarde moet opgegeven worden met schaal “per m2” en in “GJ”. Een negatieve waarde betekent dat er warmte wordt geleverd. Het gaat om het (niet-primaire) verbruik in GJ per m². Koudelevering hoort er niet bij.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="ValueCO2" type="tns:ValueCO2Type" minOccurs="1" maxOccurs="1">
@@ -565,12 +565,12 @@
 			</xs:element>
 			<xs:element name="SurfaceArea" type="tns:SurfaceArea" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Totale vloeroppervlakte van de begane grond van het opnamegebouw in m² binnen de thermische schil.</xs:documentation>
+					<xs:documentation>Totale gebruiksoppervlakte van de begane grond van het opnamegebouw in m² binnen de thermische schil.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EffectiveSurfaceArea" type="tns:SurfaceArea" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Totale vloeroppervlakte van alle gebruikslagen binnen de thermische schil van het opnamegebouw in m².</xs:documentation>
+					<xs:documentation>Totale gebruiksoppervlakte van alle gebruikslagen binnen de thermische schil van het opnamegebouw in m².</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -746,7 +746,7 @@
 			<xs:enumeration value="G"></xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
-	
+
 	<!-- ConstructionYear: Bouwjaar. -->
 	<xs:simpleType name="ConstructionYear">
 		<xs:restriction base="tns:EpbdYear" />

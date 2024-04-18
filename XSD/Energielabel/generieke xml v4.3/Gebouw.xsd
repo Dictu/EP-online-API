@@ -142,7 +142,12 @@
 				</xs:element>
 				<xs:element name="PercentageRaam" type="xs:nonNegativeInteger">
 					<xs:annotation>
-						<xs:documentation>Totaaloppervlakte van de ramen (in gevels) ten opzichte van de totaaloppervlakte van gevels.</xs:documentation>
+						<xs:documentation>
+							Totaaloppervlakte van de ramen (in gevels) ten opzichte van de totaaloppervlakte van gevels. De definitie van gevel hangt af van de hellingshoek.
+							Het gaat om de som van alle ramen die in gevels zitten gedeeld door de som van de bruto afmetingen van alle gevels (ongeacht de begrenzing van de gevels, met uitzondering van begrenzing AVR).
+							Bij een serre gaat het om het raam in de constructie tussen de woning en de serre, en niet om de buitenomhulling.
+							Ramen in daken tellen niet mee, en de daken zelf ook niet (maar delen van dakkapellen wel).
+						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="PercentageZonwering" type="xs:nonNegativeInteger" minOccurs="0">
@@ -424,7 +429,7 @@
 							</xs:element>
 							<xs:element name="AangeslotenOppervlak" type="xs:double">
 								<xs:annotation>
-									<xs:documentation>Oppervlak van het gebouw dat is aangesloten op dit verwarmingssysteem.</xs:documentation>
+									<xs:documentation>Oppervlak van het geregisteerd object dat is aangesloten op dit verwarmingssysteem.</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 						</xs:sequence>
@@ -1003,7 +1008,11 @@
 			<xs:documentation>Specifieke velden voor PV-cellen</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Spv" type="xs:integer"/>
+			<xs:element name="Spv" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Totale wattpiekvermogen P;pk in W per systeem</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Bouwintegratietype">
 				<xs:complexType>
 					<xs:simpleContent>
@@ -1013,7 +1022,11 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="fperf" type="xs:double"/>
+			<xs:element name="fperf" type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Bouwintegratiefactor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Paneeltype">
 				<xs:complexType>
 					<xs:simpleContent>
@@ -1379,7 +1392,13 @@
 							</xs:choice>
 							<xs:element ref="n:Hellingshoek"/>
 							<xs:element name="Orientatie" type="n:OrientatieOnbekendEnumeration" />
-							<xs:element name="Oppervlakte" type="xs:double"/>
+							<xs:element name="Oppervlakte" type="xs:double">
+								<xs:annotation>
+									<xs:documentation>
+										Bij de oppervlakte van gevels gaat het om de netto oppervlakte (dus met aftrek van de ramen) en niet de bruto oppervlakte.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
 							<xs:element name="Vlaktype" type="n:VlaktypeEnumeration"/>
 							<xs:choice>
 								<xs:element name="Raam">
