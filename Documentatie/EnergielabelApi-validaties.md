@@ -119,7 +119,7 @@ Voor elk gebouw wordt gecontroleerd dat er niet al een recentere registratie aan
 |	CheckNoMoreRecentLabelExists		|	Er mag geen pre-NTA registratie gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>‘Geldig tot’ ligt in de toekomst.</li><li>‘Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTA registratie gevonden worden, op hetzelfde adres of project, die voldoet aan:<ul><li>‘Geldig tot’ ligt in de toekomst.</li><li> 'Opnamedatum’ ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>‘Scope’ heeft dezelfde waarde als ‘Scope’ uit het registratiebestand.</li><li>‘Gebouwklasse’ heeft dezelfde waarde als ‘Gebouwklasse’ uit het registratiebestand.</li></ul>
 
 ### 2.7. Controle op de actie
-Controle of de actie 'Toevoegen', 'Vervangen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' betreft en daarop de validaties uitgevoerd.
+Controle of de actie 'Toevoegen', 'Vervangen', 'Herlabelen' of 'Uitbreiden' is toegestaan. Bij Uitbreiden wordt gekeken of de situatie 'Uitbreiden' betreft en daarop de validaties uitgevoerd.
 
 |  Actie  			|	Status									|  Rule(s)
 |:------------------|:------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
