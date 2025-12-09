@@ -272,7 +272,7 @@
                         <xs:documentation>1 indien in een of meerdere ventilatiesystemen een wisselstroomventilator aanwezig is, in alle andere gevallen 0</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="GemiddeldvermogenVerlichting" type="xs:double">
+                <xs:element name="GemiddeldvermogenVerlichting" type="xs:double" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>Som van totale geïnstalleerde vermogen voor verlichting (niet parasitair!)( Formule 14.8) / som Ag.</xs:documentation>
                     </xs:annotation>
@@ -1910,7 +1910,7 @@
                         <xs:documentation>Jaarlijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor het totaal aan energiedragers formule AB.9 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-tot-an-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-tot-mi" type="xs:integer">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor het totaal aan energiedragers formule AB.10 in kWh</xs:documentation>
                     </xs:annotation>
