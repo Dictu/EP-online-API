@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-		   targetNamespace="http://schemas.ep-online.nl/monitoringbestand"
-		   xmlns:tns="http://schemas.ep-online.nl/monitoringbestand"
-		   xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+           targetNamespace="http://schemas.ep-online.nl/monitoringbestand"
+           xmlns:tns="http://schemas.ep-online.nl/monitoringbestand"
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
            xmlns:xf="http://www.w3.org/2002/06/xmldsig-filter2"
-		   xml:lang="nl">
+           xml:lang="nl">
     <!-- Namespace urn:nl.nen7120.export kunnen we niet meer opnemen omdat het mogelijk moet zijn
-		 dat element SurveySourceData verschillende type XML moet kunnen bevatten. -->
+         dat element SurveySourceData verschillende type XML moet kunnen bevatten. -->
     <!--xmlns:survey="urn:nl.nta.8800.export">-->
     <!-- Remove xmlns:survey before generating the C# classes -->
 
@@ -67,6 +67,11 @@
                                     <xs:element name="MainBuildingClass" type="tns:BuildingClass" minOccurs="1" maxOccurs="1">
                                         <xs:annotation>
                                             <xs:documentation>Waarde die aangeeft of het opnamegebouw onder woningbouw of utiliteitsbouw valt. De waarde “residential” wordt gebruikt voor woningbouw, “commercial” voor utiliteitsbouw.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="CommercialUnit" type="xs:boolean" minOccurs="0" maxOccurs="1">
+                                        <xs:annotation>
+                                            <xs:documentation>Alleen invullen als het een utiliteitsbouw betreft. Waarde die aangeeft of het één of meerdere units uit een gebouw betreft (true) of een geheel gebouw (false).</xs:documentation>
                                         </xs:annotation>
                                     </xs:element>
                                     <xs:element name="ObjectLocation" type="tns:ObjectLocationType" minOccurs="1" maxOccurs="1">
@@ -852,15 +857,15 @@
 
 
                         <!--<xs:element name="SurveySourceData" minOccurs="1" maxOccurs="1" >
-							<xs:annotation>
-								<xs:documentation>Blok met gedetailleerde opnamegegevens volgens het generieke invoer/uitvoer format.</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element ref="tns:Energieprestatie" />
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>-->
+                            <xs:annotation>
+                                <xs:documentation>Blok met gedetailleerde opnamegegevens volgens het generieke invoer/uitvoer format.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element ref="tns:Energieprestatie" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>-->
 
                         <!-- Replace previous element by the one below before generating the C# classes -->
                         <xs:element name="SurveySourceData" minOccurs="1" maxOccurs="1">
@@ -1063,7 +1068,7 @@
     </xs:simpleType>
 
     <!-- EpbdNumeric: Algemeen type voor alle numerieke velden.
-			Deze hebben allen een precisie van twee decimalen. -->
+            Deze hebben allen een precisie van twee decimalen. -->
     <xs:simpleType name="EpbdNumeric">
         <xs:restriction base="xs:decimal">
             <xs:pattern value="([0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
@@ -1077,7 +1082,7 @@
     </xs:simpleType>
 
     <!-- EpbdNumericWithNegative: Algemeen type voor alle numerieke velden.
-			  Deze hebben allen een precisie van twee decimalen. -->
+              Deze hebben allen een precisie van twee decimalen. -->
     <xs:simpleType name="EpbdNumericWithNegative">
         <xs:restriction base="xs:decimal">
             <xs:pattern value="(-{0,1}[0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
@@ -1107,7 +1112,7 @@
     </xs:simpleType>
 
     <!-- MinusOne: Gebruikt voor waardes die eigenlijk ingevuld zouden
-				   moeten worden, maar niet bestaan in V4. -->
+                   moeten worden, maar niet bestaan in V4. -->
     <xs:simpleType name="MinusOne">
         <xs:restriction base="xs:decimal">
             <xs:pattern value="-1" />
@@ -1177,7 +1182,7 @@
     </xs:simpleType>
 
     <!-- BuildingIdentification: Extra informatie om gebouw te identificeren als er meerdere
-	 gebouwen op een kavel staan. -->
+     gebouwen op een kavel staan. -->
     <xs:simpleType name="BuildingIdentification">
         <xs:restriction base="xs:string">
             <xs:maxLength value="25"/>
