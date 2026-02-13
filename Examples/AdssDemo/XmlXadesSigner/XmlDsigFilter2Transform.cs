@@ -11,7 +11,7 @@ namespace XmlXadesSigner;
 /// - Serialiseert <XPath> zonder overbodige xmlns:*
 /// - Bindt tijdens evaluatie de gebruikte prefixen via XmlNamespaceManager (runtime)
 /// </summary>
-internal sealed class XmlDsigFilter2Transform : Transform
+public sealed class XmlDsigFilter2Transform : Transform
 {
     public const string AlgorithmUri = "http://www.w3.org/2002/06/xmldsig-filter2";
 
