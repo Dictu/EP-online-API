@@ -1,0 +1,1270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://schemas.ep-online.nl/maatwerkadviesbestand" 
+           xmlns:tns="http://schemas.ep-online.nl/maatwerkadviesbestand" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
+           xmlns:xf="http://www.w3.org/2002/06/xmldsig-filter2" 
+           xml:lang="nl">
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+    <xs:import namespace="http://www.w3.org/2002/06/xmldsig-filter2" schemaLocation="xmldsig-filter2.xsd"/>
+    <xs:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdESv132.xsd"/>
+    <xs:element name="TailoredAdvice" type="tns:TailoredAdvice"/>
+    <xs:complexType name="TailoredAdvice">
+        <xs:sequence>
+            <xs:element name="TAMeta">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Version" type="tns:Version">
+                            <xs:annotation>
+                                <xs:documentation>Versiecode van de xml-structuur van het maatwerkadviesbestand.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Tooling">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="VendorSoftwareKey" type="tns:NameSoftware">
+                                        <xs:annotation>
+                                            <xs:documentation>Identificatiesleutel van de rekensoftware. Waarde moet overeenkomen met de sleutel van een geregistreerd rekensoftware-pakket.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="VendorSoftwareVersionId" type="tns:VersionSoftware">
+                                        <xs:annotation>
+                                            <xs:documentation>Identificatie van de versie van de rekensoftware.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TAObject">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="BuildingClass" type="tns:BuildingClass">
+                            <xs:annotation>
+                                <xs:documentation>Geeft aan of de opname onder woningbouw of utiliteitsbouw valt. De waarde 'residential' wordt gebruikt voor woningbouw, 'commercial' voor utiliteitsbouw.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="ObjectLocationList">
+                            <xs:annotation>
+                                <xs:documentation>Lijst van locatieidentificaties waarvoor het maatwerkadvies geldt.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="ObjectLocation" type="tns:ObjectLocationType" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                            <xs:documentation>Blok met gegevens over de locatie van het pand of adresseerbaar object.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ValidEPC" type="xs:boolean">
+                            <xs:annotation>
+                                <xs:documentation>Heeft het object een geregistreerd energielabel binnen het projectbestand. Is niet door iedereen op te geven, daarom optioneel.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TAAdvice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="AdviceSources">
+                            <xs:annotation>
+                                <xs:documentation>Blok met brongegevens van het maatwerkadvies.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="AdviceDate" type="tns:AdviceDate">
+                                        <xs:annotation>
+                                            <xs:documentation>Datum waarop de maatwerkadviesparameters zijn opgenomen. Notatie YYYYMMDD. Deze datum moet op of voor de registratiedatum liggen.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="SurveyorIsRegistrationAdvisor" type="xs:boolean">
+                                        <xs:annotation>
+                                            <xs:documentation>Geeft aan of de opname en registratie van het maatwerkadvies door dezelfde adviseur zijn uitgevoerd. Als false, dan moet Surveyor gevuld worden.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="Surveyor" type="tns:SurveyorType" minOccurs="0"/>
+                                    <xs:element name="CalculationType" type="tns:CalculationType">
+                                        <xs:annotation>
+                                            <xs:documentation>Aanduiding van rekenmethodiek met jaartal.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="BRP" type="xs:boolean">
+                                        <xs:annotation>
+                                            <xs:documentation>Heeft het maatwerkadvies geleid tot een Renovatiepaspoort?</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="UitzonderingGebruikStandaard" type="xs:boolean">
+                                        <xs:annotation>
+                                            <xs:documentation>Alleen als gevelisolatie technisch of bouwkundig niet mogelijk is, mag de standaard voor vooroorlogse woningen worden gehanteerd. De adviseur legt deze uitzondering vast in de software. Ja/true = uitzondering van toepassing.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="CalculationProfile">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="UsedProfile" type="tns:UsedProfileType">
+                                        <xs:annotation>
+                                            <xs:documentation>Profiel dat gebruikt wordt voor alle onderdelen. Zodra een onderdeel eigen waarden heeft of een ander profiel, dan is de waarde 'eigen profiel'.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Climate" type="tns:ClimateType"/>
+                        <xs:element name="EnergyConsumption">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Measured" type="tns:MeasuredType"/>
+                                    <xs:element name="EnergiegebruikNietPrimairHuidig" type="tns:NietPrimairEnergiegebruikType"/>
+                                    <xs:element name="EnergiegebruikNietPrimairAdvice" type="tns:NietPrimairEnergiegebruikType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="AdviceStepsBRP">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CurrentSituation" type="tns:BrpStepOptionalHernieuwbaarOpwek"/>
+                                    <xs:element name="Step1" type="tns:BrpStepWithInvesteringOptionalHernieuwbaarOpwek"/>
+                                    <xs:element name="Step2" type="tns:BrpStepWithInvesteringOptionalHernieuwbaarOpwek"/>
+                                    <xs:element name="Step3" type="tns:BrpStepWithInvesteringRequiredHernieuwbaarOpwek"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Summary">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CurrentSituation" type="tns:SummaryType"/>
+                                    <xs:element name="Advice" type="tns:SummaryType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="SoftwareSpecific" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Softwarespecifieke informatie die anders niet in deze XML-structuur past.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+                                </xs:sequence>
+                                <xs:attribute name="software" type="xs:string" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>Identifier van de software waarvoor dit blok bedoeld is (naam en versie).</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- Version: Versienummer van het maatwerkadviesbestand XML-format. Initiëel is de enige mogelijke waarde 2.00. -->
+    <xs:simpleType name="Version">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="2.00"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- NameSoftware: Naam van het softwarepakket. -->
+    <xs:simpleType name="NameSoftware">
+        <xs:restriction base="tns:EpbdNonEmptyString">
+            <xs:maxLength value="75"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- VersionSoftware: Versienummer van het softwarepakket. -->
+    <xs:simpleType name="VersionSoftware">
+        <xs:restriction base="tns:EpbdNonEmptyString">
+            <xs:maxLength value="75"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- ObjectLocationType: De objecten waar het advies betrekking op heeft. -->
+    <xs:complexType name="ObjectLocationType">
+        <xs:sequence>
+            <xs:element name="BAGIdentification" type="tns:BAGIdentificationType">
+                <xs:annotation>
+                    <xs:documentation>Blok met identificatiegegevens van een gebouw volgens BAG.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BuildingAnnotation" type="tns:BuildingIdentification" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Extra identificatie als de combinatie van postcode, huisnummer en -toevoeging niet uniek is.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- BAGIdentificationType: Het BAG identificatie type van het object (BAGResidence, BAGBerth of BAGPitch). -->
+    <xs:complexType name="BAGIdentificationType">
+        <xs:choice>
+            <xs:element name="BAGResidenceId" type="tns:BagId">
+                <xs:annotation>
+                    <xs:documentation>BAG verblijfsobject-ID.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BAGBerthId" type="tns:BagId">
+                <xs:annotation>
+                    <xs:documentation>BAG Ligplaats-ID.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BAGPitchId" type="tns:BagId">
+                <xs:annotation>
+                    <xs:documentation>BAG Standplaats-ID.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <!-- BagId: Het geldige patroon voor een BAG id. -->
+    <xs:simpleType name="BagId">
+        <xs:restriction base="xs:long">
+            <xs:pattern value="([0-9]{4}(01|02|03)[0-9]{10})"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- BuildingClass: Geeft aan of het gaat om woningbouw of utiliteitsbouw -->
+    <xs:simpleType name="BuildingClass">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="residential"/>
+            <xs:enumeration value="commercial"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- BuildingIdentification: Extra informatie om een gebouw te identificeren waar geen adres voor beschikbaar is.-->
+    <xs:simpleType name="BuildingIdentification">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="25"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- SurveyDate: Opnamedatum van het maatwerkadvies. -->
+    <xs:simpleType name="AdviceDate">
+        <xs:restriction base="tns:EpbdDate"/>
+    </xs:simpleType>
+    <!-- EpbdNonEmptyString: Hulptype voor een string die niet leeg mag zijn. -->
+    <xs:simpleType name="EpbdNonEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- EpbdDate: formaat is YYYYMMDD -->
+    <xs:simpleType name="EpbdDate">
+        <xs:restriction base="xs:string">
+            <xs:length value="8"/>
+            <xs:pattern value="([0-9]{4}((0[1-9])|(1[0-2]))((0[1-9])|(([1-2][0-9])|(3[0-1]))))"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- EpbdNumericNoDecimal: Algemeen type voor decimale velden.
+            Deze hebben allen een precisie van nul decimalen. -->
+    <xs:simpleType name="EpbdNumericNoDecimal">
+        <xs:restriction base="xs:decimal">
+            <xs:fractionDigits value="0"/>
+            <xs:totalDigits value="14"/>
+            <xs:minInclusive value="-1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- EpbdNumeric: Algemeen type voor decimale velden.
+            Deze hebben allen een precisie van twee decimalen. -->
+    <xs:simpleType name="EpbdNumericTwoDecimal">
+        <xs:restriction base="xs:decimal">
+            <xs:fractionDigits value="2"/>
+            <xs:totalDigits value="14"/>
+            <xs:minInclusive value="-1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- SurveyorType: De opnameadviseur.-->
+    <xs:complexType name="SurveyorType">
+        <xs:sequence>
+            <xs:element name="Initials" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Voorletters van de maatwerkadvies-opname-adviseur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MiddleName" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Tussenvoegsel van de maatwerkadvies-opname-adviseur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LastName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Achternaam van de maatwerkadvies-opname-adviseur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ProfessionalCompetenceNumber" type="tns:ProfessionalCompetenceNumberType">
+                <xs:annotation>
+                    <xs:documentation>Vakbekwaamheidsnummer van de maatwerkadvies-opname-adviseur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- ProfessionalCompetenceNumberType: De restrictie voor het vakbekwaamheidsnummer.-->
+    <xs:simpleType name="ProfessionalCompetenceNumberType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- CalculationType: Berekeningswijze.-->
+    <xs:simpleType name="CalculationType">
+        <xs:restriction base="tns:EpbdNonEmptyString">
+            <xs:maxLength value="25"/>
+            <xs:enumeration value="NTA_8800_MWA:2025"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- UsedProfileType: Berekeningsprofiel.-->
+    <xs:simpleType name="UsedProfileType">
+        <xs:restriction base="tns:EpbdNonEmptyString">
+            <xs:maxLength value="25"/>
+            <xs:enumeration value="Energiebewust"/>
+            <xs:enumeration value="Gemiddeld (NTA)"/>
+            <xs:enumeration value="Niet energiebewust"/>
+            <xs:enumeration value="Eigen profiel"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- ClimateType: De klimaatgegevens.-->
+    <xs:complexType name="ClimateType">
+        <xs:annotation>
+            <xs:documentation>De klimaatgegevens.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Year" type="tns:Year">
+                <xs:annotation>
+                    <xs:documentation>Het jaar van meetgegevens in het formaat: YYYY.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Month" type="tns:Month">
+                <xs:annotation>
+                    <xs:documentation>De start maand van meetgegevens in het formaat: MM.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Station" type="tns:ClimateStationType">
+                <xs:annotation>
+                    <xs:documentation>Het gebruikte klimaatstation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- Year: formaat is YYYY.-->
+    <xs:simpleType name="Year">
+        <xs:annotation>
+            <xs:documentation>Formaat is YYYY.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- Month: formaat is MM.-->
+    <xs:simpleType name="Month">
+        <xs:annotation>
+            <xs:documentation>Formaat is MM.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="0[1-9]|1[0-2]"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- ClimateStationType: De lijst van meetstations.-->
+    <xs:simpleType name="ClimateStationType">
+        <xs:restriction base="tns:EpbdNonEmptyString">
+            <xs:enumeration value="De Bilt (NTA 8800)"/>
+            <xs:enumeration value="Arcen"/>
+            <xs:enumeration value="Berkhout"/>
+            <xs:enumeration value="Cabauw Mast"/>
+            <xs:enumeration value="Deelen"/>
+            <xs:enumeration value="Eelde"/>
+            <xs:enumeration value="Eindhoven"/>
+            <xs:enumeration value="Ell"/>
+            <xs:enumeration value="Gilze-Rijen"/>
+            <xs:enumeration value="Heino"/>
+            <xs:enumeration value="Herwijnen"/>
+            <xs:enumeration value="Hoek van Holland"/>
+            <xs:enumeration value="Hoogeveen"/>
+            <xs:enumeration value="Hoorn Terschelling"/>
+            <xs:enumeration value="Hupsel"/>
+            <xs:enumeration value="De Kooy"/>
+            <xs:enumeration value="Lauwersoog"/>
+            <xs:enumeration value="Leeuwarden"/>
+            <xs:enumeration value="Lelystad"/>
+            <xs:enumeration value="Maastricht"/>
+            <xs:enumeration value="Marknesse"/>
+            <xs:enumeration value="Nieuw Beerta"/>
+            <xs:enumeration value="Rotterdam"/>
+            <xs:enumeration value="Schiphol"/>
+            <xs:enumeration value="Stavoren"/>
+            <xs:enumeration value="Twenthe"/>
+            <xs:enumeration value="Vlissingen"/>
+            <xs:enumeration value="Volkel"/>
+            <xs:enumeration value="Voorschoten"/>
+            <xs:enumeration value="Westdorpe"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- MeasuredType: De metingen van het verbruik.-->
+    <xs:complexType name="MeasuredType">
+        <xs:sequence>
+            <xs:element name="ValueElectricityTotal" type="tns:EpbdNumericNoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven jaarverbruik van elektriciteit.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueElectricity" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven maandverbruik van elektriciteit.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueGasTotal" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven jaarverbruik van gas.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueGas" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven maandverbruik van gas.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueHeatTotal" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven jaarverbruik van warmte.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueHeat" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven maandverbruik van warmte.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueBiomassTotal" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven jaarverbruik van biomassa.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueBiomass" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven maandverbruik van biomassa.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueColdTotal" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven jaarverbruik van koude.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueCold" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het opgegeven maandverbruik van koude.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueElectricityProducedTotal" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>De opgegeven opwekking totaal van elektriciteit.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ValueElectricityProduced" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>De opgegeven opwekking per maand van elektriciteit.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- NietPrimairEnergiegebruikType: De lijst van niet primair energiegebruiktype.-->
+    <xs:complexType name="NietPrimairEnergiegebruikType">
+        <xs:annotation>
+            <xs:documentation>Jaarlijkse waarden voor het niet‑primaire energiegebruik van het gebouw, opgesplitst naar energiefuncties (optelling van maandelijkse waarden).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Totaal" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het totaal jaarlijkse energiegebruik (niet primair) voor energieprestatie functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Verwarming" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het jaarlijkse niet primaire energiegebruik van het gebouw voor verwarming (optelling van maandelijkse waarden).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Koeling" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het jaarlijkse niet primaire energiegebruik van het gebouw voor koeling (optelling van maandelijkse waarden).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Ventilatie" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het jaarlijkse niet primaire energiegebruik van het gebouw voor ventilatie (optelling van maandelijkse waarden).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Verlichting" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het jaarlijkse niet primaire energiegebruik van het gebouw voor verlichting (optelling van maandelijkse waarden).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="WarmTapwater" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het jaarlijkse niet primaire energiegebruik van het gebouw voor warmtapwater (optelling van maandelijkse waarden).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Ontvochtiging" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Het jaarlijkse niet primaire energiegebruik van het gebouw voor ontvochtiging (optelling van maandelijkse waarden).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Hulpenergie" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>De jaarlijkse totale hoeveelheid gebruikte (elektrische, niet primaire) hulpenergie ten behoeve van de verschillende energiefuncties (optelling van maandelijkse waarden).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- LabelklasseHuidigBRPType: De labelklasse lijst in de huidige situatie.-->
+    <xs:simpleType name="LabelklasseHuidigBRPTypeType">
+        <xs:restriction base="tns:EpbdNonEmptyString">
+            <xs:enumeration value="A+++++"/>
+            <xs:enumeration value="A++++"/>
+            <xs:enumeration value="A+++"/>
+            <xs:enumeration value="A++"/>
+            <xs:enumeration value="A+"/>
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="E"/>
+            <xs:enumeration value="F"/>
+            <xs:enumeration value="G"/>
+            <xs:enumeration value="NVT"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- LabelklasseHuidigBRPType: De labelklasse lijst.-->
+    <xs:simpleType name="LabelklasseBRPType">
+        <xs:restriction base="tns:EpbdNonEmptyString">
+            <xs:enumeration value="A+++++"/>
+            <xs:enumeration value="A++++"/>
+            <xs:enumeration value="A+++"/>
+            <xs:enumeration value="A++"/>
+            <xs:enumeration value="A+"/>
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="E"/>
+            <xs:enumeration value="F"/>
+            <xs:enumeration value="G"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- BrpStepOptionalHernieuwbaarOpwek: Lijst van stappen voor de huidige situatie.-->
+    <xs:complexType name="BrpStepOptionalHernieuwbaarOpwek">
+        <xs:sequence>
+            <xs:group ref="tns:BrpCurrentSituationGroup"/>
+            <xs:element name="HernieuwbareOpwek" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Totale jaarlijkse hoeveelheid op het perceel opgewekte elektriciteit.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:group ref="tns:BrpStepAfterHernieuwbaarGroup"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- BrpCurrentSituationGroup: De generieke BRP stappen lijst voor de huidige situatie.-->
+    <xs:group name="BrpCurrentSituationGroup">
+        <xs:sequence>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="LabelklasseHuidigBRP" type="tns:LabelklasseHuidigBRPTypeType">
+                        <xs:annotation>
+                            <xs:documentation>De labelklasse van de huidige situatie tbv BRP.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="PrimairFossiel" type="tns:EpbdNumericTwoDecimal">
+                        <xs:annotation>
+                            <xs:documentation>Primaire fossiele energie-indicator EwePTot [kWh/(m²·a)].</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence>
+                    <xs:element name="LabelklasseHuidigBRPReg" type="tns:LabelklasseHuidigBRPTypeType">
+                        <xs:annotation>
+                            <xs:documentation>De geregistreerde labelklasse van de huidige situatie tbv BRP.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="PrimairFossielReg" type="tns:EpbdNumericTwoDecimal">
+                        <xs:annotation>
+                            <xs:documentation>De geregistreerde Primaire Fossiele Energie Indicator EwePTot kWh/(m2.a).</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:choice>
+            <xs:element name="Warmtebehoefte" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Warmtebehoefte van het gebouw EH;nd [kWh/(m²·a)].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Koudebehoefte" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Koudebehoefte van het gebouw EC;nd [kWh/(m²·a)].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FinaalEnergiegebruik" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Finaal energiegebruik indicator E;we;final [kWh/m²].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikElektriciteit" type="tns:EpbdNumericNoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks gebruik van elektriciteit voor energieprestatie functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikAardgasEq" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks gebruik van aardgas (of gas-equivalenten) voor energieprestatie‑functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikBiomassa" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks gebruik van biomassa voor energieprestatie‑functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikWarmte" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks hoeveelheid gebruikte energie uit externe warmtelevering voor energieprestatie functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikKoude" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks hoeveelheid gebruikte energie uit externe koudelevering voor energieprestatie functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <!-- BrpStepWithInvesteringRequiredHernieuwbaarOpwek: De lijst van stappen met een verplichte HernieuwbareOpwek-->
+    <xs:complexType name="BrpStepWithInvesteringRequiredHernieuwbaarOpwek">
+        <xs:sequence>
+            <xs:group ref="tns:BrpStepGroup"/>
+            <xs:element name="HernieuwbareOpwek" type="tns:EpbdNumericNoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Totale jaarlijkse hoeveelheid op het perceel opgewekte elektriciteit.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:group ref="tns:BrpStepAfterHernieuwbaarGroup"/>
+            <xs:element name="Investering" type="tns:EpbdNumericNoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Wordt berekend aan de hand van opgegeven prijzen door adviseur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- BrpStepGroup: De generieke BRP stappen lijst voor stap 1 t/m 3.-->
+    <xs:group name="BrpStepGroup">
+        <xs:sequence>
+            <xs:element name="Labelklasse" type="tns:LabelklasseBRPType">
+                <xs:annotation>
+                    <xs:documentation>De labelklasse van de stap-situatie tbv BRP.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PrimairFossiel" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Primaire fossiele energie-indicator EwePTot [kWh/(m²·a)].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Warmtebehoefte" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Warmtebehoefte van het gebouw EH;nd [kWh/(m²·a)].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Koudebehoefte" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Koudebehoefte van het gebouw EC;nd [kWh/(m²·a)].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FinaalEnergiegebruik" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Finaal energiegebruik indicator E;we;final [kWh/m²].</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikElektriciteit" type="tns:EpbdNumericNoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks gebruik van elektriciteit voor energieprestatie functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikAardgasEq" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks gebruik van aardgas (of gas-equivalenten) voor energieprestatie‑functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikBiomassa" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks gebruik van biomassa voor energieprestatie‑functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikWarmte" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks hoeveelheid gebruikte energie uit externe warmtelevering voor energieprestatie functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnergiegebruikKoude" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Jaarlijks hoeveelheid gebruikte energie uit externe koudelevering voor energieprestatie functies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <!-- BrpStepAfterHernieuwbaarGroup: De BRP stappen lijst alles na HernieuwbareOpwek.-->
+    <xs:group name="BrpStepAfterHernieuwbaarGroup">
+        <xs:sequence>
+            <xs:element name="CO2Emissie" type="tns:EpbdNumericNoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Berekende CO2 emissie per jaar.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Energielasten" type="tns:EpbdNumericTwoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Berekende energielasten: verbruik per energiedrager × kosten energiedrager + vaste lasten.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <!-- BrpStepWithInvesteringOptionalHernieuwbaarOpwek: De lijst van stappen met een optionele HernieuwbareOpwek-->
+    <xs:complexType name="BrpStepWithInvesteringOptionalHernieuwbaarOpwek">
+        <xs:sequence>
+            <xs:group ref="tns:BrpStepGroup"/>
+            <xs:element name="HernieuwbareOpwek" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Totale jaarlijkse hoeveelheid op het perceel opgewekte elektriciteit.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:group ref="tns:BrpStepAfterHernieuwbaarGroup"/>
+            <xs:element name="Investering" type="tns:EpbdNumericNoDecimal">
+                <xs:annotation>
+                    <xs:documentation>Wordt berekend aan de hand van opgegeven prijzen door adviseur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- HoofdtypeVerwarmingstoestelEnumeration: Lijst van keuzes voor OpwekkertypeVerwarming.-->
+    <xs:simpleType name="HoofdtypeVerwarmingstoestelEnumeration">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Absorptiewarmtepomp">
+                <xs:annotation>
+                    <xs:documentation>Absorptiewarmtepomp</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WKK">
+                <xs:annotation>
+                    <xs:documentation>(micro)WKK</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LokaalCentraalElektrisch">
+                <xs:annotation>
+                    <xs:documentation>Lokale en centrale elektrische verwarming</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="StoomketelGas">
+                <xs:annotation>
+                    <xs:documentation>Stoomketel - gas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="StoomketelOlie">
+                <xs:annotation>
+                    <xs:documentation>Stoomketel - olie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ExterneWarmte">
+                <xs:annotation>
+                    <xs:documentation>Externe warmtelevering</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Conventioneel">
+                <xs:annotation>
+                    <xs:documentation>CR-ketel of moederhaard</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VR">
+                <xs:annotation>
+                    <xs:documentation>VR-ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR100">
+                <xs:annotation>
+                    <xs:documentation>HR100-ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR104">
+                <xs:annotation>
+                    <xs:documentation>HR104-ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR107">
+                <xs:annotation>
+                    <xs:documentation>HR107-ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ConventioneelLucht">
+                <xs:annotation>
+                    <xs:documentation>LuchtverwarmingConventionele ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VRLucht">
+                <xs:annotation>
+                    <xs:documentation>Luchtverwarming VR ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR100Lucht">
+                <xs:annotation>
+                    <xs:documentation>Luchtverwarming HR100 ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR104Lucht">
+                <xs:annotation>
+                    <xs:documentation>Luchtverwarming HR104 ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR107Lucht">
+                <xs:annotation>
+                    <xs:documentation>Luchtverwarming HR107 ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LokaalGasMetAfvoer">
+                <xs:annotation>
+                    <xs:documentation>Lokale gasverwarming inclusief waakvlam, olieverwarming met afvoer verbrandingsgassen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LokaalGasZonderAfvoer">
+                <xs:annotation>
+                    <xs:documentation>Lokale gasverwarming inclusief waakvlam, olieverwarming zonder afvoer verbrandingsgassen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ElektrischeWarmtepomp">
+                <xs:annotation>
+                    <xs:documentation>Elektrisch aangedreven warmtepomp</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GasWarmtepomp">
+                <xs:annotation>
+                    <xs:documentation>Gas aangedreven warmtepomp</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VrijstaandeHoutkachel">
+                <xs:annotation>
+                    <xs:documentation>Vrijstaande houtkachel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="InbouwInzetkachel">
+                <xs:annotation>
+                    <xs:documentation>Inbouw-/inzetkachel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Pelletkachel">
+                <xs:annotation>
+                    <xs:documentation>Pelletkachel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AccumulerendToestel">
+                <xs:annotation>
+                    <xs:documentation>Accumulerend toestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HandgestookteKetel">
+                <xs:annotation>
+                    <xs:documentation>Met de hand gestookte ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AutomatischGestookteKetel">
+                <xs:annotation>
+                    <xs:documentation>Automatisch gestookte ketel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ElektrischElement">
+                <xs:annotation>
+                    <xs:documentation>Elektrisch element</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVKetelElektrisch">
+                <xs:annotation>
+                    <xs:documentation>CV-ketel - elektrisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CentraleDirectGestookteLuchtverwarmerElektrisch">
+                <xs:annotation>
+                    <xs:documentation>Centrale direct gestookte luchtverwarmer - elektrisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LokaleDirectGestookteLuchtverwarmerGas">
+                <xs:annotation>
+                    <xs:documentation>Lokale direct gestookte luchtverwarmer - gas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Onbekend">
+                <xs:annotation>
+                    <xs:documentation>Onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Overig">
+                <xs:annotation>
+                    <xs:documentation>Overig</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- TapwatertoesteltypeEnumeration: Lijst van keuzes voor OpwekkertypeTapwater.-->
+    <xs:simpleType name="TapwatertoesteltypeEnumeration">
+        <xs:restriction base="xs:string">
+            <!-- Indirect gestookte boilers -->
+            <xs:enumeration value="Conventioneel">
+                <xs:annotation>
+                    <xs:documentation>Voor indirect toestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VR">
+                <xs:annotation>
+                    <xs:documentation>Voor indirect toestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR100">
+                <xs:annotation>
+                    <xs:documentation>Voor indirect toestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR104">
+                <xs:annotation>
+                    <xs:documentation>Voor indirect toestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HR107">
+                <xs:annotation>
+                    <xs:documentation>Voor indirect toestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Biomassa">
+                <xs:annotation>
+                    <xs:documentation>Voor indirect toestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!-- Gasgestookte toestellen -->
+            <xs:enumeration value="Badgeiser">
+                <xs:annotation>
+                    <xs:documentation>Gasgestookte badgeiser</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Keukengeiser">
+                <xs:annotation>
+                    <xs:documentation>Gasgestookte keukengeiser</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Combitoestel">
+                <xs:annotation>
+                    <xs:documentation>Gasgestookt combitoestel zonder gaskeur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CombiGK">
+                <xs:annotation>
+                    <xs:documentation>Gasgestookt combitoestel met gaskeur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CombiGKCW">
+                <xs:annotation>
+                    <xs:documentation>Gasgestookt combitoestel met gaskeur CW</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CombiGKHRCW">
+                <xs:annotation>
+                    <xs:documentation>Gasgestookt combitoestel met gaskeur HR en gaskeur CW</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WKK">
+                <xs:annotation>
+                    <xs:documentation>Gasgestookte (combi-)(micro)WKK</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!-- Warmtepompen -->
+            <xs:enumeration value="WarmtepompRetourlucht">
+                <xs:annotation>
+                    <xs:documentation>Elektrische warmtepompboiler met ventilatieretourlucht als bron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WarmtepompBodem">
+                <xs:annotation>
+                    <xs:documentation>Elektrische warmtepompboiler met bodem als bron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WarmtepompGrondwater">
+                <xs:annotation>
+                    <xs:documentation>Elektrische warmtepompboiler met grondwater als bron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WarmtepompOverig">
+                <xs:annotation>
+                    <xs:documentation>Elektrische warmtepompboiler met een andere bron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WarmtepompGas">
+                <xs:annotation>
+                    <xs:documentation>Warmtepomp - gas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Boosterwarmtepomp"/>
+            <!-- Overige elektrische toestellen -->
+            <xs:enumeration value="Elektroboiler">
+                <xs:annotation>
+                    <xs:documentation>Elektrische boiler</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ElektrischElement">
+                <xs:annotation>
+                    <xs:documentation>Elektrisch element</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hotfillboiler">
+                <xs:annotation>
+                    <xs:documentation>Hotfillboiler (met/zonder elektrisch element)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Heetwater">
+                <xs:annotation>
+                    <xs:documentation>Heet- of kokendwatertoestellen, waarbij kokend water uit de kraan komt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ElektrischDoorstroomtoestel">
+                <xs:annotation>
+                    <xs:documentation>Elektrisch doorstroomtoestel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVKetelElektrisch">
+                <xs:annotation>
+                    <xs:documentation>CV-ketel - elektrisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Gasboiler">
+                <xs:annotation>
+                    <xs:documentation>Gasboiler</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Overig">
+                <xs:annotation>
+                    <xs:documentation>Overig</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Onbekend">
+                <xs:annotation>
+                    <xs:documentation>Overig</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!-- Externe levering -->
+            <xs:enumeration value="ExterneWarmtelevering">
+                <xs:annotation>
+                    <xs:documentation>Warmtelevering derden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZonneboilerMetGeïntegreerdeElektrischeNaverwarming">
+                <xs:annotation>
+                    <xs:documentation>Zonneboiler met geïntegreerde elektrische naverwarming</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZonneboilerMetGeïntegreerdeGasgestookteNaverwarming">
+                <xs:annotation>
+                    <xs:documentation>Zonneboiler met geïntegreerde gasgestookte naverwarming</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WarmteUitVerwarmingssysteem">
+                <xs:annotation>
+                    <xs:documentation>Warmte uit verwarmingssysteem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OpwekkerVanVerwarmingssysteem">
+                <xs:annotation>
+                    <xs:documentation>Opwekker van verwarmingssysteem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- TypeKoeltoestelEnumeration: Lijst van keuzes voor OpwekkertypeKoeling.-->
+    <xs:simpleType name="TypeKoeltoestelEnumeration">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Absorptie">
+                <xs:annotation>
+                    <xs:documentation>Absorptiekoeling</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Compressie">
+                <xs:annotation>
+                    <xs:documentation>Compressiekoeling</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PassiefVrij">
+                <xs:annotation>
+                    <xs:documentation>Passieve of vrije koeling</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ExterneKoudelevering">
+                <xs:annotation>
+                    <xs:documentation>Externe koudelevering</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Onbekend">
+                <xs:annotation>
+                    <xs:documentation>Onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Overig">
+                <xs:annotation>
+                    <xs:documentation>Overig</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- VentilatieHoofdtypeEnumeration: Lijst van keuzes voor VentilatieHoofdtype.-->
+    <xs:simpleType name="VentilatieHoofdtypeEnumeration">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+                <xs:annotation>
+                    <xs:documentation>A - Natuurlijke ventilatie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="B">
+                <xs:annotation>
+                    <xs:documentation>B - Mechanische toevoer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+                <xs:annotation>
+                    <xs:documentation>C - Mechanische afvoer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dc">
+                <xs:annotation>
+                    <xs:documentation>Dc - Mechanische balans centraal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dd">
+                <xs:annotation>
+                    <xs:documentation>Dd - Mechanische balans decentraal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="E">
+                <xs:annotation>
+                    <xs:documentation>E - Gecombineerd systeem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- WTWTypeEnumeration: Lijst van keuzes voor TypeWTW.-->
+    <xs:simpleType name="WTWTypeEnumeration">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Onbekende WTW"/>
+            <xs:enumeration value="Koude laden met LBK"/>
+            <xs:enumeration value="Platen-of buizenwarmtewisselaar"/>
+            <xs:enumeration value="Kruisstroomwarmtewisselaar"/>
+            <xs:enumeration value="Twee-elementensysteem"/>
+            <xs:enumeration value="Warmtebuisapparaat"/>
+            <xs:enumeration value="Roterende of intermitterende warmtewisselaar"/>
+            <xs:enumeration value="Enthalpiewisselaar"/>
+            <xs:enumeration value="Tegenstroomwarmtewisselaar, aluminium"/>
+            <xs:enumeration value="Tegenstroomwarmtewisselaar, kunststof"/>
+            <xs:enumeration value="WTW rendement volgens EN13141-7, EN13141-8"/>
+            <xs:enumeration value="WTW rendement volgens EN13142"/>
+            <xs:enumeration value="WTW rendement volgens NEN-EN 13053"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- OrientationEnumeration: Lijst van keuzes voor TypeWTW. -->
+    <xs:simpleType name="OrientationEnumeration">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="N"/>
+            <xs:enumeration value="NO"/>
+            <xs:enumeration value="O"/>
+            <xs:enumeration value="ZO"/>
+            <xs:enumeration value="Z"/>
+            <xs:enumeration value="ZW"/>
+            <xs:enumeration value="W"/>
+            <xs:enumeration value="NW"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- VerlichtingsEnumeration: Lijst van keuzes voor Verlichting.-->
+    <xs:simpleType name="VerlichtingsEnumeration">
+        <xs:annotation>
+            <xs:documentation>T14.2</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ZonderOfGeintegreerdeBallast">
+                <xs:annotation>
+                    <xs:documentation>Verlichtingssystemen die zonder separate ballast aan de netspanning kunnen worden aangesloten of die zijn voorzien van een geïntegreerde ballast</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Led">
+                <xs:annotation>
+                    <xs:documentation>LED-technologie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FluorescentieT5">
+                <xs:annotation>
+                    <xs:documentation>Fluorescentietechnologie T5</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FluorescentieT8Elektronisch">
+                <xs:annotation>
+                    <xs:documentation>Fluorescentietechnologie T8 met hoogfrequente voorschakelapparatuur (elektronische ballast)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FluorescentieT8Elektromagnetisch">
+                <xs:annotation>
+                    <xs:documentation>Fluorescentietechnologie T8 met conventionele voorschakelapparatuur (elektromagnetische ballast)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FluorescentieT12">
+                <xs:annotation>
+                    <xs:documentation>Fluorescentietechnologie T12</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FluorescentieCompact">
+                <xs:annotation>
+                    <xs:documentation>Technologie Compact Fluorescentie niet geïntegreerd</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Overig">
+                <xs:annotation>
+                    <xs:documentation>Onbekende verlichtingstechnologie, overige verlichtingstechnologie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="">
+                <xs:annotation>
+                    <xs:documentation>Onbekend of voorschakelapparatuur aanwezig is</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- BevochtigingEnumeration: Lijst van keuzes voor Bevochtiging.-->
+    <xs:simpleType name="BevochtigingEnumeration">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="StoomElektrisch"/>
+            <xs:enumeration value="StoomNietElektrisch"/>
+            <xs:enumeration value="Adiabatisch"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- SummaryType: Lijst van elementen in samenvatting.-->
+    <xs:complexType name="SummaryType">
+        <xs:sequence>
+            <xs:element name="RcGevels" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="RcVloeren" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="RcDaken" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="URamen" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="GRamen" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="UDeuren" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="UPanelen" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="PercentageZonwering" type="xs:nonNegativeInteger" minOccurs="0"/>
+            <xs:element name="Luchtdoorlatendheid" type="tns:EpbdNumericTwoDecimal"/>
+            <xs:element name="OpwekkertypeVerwarming" type="tns:HoofdtypeVerwarmingstoestelEnumeration"/>
+            <xs:element name="OpwekkertypeTapwater" type="tns:TapwatertoesteltypeEnumeration"/>
+            <xs:element name="DoucheWTWAanwezig" type="xs:boolean"/>
+            <xs:element name="KoelingAanwezig" type="xs:boolean"/>
+            <xs:element name="OpwekkertypeKoeling" type="tns:TypeKoeltoestelEnumeration" minOccurs="0"/>
+            <xs:element name="VentilatieHoofdtype" type="tns:VentilatieHoofdtypeEnumeration"/>
+            <xs:element name="TypeWTW" type="tns:WTWTypeEnumeration" minOccurs="0"/>
+            <xs:element name="WisselstroomVentilator" type="xs:boolean"/>
+            <xs:element name="GemiddeldvermogenVerlichting" type="tns:EpbdNumericTwoDecimal" minOccurs="0"/>
+            <xs:element name="Verlichting" type="tns:VerlichtingsEnumeration" minOccurs="0"/>
+            <xs:element name="Bevochtiging" type="tns:BevochtigingEnumeration" minOccurs="0"/>
+            <xs:element name="OppervlaktePV" type="tns:EpbdNumericTwoDecimal"/>
+            <xs:element name="ZonneboilerAanwezig" type="xs:boolean"/>
+            <xs:element name="WattpiekvermogenPV" type="tns:EpbdNumericTwoDecimal"/>            
+            <xs:element name="OrientatiePV" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Orientatie" type="tns:OrientationEnumeration" minOccurs="1" maxOccurs="8"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="HybrideWarmtepomp" type="xs:boolean"/>
+            <xs:element name="BatterijopslagAanwezig" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
