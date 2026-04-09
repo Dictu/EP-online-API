@@ -623,56 +623,56 @@
                                         </xs:annotation>
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element name="A1A3" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="A1A3" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot productie A1-A3 (kg/m2)
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="A4A5" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="A4A5" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot bouw A4-A5 (kg/m2)
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="B1B4" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="B1B4" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot gebruik en onderhoud B1-B4 (kg/m2)
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="B6" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="B6" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot energie B6 (kg/m2)
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="C1C4" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="C1C4" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot einde levensduur C1-C4 (kg/m2)
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="D1" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="D1" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot hergebruik en recycling D1 (kg/m2)
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="D2" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="D2" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot opbrengsten (D2) (kg/m2)
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="Tot" type="tns:EpbdNumericOneDecimal" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="Tot" type="tns:EpbdNumericOneDecimalWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             CO2 uitstoot totaal A-D (kg/m2)
@@ -1086,6 +1086,14 @@
     <xs:simpleType name="EpbdNumericWithNegative">
         <xs:restriction base="xs:decimal">
             <xs:pattern value="(-{0,1}[0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
+        </xs:restriction>
+    </xs:simpleType>
+
+     <!-- EpbdNumericOneDecimalWithNegative: Algemeen type voor alle numerieke velden.
+              Deze hebben allen een precisie van een decimaal. -->
+     <xs:simpleType name="EpbdNumericOneDecimalWithNegative">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value="(-{0,1}[0-9]{1,14}(\.[0-9]{1}){0,1}|-1)" />
         </xs:restriction>
     </xs:simpleType>
 
