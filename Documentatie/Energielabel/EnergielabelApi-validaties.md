@@ -1,17 +1,17 @@
 # Businessrules registratiebestand EP-online
 
 ## 1. Versiebeheer
-| Datum 			| Versie| Auteur  			| Wijzigingen
+| Datum 		| Versie | Auteur  			| Wijzigingen
 |:--------------|:-------|:-----------------|:----------------------------------------------------------------------------
 |	6 aug 2019	|	0.1	 |	Peter Zaal		|	Initiële versie.
 |				|	0.2	 |	Peter Zaal		|	Foutjes eruit gehaald.
 |	9 sep 2019	|	0.3	 |	Peter Zaal		|	Bijgewerkt met uitgesplitste SurveyDate rules.
 |	12 sep 2019	|	0.4	 |	Piet Vredeveld	|	Omgezet naar Markdown formaat, EP-online interne informatie verwijderd.
 |	24 jan 2020	|	0.5  |	Paul Kamps		|	Nieuwe validaties en checks toegevoegd.
-|	07 jul 2020	|	0.6  |	Bas Brouwer  	| 	Geüpdatet aan de hand van de nieuwe XSD versie.
-|	10 jul 2020	|	0.7  |	Paul Kamps  	| 	Business Rules geüpdatet en toegevoegd.
-|	17 jul 2020	|	0.8  |	Bas Brouwer  	| 	Business Rules geüpdatet en vier business rules toegevoegd.
-|	09 sep 2020	|	0.9  |	Paul Kamps  	| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
+|	07 jul 2020	|	0.6  |	Bas Brouwer		| 	Geüpdatet aan de hand van de nieuwe XSD versie.
+|	10 jul 2020	|	0.7  |	Paul Kamps		| 	Business Rules geüpdatet en toegevoegd.
+|	17 jul 2020	|	0.8  |	Bas Brouwer		| 	Business Rules geüpdatet en vier business rules toegevoegd.
+|	09 sep 2020	|	0.9  |	Paul Kamps		| 	Standplaats, Ligplaats en Projectgegevens toegevoegd.
 |	18 nov 2020	|	1.0  |	Paul Kamps		|	Business Rule geüpdatet.
 |	30 nov 2020	|	1.1	 |	Paul Kamps		|	Business Rules voor labelletter toegevoegd.
 |	14 dec 2020	|	1.2  |	Robert Boonstra	|	Bag controle voor BuildingAnnotation toegevoegd.
@@ -29,8 +29,8 @@
 |	21 sep 2022	|	1.14 |	Paul Kamps		|	Business Rule verwijderd.
 |	15 dec 2022	|	1.15 |	Paul Kamps		|	Business Rule CheckProjectNameAndObjectDoesNotAlreadyExists toegevoegd, Business Rule CheckEpcVersion is verwijderd.
 |	23 jan 2023	|	1.16 |	Paul Kamps		|	Business Rules CheckEpcVersion, CheckInterpunction en CheckLinkVergunningsAanvraagToOpleveringSameScope toegevoegd. De naam van Business Rules CheckRegistrationAdvisor en CheckEpClassIdResidential zijn gewijzigd.
-|   10 mei 2023 |   1.17 |	Paul Kamps		|	Business Rule CheckBuildingTypeBagPitch bijgewerkt om meer gebouwtypes te ondersteunen.
-|	1  aug 2023 |	1.18 |  Paul Kamps		|	Business Rule CheckExpandNotAllowedForProjects toegevoegd. Business rule CheckProjectNameAndProjectObjectCannotChangeWhenExpanding verwijderd.
+|	10 mei 2023	|	1.17 |	Paul Kamps		|	Business Rule CheckBuildingTypeBagPitch bijgewerkt om meer gebouwtypes te ondersteunen.
+|	1  aug 2023	|	1.18 |  Paul Kamps		|	Business Rule CheckExpandNotAllowedForProjects toegevoegd. Business rule CheckProjectNameAndProjectObjectCannotChangeWhenExpanding verwijderd.
 |	6  sep 2023	|	1.19 |	Paul Kamps		|	Business rules CheckLinkVergunningsAanvraagToOpleveringSameScope, CheckNotPermitPreNtaStatusCompletionWithBagAndProvisionalIdentification, CheckNotPermitPreNtaStatusCompletionWithBagIdentification en CheckPermitPreNtaNoProvisionalIdentification verwijderd.
 |	10 apr 2024 |	1.20 |	Paul Kamps		| 	Business Rule CheckSurveyorFieldLengths toegevoegd.
 |	23 apr 2024	|	1.21 |	Paul Kamps		|	Business Rule CheckSurveyDate toegevoegd. Hoofdstuk '2.7. Controle op de actie': Herlabelen toegevoegd.
@@ -43,7 +43,7 @@ Het valideren en verwerken van het registratiebestand gebeurt in een aantal stap
 Er wordt gevalideerd dat de gegevens gevonden kunnen worden.
 
 ### 2.2. Bepalen versienummer en rekenmethodiek
-|	Technische naam				|	Rule(s)
+|	Technische naam				|	Regels
 |:------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |	CalculationType				|	TypeCalculation, Versie, MainBuildingClass en Opnametype worden uitgelezen. Aan de hand hiervan wordt bepaald wat de rekenmethodiek is. De rekenmethodiek moet bestaan in EP-online.
 |	CalculationTypeVersion		|	De XSD versie bij de rekenmethodiek moet bestaan in EP-online.
@@ -51,7 +51,7 @@ Er wordt gevalideerd dat de gegevens gevonden kunnen worden.
 |	GenericXmlVersion			|	In de generieke XML moet het veld *Energieprestatie.Versie* gevuld zijn, een geldig getal zijn, en overeenkomen met de generieke XML versie in EP-online.
 
 ### 2.3. XSD validatie
-| Technische naam		| Rule(s)
+| Technische naam		| Regels
 |:----------------------|:-----------------------------------------------------------------------------------------------------
 | MainSchemeValidator	| De XML wordt gevalideerd tegen de monitor XSD (exclusief het element *SurveySourceData* )
 | SurveyDataValidator	| Het element *SurveySourceData* moet bestaan en wordt gevalideerd tegen de XSD van het generieke deel.
@@ -59,7 +59,7 @@ Er wordt gevalideerd dat de gegevens gevonden kunnen worden.
 ### 2.4. Inhoudelijke controles
 Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. Indien er meerdere validaties falen, dan worden alle bijbehorende foutmeldingen geretourneerd.
 
-| Technische naam 																| Rule(s)
+| Technische naam 																| Regels
 |:---------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |  CheckBagBuildingId															|	Het is verplicht een verblijfsobject id op te geven wanneer er een pand id is opgegeven.
 |  CheckBagIdCombination														|	<ul><li> standplaats id en ligplaats id mogen niet ingevuld zijn wanneer verblijfsobject id en/of pand id ingevuld is/zijn.</li><li> verblijfsobject id, pand id en standplaats id mogen niet ingevuld zijn wanneer ligplaats id ingevuld is.</li><li> verblijfsobject id, pand id en ligplaats id mogen niet ingevuld zijn wanneer standplaats id ingevuld is.</li></ul>
@@ -106,7 +106,7 @@ Onderstaande validaties worden allemaal en in willekeurige volgorde uitgevoerd. 
 ### 2.5. BAG controle
 Voor elk adres (verblijfsobject id, ligplaats id of standplaats id in BAGIdentification) wordt gecontroleerd aan de hand van de BAG of deze valide is. 
 
-|  Situatie  							|  Rule(s)
+|  Situatie  							|	Regels
 |:--------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |  BagResultCheckBagHasMatchingAddress  |  Het ingevulde TPGIdentification adres moet overeenkomen (op basis van adres) met het resultaat uit BAG op basis van de ingevulde BAGIdentification.
 |  BagResultCheckBagHasMatchingIds		|  Als het ingevulde verblijfsobject id niet behoort tot het ingevulde pand id, dan dient de BuildingAnnotation leeg te zijn.
@@ -117,7 +117,7 @@ Voor elk adres (verblijfsobject id, ligplaats id of standplaats id in BAGIdentif
 ### 2.6. Controle op recentere registratie
 Voor elk gebouw wordt gecontroleerd dat er niet al een recentere registratie aanwezig is op basis van het gevonden adres van het verblijfsobject via de BAG (in geval van identificatie d.m.v. BAG identificatie) of ProvisionalId in Projectgegevens (in geval van identificatie d.m.v. Provisional identificatie).
 
-|  Technische naam						|	Rule(s)
+|  Technische naam						|	Regels
 |:--------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 |	CheckNoMoreRecentLabelExists		|	Er mag geen pre-NTA registratie gevonden worden, op hetzelfde adres, die voldoet aan: <br/><ul><li>'Geldig tot' ligt in de toekomst.</li><li>'Opnamedatum' ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li></ul>Er mag geen NTA registratie gevonden worden, op hetzelfde adres of project, die voldoet aan:<ul><li>'Geldig tot' ligt in de toekomst.</li><li> 'Opnamedatum' ligt na de opnamedatum (SurveyDate) uit het registratiebestand.</li><li>'Scope' heeft dezelfde waarde als 'Scope' uit het registratiebestand.</li><li>'Gebouwklasse' heeft dezelfde waarde als 'Gebouwklasse' uit het registratiebestand.</li></ul>
 
