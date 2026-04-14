@@ -4,9 +4,14 @@
 |   Datum 		| Versie |  Auteur  		 |  Wijzigingen
 |--------------:|:------:|:-----------------:|:----------------------------------------------------------------------------
 |   15 feb 2023	|  0.1	 |	Paul Kamps		 |	Initiële versie.
+|   14 apr 2026	|  0.2	 |	Paul Kamps  	 |	Document bijgewerkt; Toegevoegd: validaties voor Vervangen actie en CRT controle.
 
 ## 2. Validaties
 Het valideren en verwerken van het maatwerkadvies gebeurt in een aantal stappen. Als er een of meerdere validaties in een stap niet voldoen, worden de bijbehorende meldingen terug gegeven en wordt niet verder gegaan naar de volgende stap.
+
+**Ondersteunde acties:**
+- **Toevoegen**: Een nieuw maatwerkadvies registreren
+- **Vervangen**: Een bestaand maatwerkadvies vervangen door een nieuwe versie
 
 ### 2.1. Ophalen en valideren gebruiker (adviseur) en organisatie
 Er wordt gevalideerd dat de gegevens gevonden kunnen worden.
@@ -55,8 +60,31 @@ Voor elk adres wordt gecontroleerd dat er niet al een recenter maatwerkadvies aa
 |	Er mag geen maatwerkadvies registratie worden gevonden op hetzelfde adres met dezelfde gebouwklasse (woningbouw of utiliteitsbouw) met een recentere adviesdatum.
 
 ### 2.7. Controle op de actie
-Controle of de actie 'Toevoegen' betreft en daarop de validaties uitgevoerd.
+Controle of de actie 'Toevoegen' of 'Vervangen' betreft en daarop de validaties uitgevoerd.
 
-|  Actie  			|  	Rule(s)
-|------------------	|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|	Toevoegen		|	Op de adviesdatum (AdviceDate) mag er niet al een maatwerkadvies zijn met dezelfde gebouwklasse, waarbij een van de adressen overeenkomt met een adres van uit het registratiebestand. 
+#### 2.7.1. Actie: Toevoegen
+
+|  Technische naam 													|  Rule(s)
+|-------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|	CheckBuildingIdentificationCredit								|	Bij woningbouw registraties: wanneer een detailaanduiding is opgegeven, dient de registratieadviseur over voldoende gebouwidentificatie credits te beschikken. Het aantal benodigde credits is gelijk aan het aantal ObjectLocations waarbij de BuildingAnnotation is ingevuld.
+|	CheckForDuplicateAddresses										|	Alle adressen in het bestand (op basis van postcode, huisnummer, huisletter, huisnummertoevoeging en detailaanduiding) mogen slechts één keer voorkomen.
+|	DoesRegistrationExistsForAdviceDateBuildingClassAndAddresses	|	Op de adviesdatum (AdviceDate) mag er niet al een maatwerkadvies zijn met dezelfde gebouwklasse, waarbij een van de adressen overeenkomt met een adres uit het registratiebestand.
+
+#### 2.7.2. Actie: Vervangen
+
+|  Technische naam 													|  Rule(s)
+|-------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|	CheckForDuplicateAddresses										|	Alle adressen in het bestand (op basis van postcode, huisnummer, huisletter, huisnummertoevoeging en detailaanduiding) mogen slechts één keer voorkomen.
+|	GetRegistrationForAdviceDateBuildingClassAndAddresses			|	Er moet een bestaande maatwerkadvies registratie gevonden worden met dezelfde gebouwklasse en waarbij een van de adressen overeenkomt met een adres uit het registratiebestand.
+|	ValidateAddressesMatch											|	De adressen in het registratiebestand moeten exact overeenkomen met de adressen van de initiële registratie. Het aantal adressen moet gelijk zijn en alle adressen moeten voorkomen in de initiële registratie.
+|	ValidateExistingRegistrationForReplace							|	De bestaande registratie moet voldoen aan de volgende voorwaarden:<br/>• De uitvoerende registratieadviseur moet gelijk zijn aan de laatste registratieadviseur van de bestaande registratie<br/>• De rekenmethodiek (CalculationType) moet gelijk zijn aan de rekenmethodiek van de bestaande registratie<br/>• De bestaande registratie mag niet ingetrokken zijn<br/>• De adviesdatum van de bestaande registratie mag niet in de toekomst liggen
+|	ValidateReplacementPeriod										|	De vervangingsperiode moet geldig zijn volgens de volgende regels:<br/>• Als de reguliere vervangingsperiode (gerekend vanaf de originele adviesdatum) nog niet verstreken is, is vervangen toegestaan<br/>• Als de reguliere vervangingsperiode verstreken is, moeten er vervangrechten zijn toegekend<br/>• Als er vervangrechten zijn toegekend, moet de einddatum van deze rechten nog niet verstreken zijn
+
+### 2.8. CRT (Centraal Register Technieken) controle
+Wanneer de CRT controle is ingeschakeld (via feature toggle), wordt voor elk adres gecontroleerd of de registratieadviseur bevoegd is volgens het CRT.
+
+|	Rule(s)
+|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|	De registratieadviseur moet een geldige registratie hebben in het Centraal Register Technieken (CRT) voor de opgegeven rekenmethodiek, certificaathouder en adviesnummer.
+|	Indien de CRT service niet beschikbaar is, wordt een serverfout teruggegeven.
+|	Indien er geen match wordt gevonden in het CRT, wordt een business rule fout teruggegeven.
