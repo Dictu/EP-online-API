@@ -779,7 +779,11 @@
                                                     <xs:element name="SubtypeKoeltoestel" type="n:SubtypeKoeltoestelEnumeration" minOccurs="0"/>
                                                     <xs:element ref="n:Energiedrager"/>
                                                     <xs:element name="ElektrVermogen" type="n:ElektrischVermogenEnumeration"/>
-                                                    <xs:element name="Opwekkingsrendement" type="n:Numeric2Decimals" minOccurs="0" />
+                                                    <xs:element name="Opwekkingsrendement" type="n:Numeric2Decimals" minOccurs="0">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Bij methode 1 de EER volgens formule 10.54. Bij methode 2 EER;gi;n.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
@@ -1910,82 +1914,82 @@
                         <xs:documentation>Jaarlijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor het totaal aan energiedragers formule AB.9 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-tot-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-tot-mi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor het totaal aan energiedragers formule AB.10 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-del-el-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-del-el-mi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor elektriciteit formule AB.11a in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-del-gas-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-del-gas-mi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor gas formule AB.11 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-del-dh-dw-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-del-dh-dw-mi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor warmte formule AB.11 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-del-dc-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-del-dc-mi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor koude formule AB.11 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-del-bm-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-del-bm-mi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor biomassa formule AB.11 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-del-oil-mi" type="xs:integer">
+                <xs:element name="E-P-ZEB-del-oil-mi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse karakteristieke primaire-totale-energiegebruik van het gebouw voor stookolie formule AB.11 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-exp-T-gi" type="xs:integer">
+                <xs:element name="E-P-ZEB-exp-T-gi" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Naar vermeden primaire-totale-energie omgerekende maandelijks geëxporteerde warmte en/of koude, opgeteld voor alle voorzieningen gi formule AB.12 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-exp-el-ren-tot" type="xs:integer">
+                <xs:element name="E-P-ZEB-exp-el-ren-tot" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Naar vermeden primaire-totale-energie omgerekende totale hoeveelheid maandelijks geëxporteerde hernieuwbare elektriciteit formule AB.13 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-P-ZEB-exp-el-nren-tot" type="xs:integer">
+                <xs:element name="E-P-ZEB-exp-el-nren-tot" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>naar vermeden primaire-totale-energie omgerekende totale hoeveelheid maandelijks geëxporteerde niet-hernieuwbare elektriciteit formule AB.14 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-exp-el-ren-tot" type="xs:integer">
+                <xs:element name="E-exp-el-ren-tot" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijks geëxporteerde hernieuwbare elektriciteit formule AB.61 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-exp-el-nren-tot" type="xs:integer">
+                <xs:element name="E-exp-el-nren-tot" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijks geëxporteerde niet-hernieuwbare elektriciteit formule AB.62 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-pr-el-ren-directuse" type="xs:integer">
+                <xs:element name="E-pr-el-ren-directuse" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse hoeveelheid hernieuwbare elektriciteit die op het eigen perceel direct gebruikt wordt voor bij de energieprestatie betrokken energiefuncties formule AB.65 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-pr-el-nren-directuse" type="xs:integer">
+                <xs:element name="E-pr-el-nren-directuse" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Maandelijkse hoeveelheid niet-hernieuwbare elektriciteit die op het eigen perceel direct gebruikt wordt voor bij de energieprestatie betrokken energiefuncties formule AB.66 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-BAT-tot-out" type="xs:integer">
+                <xs:element name="E-BAT-tot-out" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Totale maandelijkse hoeveelheid hernieuwbare elektriciteit die beschikbaar is vanuit op het eigen perceel gelegen batterijsystemen formule AB.70 in kWh</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="E-BAT-tot-in" type="xs:integer">
+                <xs:element name="E-BAT-tot-in" type="n:Maandwaarden">
                     <xs:annotation>
                         <xs:documentation>Totale maandelijkse hoeveelheid hernieuwbare elektriciteit die wordt opgeslagen in op het eigen perceel gelegen batterijsystemen formule AB.71 in kWh</xs:documentation>
                     </xs:annotation>

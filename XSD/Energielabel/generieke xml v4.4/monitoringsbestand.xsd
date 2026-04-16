@@ -679,6 +679,15 @@
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="EnergieverbruikPerEnergiedrager" minOccurs="1" maxOccurs="1">
+                                        <xs:annotation>
+                                            <xs:documentation>Blok met info over energieverbruik per energiedrager</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                            <xs:sequence>
                                                 <xs:element name="E-EP-us-el" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
