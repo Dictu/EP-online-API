@@ -1835,7 +1835,7 @@
                         <xs:documentation>Energiebehoefte Indicator EweH+C;ndventsys kWh/(m2.a) formule 5.1</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="PrimaireFossieleEnergieIndicator" type="xs:double">
+                <xs:element name="PrimaireFossieleEnergieIndicator" type="n:Numeric2DecimalsWithNegative">
                     <xs:annotation>
                         <xs:documentation>Primaire Fossiele Energie Indicator EwePTot kWh/(m2.a) formule 5.2</xs:documentation>
                     </xs:annotation>
