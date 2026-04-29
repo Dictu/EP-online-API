@@ -273,6 +273,17 @@
             <xs:minInclusive value="-1"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="EpbdNumericTwoDecimalWithNegative">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value="(-{0,1}[0-9]{1,14}(\.[0-9]{2}){0,1}|-1)" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Maandwaarden">
+        <xs:annotation>
+            <xs:documentation>Lijst van decimalen, gescheiden door één of meer spaties. De eerste waarde is de jaarwaarde (of 0 als er geen jaarwaarde is), gevolgd door de twaalf maandwaarden.</xs:documentation>
+        </xs:annotation>
+        <xs:list itemType="xs:double"/>
+    </xs:simpleType>
     <!-- SurveyorType: De opnameadviseur.-->
     <xs:complexType name="SurveyorType">
         <xs:sequence>
@@ -405,7 +416,7 @@
                     <xs:documentation>Het opgegeven jaarverbruik van elektriciteit.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ValueElectricity" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+            <xs:element name="ValueElectricity" type="tns:Maandwaarden" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Het opgegeven maandverbruik van elektriciteit.</xs:documentation>
                 </xs:annotation>
@@ -415,7 +426,7 @@
                     <xs:documentation>Het opgegeven jaarverbruik van gas.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ValueGas" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+            <xs:element name="ValueGas" type="tns:Maandwaarden" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Het opgegeven maandverbruik van gas.</xs:documentation>
                 </xs:annotation>
@@ -425,7 +436,7 @@
                     <xs:documentation>Het opgegeven jaarverbruik van warmte.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ValueHeat" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+            <xs:element name="ValueHeat" type="tns:Maandwaarden" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Het opgegeven maandverbruik van warmte.</xs:documentation>
                 </xs:annotation>
@@ -435,7 +446,7 @@
                     <xs:documentation>Het opgegeven jaarverbruik van biomassa.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ValueBiomass" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+            <xs:element name="ValueBiomass" type="tns:Maandwaarden" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Het opgegeven maandverbruik van biomassa.</xs:documentation>
                 </xs:annotation>
@@ -445,7 +456,7 @@
                     <xs:documentation>Het opgegeven jaarverbruik van koude.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ValueCold" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+            <xs:element name="ValueCold" type="tns:Maandwaarden" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Het opgegeven maandverbruik van koude.</xs:documentation>
                 </xs:annotation>
@@ -455,7 +466,7 @@
                     <xs:documentation>De opgegeven opwekking totaal van elektriciteit.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ValueElectricityProduced" type="tns:EpbdNumericNoDecimal" minOccurs="0">
+            <xs:element name="ValueElectricityProduced" type="tns:Maandwaarden" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>De opgegeven opwekking per maand van elektriciteit.</xs:documentation>
                 </xs:annotation>
@@ -579,7 +590,7 @@
                             <xs:documentation>De geregistreerde labelklasse van de huidige situatie tbv BRP.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
-                    <xs:element name="PrimairFossielReg" type="tns:EpbdNumericTwoDecimal">
+                    <xs:element name="PrimairFossielReg" type="tns:EpbdNumericTwoDecimalWithNegative">
                         <xs:annotation>
                             <xs:documentation>De geregistreerde Primaire Fossiele Energie Indicator EwePTot kWh/(m2.a).</xs:documentation>
                         </xs:annotation>
@@ -1156,7 +1167,7 @@
             <xs:enumeration value="WTW rendement volgens NEN-EN 13053"/>
         </xs:restriction>
     </xs:simpleType>
-    <!-- OrientationEnumeration: Lijst van keuzes voor TypeWTW. -->
+    <!-- OrientationEnumeration: Lijst van oriëntaties. -->
     <xs:simpleType name="OrientationEnumeration">
         <xs:restriction base="xs:string">
             <xs:enumeration value="N"/>
