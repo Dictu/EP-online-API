@@ -265,7 +265,7 @@
                                             <xs:documentation>Finaal energiegebruik indicator E;we;final;EED (kWh/m2) formule 5.3i</xs:documentation>
                                         </xs:annotation>
                                     </xs:element>
-                                    <xs:element name="ZEBIndicator" type="tns:EpbdNumeric" minOccurs="1" maxOccurs="1">
+                                    <xs:element name="ZEBIndicator" type="tns:EpbdNumericWithNegative" minOccurs="1" maxOccurs="1">
                                         <xs:annotation>
                                             <xs:documentation>Primair-totale-energie-indicator E;we;Plzeb;tot kWh/m2 formule AB.1</xs:documentation>
                                         </xs:annotation>
@@ -478,7 +478,7 @@
                                                         </xs:documentation>
                                                     </xs:annotation>
                                                 </xs:element>
-                                                <xs:element name="TotaalkWhm2" type="tns:EpbdNumeric" minOccurs="1" maxOccurs="1">
+                                                <xs:element name="TotaalkWhm2" type="tns:EpbdNumericWithNegative" minOccurs="1" maxOccurs="1">
                                                     <xs:annotation>
                                                         <xs:documentation>
                                                             Totaal finaalverbruik per m2. Formule 5.3h
