@@ -99,7 +99,7 @@
                                             <xs:documentation>Heeft het maatwerkadvies geleid tot een Renovatiepaspoort?</xs:documentation>
                                         </xs:annotation>
                                     </xs:element>
-                                    <xs:element name="UitzonderingGebruikStandaard" type="xs:boolean">
+                                    <xs:element name="UitzonderingGebruikStandaard" type="xs:boolean" minOccurs="0">
                                         <xs:annotation>
                                             <xs:documentation>Alleen als gevelisolatie technisch of bouwkundig niet mogelijk is, mag de standaard voor vooroorlogse woningen worden gehanteerd. De adviseur legt deze uitzondering vast in de software. Ja/true = uitzondering van toepassing.</xs:documentation>
                                         </xs:annotation>
@@ -124,11 +124,11 @@
                                 <xs:sequence>
                                     <xs:element name="Measured" type="tns:MeasuredType"/>
                                     <xs:element name="EnergiegebruikNietPrimairHuidig" type="tns:NietPrimairEnergiegebruikType"/>
-                                    <xs:element name="EnergiegebruikNietPrimairAdvice" type="tns:NietPrimairEnergiegebruikType"/>
+                                    <xs:element name="EnergiegebruikNietPrimairAdvice" type="tns:NietPrimairEnergiegebruikType" minOccurs="0"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-                        <xs:element name="AdviceStepsBRP">
+                        <xs:element name="AdviceStepsBRP" minOccurs="0">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="CurrentSituation" type="tns:BrpStepOptionalHernieuwbaarOpwek"/>
@@ -138,7 +138,7 @@
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-                        <xs:element name="Summary">
+                        <xs:element name="Summary" minOccurs="0">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="CurrentSituation" type="tns:SummaryType"/>
@@ -411,7 +411,7 @@
     <!-- MeasuredType: De metingen van het verbruik.-->
     <xs:complexType name="MeasuredType">
         <xs:sequence>
-            <xs:element name="ValueElectricityTotal" type="tns:EpbdNumericNoDecimal">
+            <xs:element name="ValueElectricityTotal" type="tns:EpbdNumericNoDecimal" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Het opgegeven jaarverbruik van elektriciteit.</xs:documentation>
                 </xs:annotation>
