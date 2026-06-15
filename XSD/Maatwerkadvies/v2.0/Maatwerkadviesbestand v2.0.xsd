@@ -338,12 +338,12 @@
             <xs:documentation>De klimaatgegevens.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="Year" type="tns:Year">
+            <xs:element name="Year" type="tns:Year" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Het jaar van meetgegevens in het formaat: YYYY.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="Month" type="tns:Month">
+            <xs:element name="Month" type="tns:Month" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>De start maand van meetgegevens in het formaat: MM.</xs:documentation>
                 </xs:annotation>
