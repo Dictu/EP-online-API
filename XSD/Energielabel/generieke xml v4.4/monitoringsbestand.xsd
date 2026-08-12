@@ -5,13 +5,6 @@
            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
            xmlns:xf="http://www.w3.org/2002/06/xmldsig-filter2"
            xml:lang="nl">
-    <!-- Namespace urn:nl.nen7120.export kunnen we niet meer opnemen omdat het mogelijk moet zijn
-         dat element SurveySourceData verschillende type XML moet kunnen bevatten. -->
-    <!--xmlns:survey="urn:nl.nta.8800.export">-->
-    <!-- Remove xmlns:survey before generating the C# classes -->
-
-    <!-- Remove import before generating the C# classes -->
-    <!--<xs:import schemaLocation="surveydata.xsd" namespace="urn:nl.nta.8800.export" />-->
 
     <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="..\xmldsig-core-schema.xsd"/>
     <xs:import namespace="http://www.w3.org/2002/06/xmldsig-filter2" schemaLocation="..\xmldsig-filter2.xsd"/>
@@ -230,7 +223,7 @@
                                             <xs:documentation>Eis voor aantal uren temperatuuroverschrijding per jaar (450).</xs:documentation>
                                         </xs:annotation>
                                     </xs:element>
-                                    <xs:element name="NettoWarmtebehoefte" type="tns:EpbdNumeric" minOccurs="1" maxOccurs="1">
+                                    <xs:element name="NettoWarmtebehoefte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1">
                                         <xs:annotation>
                                             <xs:documentation>Netto warmtebehoefte in kWh/m² formule 5.3a</xs:documentation>
                                         </xs:annotation>
@@ -311,14 +304,14 @@
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
-                                    <xs:element name="Gebruiksoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
-                                    <xs:element name="Verliesoppervlakte" type="tns:EpbdNumericNotZero" minOccurs="1" maxOccurs="1"/>
+                                    <xs:element name="Gebruiksoppervlakte" type="tns:Gebruiksoppervlakte" minOccurs="1" maxOccurs="1"/>
+                                    <xs:element name="Verliesoppervlakte" type="tns:EpbdNumeric" minOccurs="1" maxOccurs="1"/>
                                     <xs:element name="Standaard" type="tns:EpbdNumeric" minOccurs="1" maxOccurs="1">
                                         <xs:annotation>
                                             <xs:documentation>Standaard voor woningisolatie in kWh/m2 (par 5.3.2) of U Renovatiestandaard (par 5.3.1).</xs:documentation>
                                         </xs:annotation>
                                     </xs:element>
-                                    <xs:element name="Compactheid" type="tns:EpbdNumeric" minOccurs="0" maxOccurs="1"/>
+                                    <xs:element name="Compactheid" type="tns:Compactheid" minOccurs="0" maxOccurs="1"/>
                                     <xs:element name="Labelklassegrenzen">
                                         <xs:complexType>
                                             <xs:sequence>
@@ -1141,6 +1134,7 @@
             <xs:minExclusive value="0.00"/>
         </xs:restriction>
     </xs:simpleType>
+	
     <xs:simpleType name="EpbdPercentage">
         <xs:restriction base="xs:decimal">
             <xs:pattern value="([0-9]{1,3}\.[0-9]{2})" />
@@ -1148,15 +1142,29 @@
             <xs:maxInclusive value="100.00" />
         </xs:restriction>
     </xs:simpleType>
+	
     <xs:simpleType name="BagId">
         <xs:restriction base="xs:long">
             <xs:pattern value="[0-9]{16}" />
         </xs:restriction>
     </xs:simpleType>
+	
+    <xs:simpleType name="Gebruiksoppervlakte">
+        <xs:restriction base="tns:EpbdNumericNotZero">
+            <xs:maxInclusive value="1000000" />
+        </xs:restriction>
+    </xs:simpleType>
+	
+    <xs:simpleType name="Compactheid">
+        <xs:restriction base="tns:EpbdNumeric">
+            <xs:maxInclusive value="10" />
+        </xs:restriction>
+    </xs:simpleType>
+    
     <!-- EpbdYear: formaat is YYYY -->
     <xs:simpleType name="EpbdYear">
         <xs:restriction base="xs:string">
-            <xs:pattern value="([0-9]{4})"/>
+            <xs:pattern value="([1-2]{1}[0-9]{3})"/>
         </xs:restriction>
     </xs:simpleType>
 
