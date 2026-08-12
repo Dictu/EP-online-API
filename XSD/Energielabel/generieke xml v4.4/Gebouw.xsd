@@ -102,6 +102,33 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="NonNegativeDouble">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="RcValue">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="50" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="UValue">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="GValue">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:element name="Projectgegevens">
         <xs:complexType>
             <xs:sequence>
@@ -136,47 +163,47 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="RcGevels" type="xs:double">
+                <xs:element name="RcGevels" type="n:RcValue" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>Oppervlaktegewogen Rc-waarde van alle gevels waarvoor geldt: Vlaktype = ‘gevel’ EN Dicht EN Begrenzing = NIET (‘AangrenzendeRekenzone’ of ‘AangrenzendeRuimteAnderGebouw). Weglaten als er geen gevels zijn die aan deze voorwaarden voldoen.</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="RcVloeren" type="xs:double" minOccurs="0">
+                <xs:element name="RcVloeren" type="n:RcValue" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
                             Oppervlaktegewogen Rc-waarde van alle vloeren waarvoor geldt: Vlaktype  = ‘vloer’ EN Vloer EN Begrenzing = NIET (‘AangrenzendeRekenzone’ of ‘AangrenzendeRuimteAnderGebouw).Weglaten indien er geen vloeren zijn die aan de voorwaarde voldoen.
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="RcDaken" type="xs:double" minOccurs="0">
+                <xs:element name="RcDaken" type="n:RcValue" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
                             Oppervlaktegewogen Rc-waarde van alle daken waarvoor geldt: Vlaktype = ‘dak’ EN Dicht EN Begrenzing = NIET (‘AangrenzendeRekenzone’ of ‘AangrenzendeRuimteAnderGebouw). Weglaten indien er geen daken zijn die aan de voorwaarden voldoen.
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="URamen" type="xs:double" minOccurs="0">
+                <xs:element name="URamen" type="n:UValue" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
                             Oppervlaktegewogen U-waarde van alle ramen waarvoor geldt: Vlaktype = ‘gevel/dak’ EN Raam EN Begrenzing = NIET (‘AangrenzendeRekenzone’ of ‘AangrenzendeRuimteAnderGebouw). Weglaten indien er geen ramen zijn die aan de voorwaarden voldoen.
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="GRamen" type="xs:double" minOccurs="0">
+                <xs:element name="GRamen" type="n:GValue" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
                             Oppervlaktegewogen zontoetredingsfactor (loodrechte invoer) van alle ramen waarvoor geldt: Vlaktype = ‘gevel/dak’ EN Raam EN Begrenzing = NIET (‘AangrenzendeRekenzone’ of ‘AangrenzendeRuimteAnderGebouw). Weglaten indien er geen ramen zijn die aan de voorwaarden voldoen.
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="UDeuren" type="xs:double">
+                <xs:element name="UDeuren" type="n:UValue" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
                             Oppervlaktegewogen U-waarde van alle deuren waarvoor geldt: Vlaktype = ‘gevel/dak’ EN Deur EN Begrenzing = NIET (‘AangrenzendeRekenzone’ of ‘AangrenzendeRuimteAnderGebouw). Weglaten als er geen deuren zijn die aan de voorwaarden voldoen.
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="UPanelen" type="xs:double" minOccurs="0">
+                <xs:element name="UPanelen" type="n:UValue" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
                             Oppervlaktegewogen U-waarde van alle panelen waarvoor geldt: Vlaktype = ‘gevel/dak’ EN Paneel EN Begrenzing = NIET (‘AangrenzendeRekenzone’ of ‘AangrenzendeRuimteAnderGebouw). Weglaten indien er geen panelen zijn die aan de voorwaarden voldoen.
@@ -203,7 +230,7 @@
                         <xs:documentation>Verhouding tussen verliesoppervlakte (§6.7) en gebruiksoppervlakte (§6.6).</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="Luchtdoorlatendheid" type="xs:double">
+                <xs:element name="Luchtdoorlatendheid" type="n:NonNegativeDouble">
                     <xs:annotation>
                         <xs:documentation>Oppervlaktegewogen gemiddelde van qv10;spec van alle rekenzones [dm³/(s×m²)]. §11.2.5</xs:documentation>
                     </xs:annotation>
@@ -278,7 +305,7 @@
                         <xs:documentation>1 indien in een of meerdere ventilatiesystemen een wisselstroomventilator aanwezig is, in alle andere gevallen 0</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="GemiddeldvermogenVerlichting" type="xs:double" minOccurs="0">
+                <xs:element name="GemiddeldvermogenVerlichting" type="n:NonNegativeDouble" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>Som van totale geïnstalleerde vermogen voor verlichting (niet parasitair!)( Formule 14.8) / som Ag.</xs:documentation>
                     </xs:annotation>
@@ -293,7 +320,7 @@
                         <xs:documentation>Type bevochtigingsinstallatie met de grootste aangesloten oppervlakte. (Alleen) weglaten indien er geen sprake is van bevochtiging.</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="OppervlaktePV" type="xs:double">
+                <xs:element name="OppervlaktePV" type="n:NonNegativeDouble">
                     <xs:annotation>
                         <xs:documentation>Totaaloppervlakte aan PV-panelen die is toegekend aan dit gebouw(deel) [m²].</xs:documentation>
                     </xs:annotation>
@@ -303,7 +330,7 @@
                         <xs:documentation>Aanwezig (1) indien er indien er een of meer zonneboilers voor tapwater en/of ruimteverwarming zijn.</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="WattpiekvermogenPV" type="xs:double">
+                <xs:element name="WattpiekvermogenPV" type="n:NonNegativeDouble">
                     <xs:annotation>
                         <xs:documentation>Totale wattpiekvermogen van de PV-panelen die zijn toegekend aan dit gebouw(deel) [Wp].</xs:documentation>
                     </xs:annotation>
@@ -1670,7 +1697,7 @@
                             </xs:choice>
                             <xs:element ref="n:Hellingshoek"/>
                             <xs:element name="Orientatie" type="n:OrientatieOnbekendEnumeration" />
-                            <xs:element name="Oppervlakte" type="xs:double">
+                            <xs:element name="Oppervlakte" type="n:NonNegativeDouble">
                                 <xs:annotation>
                                     <xs:documentation>
                                         Het gaat om de netto oppervlakte (dus met aftrek van de ramen) en niet de bruto oppervlakte.
@@ -1773,13 +1800,13 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="U" type="xs:double">
+    <xs:element name="U" type="n:UValue">
         <xs:annotation>
             <xs:documentation>U-waarde van het constructiedeel [W/(m²·K)]</xs:documentation>
         </xs:annotation>
     </xs:element>
 
-    <xs:element name="Rc" type="xs:double">
+    <xs:element name="Rc" type="n:RcValue">
         <xs:annotation>
             <xs:documentation>Rc-waarde van het constructiedeel [m²·K/W]</xs:documentation>
         </xs:annotation>
